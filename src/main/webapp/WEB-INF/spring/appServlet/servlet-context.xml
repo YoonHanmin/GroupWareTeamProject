@@ -23,18 +23,19 @@
 	
 	<context:component-scan base-package="com.green.teamproject_groupware" />
 	
-		<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<beans:property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></beans:property>
-		<beans:property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></beans:property>
+	<!-- 	dataSource 객체는 데이터베이스 정보 포함 -->
+	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></beans:property>
+		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></beans:property>
 		<beans:property name="username" value="scott"></beans:property>
 		<beans:property name="password" value="tiger"></beans:property>
-	</beans:bean>
+	</beans:bean>	
 	
 <!-- 	mybatis를 사용하는 sqlSession 객체를 만들기위한 세션팩토리 객체에 dataSource와 매퍼설정 할당 -->
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"></beans:property>
 <!-- 		sql로 구성된 매퍼 xml파일 경로 설정 -->
-		<beans:property name="mapperLocations" value="classpath:com/lgy/spring_paging/dao/mapper/*.xml"></beans:property>
+		<beans:property name="mapperLocations" value="classpath:com/green/teamproject_groupware/dao/mapper/*.xml"></beans:property>
 	</beans:bean>
 <!-- 	SqlSessionTemplate 타입의 sqlSession객체는 sqlSessionFactory객체를 포함한다. -->
 	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">

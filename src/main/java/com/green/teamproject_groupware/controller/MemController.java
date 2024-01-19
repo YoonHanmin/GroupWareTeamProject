@@ -1,6 +1,7 @@
 package com.green.teamproject_groupware.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.teamproject_groupware.dao.IMemDao;
 import com.green.teamproject_groupware.dto.MemDto;
+import com.green.teamproject_groupware.controller.MemController;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemController {
 
 	@Autowired
-	private SqlSession sqlSession;
+	private com.green.teamproject_groupware.service.MemService service;
 	
 	@RequestMapping("/login")
 	public String login() {
@@ -30,18 +33,21 @@ public class MemController {
 	}
 	
 	@RequestMapping("/login_yn")
-	public String login_yn(HttpServletRequest request, Model model) {
+	public String login_yn(@RequestParam HashMap<String, String>param) {
 		log.info("@# login_yn");
 		
-		String mPw = request.getParameter("mem_pwd");
-		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-		ArrayList<MemDto> dtos = dao.loginYn(request.getParameter("mem_uid")
-																			,request.getParameter("mem_pwd"));
+		ArrayList<MemDto> dtos = service.loginYn(param);
+		
+//		String mPw = request.getParameter("mem_pwd");
+//		IMemDao dao = sqlSession.getMapper(IMemDao.class);
+//		ArrayList<MemDto> dtos = dao.loginYn(request.getParameter("mem_uid")
+//																			,request.getParameter("mem_pwd"));
 		
 		if (dtos.isEmpty()) {
 			return "redirect:login";
 		} else {
-			if (mPw.equals(dtos.get(0).getMem_pwd())) {
+//			if (mPw.equals(dtos.get(0).getMem_pwd())) {
+			if (param.get("mem_pwd").equals(dtos.get(0).getMem_pwd())) {
 				return "redirect:login_ok";
 			} else {
 			    return "redirect:login";
@@ -64,13 +70,10 @@ public class MemController {
 	}
 	
 	@RequestMapping("/registerOk")
-	public String registerOk(HttpServletRequest request, Model model) {
+	public String registerOk(@RequestParam HashMap<String, String>param) {
 		log.info("@# registerOk");
 		
-		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-		dao.write(request.getParameter("mem_uid")
-        				, request.getParameter("mem_pwd")
-        				, request.getParameter("mem_name"));
+		service.write(param);
 		
 		return "redirect:login";
 	}
