@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/login.css">
 <title>Insert title here</title>
+<style>
+     @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Noto+Sans+KR&display=swap');
+     body {
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+</style>
 </head>
 <body class="text-center">
     
