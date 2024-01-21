@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.teamproject_groupware.dao.IMemDao;
 import com.green.teamproject_groupware.dto.MemDto;
+import com.green.teamproject_groupware.service.MemService;
 import com.green.teamproject_groupware.controller.MemController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,20 +22,23 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class MemController {
-
 	@Autowired
-	private com.green.teamproject_groupware.service.MemService service;
+	MemService service;
+	@RequestMapping("/main")
+	public String main() {
+		return "main";
+	}
+	
 	
 	@RequestMapping("/login")
 	public String login() {
-		log.info("@# login");
-		
+
 		return "login";
 	}
 	
 	@RequestMapping("/login_yn")
 	public String login_yn(@RequestParam HashMap<String, String>param) {
-		log.info("@# login_yn");
+//		log.info("@# login_yn");
 		
 		ArrayList<MemDto> dtos = service.loginYn(param);
 		

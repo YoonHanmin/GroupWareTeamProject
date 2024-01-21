@@ -8,8 +8,8 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<java-version>1.6</java-version>
-		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
+		<java-version>1.8</java-version>
+		<org.springframework-version>5.0.7.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
@@ -120,7 +120,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>4.1.4.RELEASE</version>
+			<version>${org.springframework-version}</version>
 		</dependency>  
 		<!-- 		lombok -->
 		<dependency>
@@ -155,7 +155,18 @@
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.5.4</version>
 		</dependency>
-		
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.4</version>
+    <scope>provided</scope>
+</dependency>
+		<dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.11.0</version> <!-- 최신 버전으로 변경 가능 -->
+</dependency>
 	</dependencies>
     <build>
         <plugins>
