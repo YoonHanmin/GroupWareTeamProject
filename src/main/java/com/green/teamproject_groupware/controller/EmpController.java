@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.green.teamproject_groupware.dto.MemDto;
+import com.green.teamproject_groupware.dto.UserInfoDto;
 
 import lombok.extern.slf4j.Slf4j;
 

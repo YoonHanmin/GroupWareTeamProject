@@ -4,16 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.teamproject_groupware.dao.IMemDao;
-import com.green.teamproject_groupware.dto.MemDto;
+import com.green.teamproject_groupware.dto.UserInfoDto;
 import com.green.teamproject_groupware.service.MemService;
 import com.green.teamproject_groupware.controller.MemController;
 
@@ -24,9 +26,21 @@ import lombok.extern.slf4j.Slf4j;
 public class MemController {
 	@Autowired
 	MemService service;
+	
 	@RequestMapping("/main")
-	public String main() {
+	public String main(HttpSession session,Model model) {
+		String empno = (String)session.getAttribute("empno");
+		
+		if(empno !=null) {
+		UserInfoDto user = service.getUserByEmpno(Integer.parseInt(empno));
+		model.addAttribute("user", user);
+		 log.info("name ==>"+user.getName());
+		 log.info("dnamd ==>"+user.getDname());
+		 if(user !=null) {
 		return "main";
+		 }
+		}
+		 return "redirect:/login";
 	}
 	
 	
@@ -36,27 +50,22 @@ public class MemController {
 		return "login";
 	}
 	
-	@RequestMapping("/login_yn")
-	public String login_yn(@RequestParam HashMap<String, String>param) {
-//		log.info("@# login_yn");
+//	로그인 메소드
+	@RequestMapping("/loginYn")
+	public String login_yn(@RequestParam HashMap<String, String>param,HttpSession session) {
+		int result = service.loginYn(param);
+		log.info("@#@#result ===>"+result);
 		
-		ArrayList<MemDto> dtos = service.loginYn(param);
-		
-//		String mPw = request.getParameter("mem_pwd");
-//		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-//		ArrayList<MemDto> dtos = dao.loginYn(request.getParameter("mem_uid")
-//																			,request.getParameter("mem_pwd"));
-		
-		if (dtos.isEmpty()) {
+		String empno = param.get("empno");
+		log.info("empno ====>"+empno);
+		if(result==1) {
+			session.setAttribute("empno", empno);
+			
+			return "redirect:main";
+		}else {
 			return "redirect:login";
-		} else {
-//			if (mPw.equals(dtos.get(0).getMem_pwd())) {
-			if (param.get("mem_pwd").equals(dtos.get(0).getMem_pwd())) {
-				return "redirect:login_ok";
-			} else {
-			    return "redirect:login";
-			}
-		}				
+		}
+	
 	}
 	
 	@RequestMapping("/login_ok")

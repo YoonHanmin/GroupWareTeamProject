@@ -5,12 +5,13 @@ import java.util.HashMap;
 
 import org.springframework.ui.Model;
 
-import com.green.teamproject_groupware.dto.MemDto;
+import com.green.teamproject_groupware.dto.UserInfoDto;
 
 
 
 public interface MemService {
 
-	public ArrayList<MemDto> loginYn(HashMap<String, String> param);
+	public int loginYn(HashMap<String, String> param);
+	public UserInfoDto getUserByEmpno(int empno);
 	public void write(HashMap<String, String> param);
 }

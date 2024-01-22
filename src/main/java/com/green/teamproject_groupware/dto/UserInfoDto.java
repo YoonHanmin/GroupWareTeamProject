@@ -10,11 +10,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class MemDto {
-		private String mem_uid;
-		private String mem_pwd;
-		private String mem_name;
-		
+public class UserInfoDto {
+		private String empno;
+		private String name;
+		private String password;
+		private String email;
+		private String tel;
+		private String address;
+		private String dname;
 		
 	}
 

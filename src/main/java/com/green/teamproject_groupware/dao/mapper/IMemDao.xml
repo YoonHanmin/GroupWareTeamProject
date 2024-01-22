@@ -6,12 +6,16 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.IMemDao">
     
-    <select id="loginYn" parameterType="hashmap"  resultType="com.green.teamproject_groupware.dto.MemDto">
-        select mem_pwd from mvc_member where mem_uid=#{mem_uid}
+    <select id="loginYn" parameterType="hashmap"  resultType="com.green.teamproject_groupware.dto.UserInfoDto">
+        select password from userinfo where empno=#{empno}
+    </select>
+    
+    <select id="getUserByEmpno"  resultType="com.green.teamproject_groupware.dto.UserInfoDto">
+        select empno,name,dname from emp where empno=#{empno}
     </select>
     
     <insert id="write" parameterType="hashmap">
     	insert into mvc_member values(#{mem_uid},#{mem_pwd},#{mem_name})
     </insert>
-
+	
 </mapper>
