@@ -1,144 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>main</title>
-    <link rel="stylesheet" href="resources/css/bootstrap.css">
-    <link rel="stylesheet" href="resources/css/login.css">
-    <script src="resources/js/jquery.js"></script>
+<%@ include file="/WEB-INF/views/inc/header_link.jsp" %>    
+<!--     <link rel="stylesheet" href="resources/css/bootstrap.css"> -->
+<!--     <link rel="stylesheet" href="resources/css/main.css"> -->
+<!--     <script src="resources/js/jquery.js"></script> -->
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<!--     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+<!--     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> -->
 </head>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Noto+Sans+KR&display=swap');
-    body {
-       font-family: 'Noto Sans KR', sans-serif;
-  margin: 0;
-  
-}
-main {
-margin-left: 250px; /* navÀÇ ³Êºñ¸¸Å­ mainÀ» ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿ */
-        padding: 1px 16px;
-        height: 1000px;
-}
-nav .profile{
-    background-color: #f1f1f1;
-    height: 20%;
-    
-    padding: 20px;
-}
-.profile img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        cursor: pointer; /* Å¬¸¯ °¡´ÉÇÑ ¿ä¼Ò·Î ¼³Á¤ */
-    }
 
-nav {
-    margin: 0;
-        padding-top: 10px; /* nav »ó´Ü¿¡ ¿©¹é Ãß°¡ */
-        width: 250px;
-        background-color: #f1f1f1;
-        position: fixed;
-        height: 100%;
-        overflow: auto;
-}
-nav ul{
-    list-style-type: none;
-    margin: 0;
-  padding: 0;
-}
-
-li a {
-  display: block;
-  color: #000;
-  padding:20px 16px;
-  text-decoration: none;
-}
-
-li a.active {
-  background-color: #eee;
-  color: #555;
-}
-
-li a:hover:not(.active) {
-  background-color: #555;
-  color: white;
-}
-.profile{
- text-align: center; /* ÅØ½ºÆ® Á¤·ÄÀ» °¡¿îµ¥·Î Á¶Á¤ */
-    background-color: #f1f1f1;
-        height: 20%;
-        padding: 20px;
-}
-.user-info {
-        text-align: center; /* ÅØ½ºÆ® Á¤·ÄÀ» °¡¿îµ¥·Î Á¶Á¤ */
-        margin-top: 10px; /* ÀÌ¹ÌÁö¿Í ÅØ½ºÆ® »çÀÌÀÇ °£°Ý Á¶Á¤ */
-    }
-    .profile img {
-        width: 80px; /* ÇÁ·ÎÇÊ ÀÌ¹ÌÁöÀÇ ³Êºñ ¼³Á¤ */
-        height: 80px; /* ÇÁ·ÎÇÊ ÀÌ¹ÌÁöÀÇ ³ôÀÌ ¼³Á¤ */
-        border-radius: 50%; /* ÀÌ¹ÌÁö¸¦ ¿ø ¸ð¾çÀ¸·Î ¸¸µé±â À§ÇØ ¿øÇü ¸ð¾çÀ¸·Î Àß¶ó³À´Ï´Ù. */
-    }
-    nav li ul {
-        display: none;
-    font-size: 14px; /* ¼­ºê¸Þ´ºÀÇ ÆùÆ® Å©±â Á¶Àý */
-    padding: 10px; /* ¼­ºê¸Þ´ºÀÇ ÆÐµù Á¶Àý */
-    max-height: 200px;
-    }
-   
-</style>
 <body>
-    <!-- <nav>~</nav> ¸ÞÀÎ ÆäÀÌÁö ÁÂÃø Nav¹Ù -->
-    <nav>
-    <div class="profile">
-        <div class="profile-img">
-        
-        </div>
-            <div class="user-info">
-                <p><b>°íÀ±Á¤</b></p>
-                <p><b>°³¹ß2ÆÀ »ç¿ø</b></p>
-            </div>
-            </div>
-    <!-- ul ÅÂ±×³» ¸Þ´º -->
-    <ul>
-        <li ><a href="#"><i class="bi bi-person-circle"></i> »ç¿øÁ¤º¸</a>
-            <!-- ¼­ºê¸Þ´º´Â Á¦ÀÌÄõ¸® ÀÌ¿ëÇØ¼­ Åä±ÛÃ³¸®(¾Æ·¡ Á¦ÀÌÄõ¸® ÄÚµå ÂüÁ¶) -->
-            <ul>
-                <li><a href="#" target="_blank" onclick="openPop()" >ÇÁ·ÎÇÊ»çÁø º¯°æ</a></li>
-                <li><a href="#">¼­ºê¸Þ´º2</a></li>
-            </ul>
-        </li>
-        <li><a href="#"><i class="bi bi-calendar-week"></i>  ÈÞ°¡°ü¸®</a>
-            <ul>
-                <li><a href="#">¼­ºê¸Þ´º1</a></li>
-                <li><a href="#">¼­ºê¸Þ´º2</a></li>
-            </ul>
-        </li>
-        <li><a href="#"><i class="bi bi-file-earmark-check"></i>  ÀüÀÚ°áÀç</a> 
-            <ul>
-                <li><a href="#">¼­ºê¸Þ´º1</a></li>
-                <li><a href="#">¼­ºê¸Þ´º2</a></li>
-            </ul>
-        </li>
-        <li><a href="#"><i class="bi bi-boxes"></i> ÀÚ¿ø¿äÃ»</a>
-            <ul>
-                <li><a href="#">¼­ºê¸Þ´º1</a></li>
-                <li><a href="#">¼­ºê¸Þ´º2</a></li>
-            </ul>
-        </li>
-        <li><a href="#"><i class="bi bi-people-fill"></i> Ä¿¹Â´ÏÆ¼</a>
-            <ul>
-                <li><a href="#">¼­ºê¸Þ´º1</a></li>
-                <li><a href="#">¼­ºê¸Þ´º2</a></li>
-            </ul>
-        </li>
-      </ul>
-    </nav>
+<!-- navë°” include  -->
+<%@ include file="/WEB-INF/views/inc/nav.jsp" %>
+
     <main>
       <div style="margin-left:25%;padding:1px 16px;height:1000px;">
       <h1>Main page</h1>
@@ -146,34 +26,6 @@ li a:hover:not(.active) {
     </main>
 </body>
 <script>
-    $(document).ready(function () {
-        $('nav li').click(function () {
-            // Å¬¸¯ÇÑ li ¿ä¼ÒÀÇ ÇÏÀ§ ul ¿ä¼Ò¸¦ Åä±ÛÇÏ¿© º¸ÀÌ°Å³ª °¨Ãã
-            $(this).find('ul').slideToggle();
-        });
-	// ¹®¼­ ÀÐ¾î¿Ã¶§ showImage ÇÔ¼ö È£Ãâ - ÆÄ¶ó¹ÌÅÍ´Â ¼¼¼Ç°ªµîÀ¸·Î ºÎÅÍ °³ÀÎ À¯Àúº° Á¤º¸ ³Ö¾îÁà¾ßÇÔ
-        showImage('profile2.jpg');
-        
-        
-    });
-
-    function openPop(){
-    	var width = 400;
-        var height = 300;
-        var left = (screen.width - width) / 2;
-        var top = (screen.height - height) / 2;
-
-        var windowFeatures = 'width=' + width + ',height=' + height + ',left=' + left + ',top=' + top;
-		window.open('profile','_blank',windowFeatures);
-      
-    }
-//     	ÄÁÆ®·Ñ·¯¸¦ È£ÃâÇØ¼­ ÀÌ¹ÌÁöÁ¤º¸¸¦ °¡Á®¿Í º¸¿©ÁÖ´Â ÇÔ¼ö
-    	function showImage(fileCallPath){
-
-    		console.log("##@#@# fileCallpath : "+fileCallPath);
-//     		profile-img Å¬·¡½ºÀÇ divÀÇ html¿ä¼Ò¿¡ ÄÁÆ®·Ñ·¯ ¸Þ¼Òµå È£ÃâÇÏ¿© ¿øº» ÀÌ¹ÌÁö ÆÄÀÏÀ» Ãâ·ÂÇÏ´Â imgÅÂ±×¸¦ »ðÀÔÇÑ´Ù. 
-    		$(".profile-img").html("<img src='./display?fileName="+encodeURI(fileCallPath)+"'>")
-    		
-    	}
+   
 </script>
 </html>

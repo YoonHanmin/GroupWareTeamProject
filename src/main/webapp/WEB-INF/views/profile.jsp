@@ -24,6 +24,10 @@
         text-align: center; /* 텍스트 정렬을 가운데로 조정 */
 }
 </style>
+<script>
+
+
+</script>
 </head>
 
 <body>
@@ -34,8 +38,12 @@
 		</div>
 	</div>
 	<div class="uploadDiv">
+	<form method="post" action="uploadFormAction" enctype="multipart/form-data">
 		<input type="file" name="uploadFile" multiple>
+		<input type="hidden" name="name" value="본인사번값">
+		<input type="submit" value="변경하기">
+		</form>
 	</div>
-	<button id="uploadBtn">변경하기</button>
+<!-- 	<button type="button" id="uploadBtn" class="btn btn-primary btn-sm">변경하기</button> -->
 </body>
 </html>

@@ -66,11 +66,11 @@ public class MemController {
 		return "login_ok";
 	}
 	
-	@RequestMapping("/register")
-	public String register() {
-		log.info("@# register");
+	@RequestMapping("/regist")
+	public String regist() {
+		log.info("@# regist");
 		
-		return "register";
+		return "regist";
 	}
 	
 	@RequestMapping("/registerOk")
