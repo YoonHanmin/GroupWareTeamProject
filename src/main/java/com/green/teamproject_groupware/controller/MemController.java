@@ -51,6 +51,15 @@ public class MemController {
 		return "login";
 	}
 	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+	    // 세션 제거
+	    session.invalidate();
+	    
+	    // 로그인 페이지로 리다이렉트
+	    return "redirect:login";
+	}
+	
 //	로그인 메소드
 	@RequestMapping("/loginYn")
 	public String login_yn(@RequestParam HashMap<String, String>param,HttpSession session) {

@@ -19,11 +19,11 @@ private String password;
 private int sal;
 private Timestamp hiredate;
 private String jumin;
+private String phone;
 private String address;
 private String account;
 private String profileimage;
 private String dname;
 private String status;
-private String phone;
 
 }
