@@ -10,7 +10,7 @@
         select password from userinfo where empno=#{empno}
     </select>
     
-    <select id="getUserByEmpno"  resultType="com.green.teamproject_groupware.dto.UserInfoDto">
+    <select id="getUserByEmpno"  resultType="com.green.teamproject_groupware.dto.EmpDto">
         select empno,name,dname from emp where empno=#{empno}
     </select>
     

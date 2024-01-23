@@ -9,6 +9,7 @@
        font-family: 'Noto Sans KR', sans-serif;
   margin: 0; 
 }
+
 </style>
  <script src="resources/js/jquery.js"></script>
     <meta charset="UTF-8">
@@ -30,8 +31,8 @@
     });
 
     function openPop(){
-    	var width = 500;
-        var height = 400;
+    	var width = 400;
+        var height = 200;
         var left = (screen.width - width) / 2;
         var top = (screen.height - height) / 2;
 
@@ -58,6 +59,8 @@
 </head>
 
 <body>
+
+
  <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
     <nav>
     <div class="profile">
@@ -66,7 +69,7 @@
         
         </div>
             <div class="user-info">
-                <p>반갑습니다. ${user.getName()}님!</p>
+                <p> ${user.getName()}</p>
                 <p>${user.getDname()}</p>
             </div>
             </div>
@@ -76,9 +79,17 @@
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
                 <li><a href="#" target="_blank" onclick="openPop()" >프로필사진 변경</a></li>
-                <li><a href="#">서브메뉴2</a></li>
+                <li><a href="#">내 사원 정보</a></li>
             </ul>
         </li>
+        <li ><a href="people"><i class="bi bi-building"></i> 회사정보</a>
+            <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
+            <ul>
+                <li><a href="#">사원검색</a></li>
+                <li><a href="#">조직도</a></li>
+            </ul>
+        </li>
+        
         <li><a href="#"><i class="bi bi-calendar-week"></i>  휴가관리</a>
             <ul>
                 <li><a href="#">서브메뉴1</a></li>

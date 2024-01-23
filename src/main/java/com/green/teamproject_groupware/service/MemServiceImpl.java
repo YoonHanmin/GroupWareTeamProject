@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import com.green.teamproject_groupware.dao.IMemDao;
+import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.UserInfoDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,9 +49,9 @@ public class MemServiceImpl implements MemService{
 	}
 	
 	@Override
-	public UserInfoDto getUserByEmpno(int empno) {
+	public EmpDto getUserByEmpno(int empno) {
 		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-		UserInfoDto user = dao.getUserByEmpno(empno);
+		EmpDto user = dao.getUserByEmpno(empno);
 		return user;
 	}
 }

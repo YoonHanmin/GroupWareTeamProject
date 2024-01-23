@@ -27,7 +27,7 @@
       <div id="loginBox">
      
         <!-- 로그인 페이지 타이틀 -->
-        <div id="loginBoxTitle"><a href="login">AssemWork</a></div>
+        <div id="loginBoxTitle"><a href="login"><img src="resources/images/logo.png" width="230px" height="100px"></a></div>
         <!-- 아이디, 비번, 버튼 박스 -->
         <div id="inputBox">
         	<form name="loginform" action="loginYn" method="post">

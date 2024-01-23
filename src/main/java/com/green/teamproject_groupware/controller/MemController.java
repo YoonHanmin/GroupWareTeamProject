@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.green.teamproject_groupware.dao.IMemDao;
+import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.UserInfoDto;
 import com.green.teamproject_groupware.service.MemService;
 import com.green.teamproject_groupware.controller.MemController;
@@ -32,10 +33,10 @@ public class MemController {
 		String empno = (String)session.getAttribute("empno");
 		
 		if(empno !=null) {
-		UserInfoDto user = service.getUserByEmpno(Integer.parseInt(empno));
+		EmpDto user = service.getUserByEmpno(Integer.parseInt(empno));
 		model.addAttribute("user", user);
 		 log.info("name ==>"+user.getName());
-		 log.info("dnamd ==>"+user.getDname());
+		
 		 if(user !=null) {
 		return "main";
 		 }

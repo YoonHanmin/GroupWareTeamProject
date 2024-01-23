@@ -45,6 +45,7 @@
 </head>
 <body>
   <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
+
     <nav>
     <div class="profile">
 <!--     	<button style="float:left;">로그아웃</button> -->
@@ -65,6 +66,14 @@
                 <li><a href="#">서브메뉴2</a></li>
             </ul>
         </li>
+        <li ><a href="people"><i class="bi bi-building"></i> 회사정보</a>
+            <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
+            <ul>
+                <li><a href="#">사원검색</a></li>
+                <li><a href="#">조직도</a></li>
+            </ul>
+        </li>
+        
         <li><a href="#"><i class="bi bi-calendar-week"></i>  휴가관리</a>
             <ul>
                 <li><a href="#">서브메뉴1</a></li>
