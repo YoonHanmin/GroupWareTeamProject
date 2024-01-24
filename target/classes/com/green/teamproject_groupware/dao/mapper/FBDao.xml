@@ -1,0 +1,40 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.teamproject_groupware.dao.FBDao">
+
+    <select id="free_board_list" resultType="com.green.teamproject_groupware.dto.FBDto">
+        select bid, bname, btitle, bcontent, bdate, bhit from free_board
+    </select>
+    
+    <update id="increaseHit" parameterType="java.util.HashMap">
+        UPDATE free_board
+        SET bhit = bhit + 1
+        WHERE bid = #{bid}
+    </update>
+    
+    <insert id="write" >
+    insert into free_board(bid, bname, btitle, bcontent, bhit, imagedata)
+    values (free_board_SEQ.NEXTVAL,#{bname},#{btitle},#{bcontent},0, #{imagedata, jdbcType=BLOB})
+</insert>
+    
+<!--     <insert id="write" > -->
+<!--     	insert into free_board(bid, bname, btitle, bcontent, bhit) values -->
+<!--     										  (free_board_SEQ.NEXTVAL,#{bname},#{btitle},#{bcontent},0) -->
+<!--     </insert> -->
+    
+
+    <select id="contentView" resultType="com.green.teamproject_groupware.dto.FBDto">
+        select bid, bname, btitle, bcontent, bdate, bhit, empno from free_board where bid=#{bid}
+    </select>
+    
+    <update id="modify">
+    	update free_board set bname=#{bname}, btitle=#{btitle}, bcontent=#{bcontent} where bid=#{bid}
+    </update>
+    
+    <delete id="delete">
+    	delete from free_board where bid=#{bid}
+    </delete>
+    
+</mapper>

@@ -15,7 +15,7 @@ margin-left: 250px; /* nav의 너비만큼 main을 오른쪽으로 이동 */
 nav .profile{
     background-color: #f1f1f1;
     height: 20%;
-    margin : 20px;
+   
     padding: 20px;
 }
 .profile img {

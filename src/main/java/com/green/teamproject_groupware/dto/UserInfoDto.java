@@ -17,6 +17,6 @@ public class UserInfoDto {
 		private String email;
 		private String tel;
 		private String address;
-		private String dname;
+		
 	}
 

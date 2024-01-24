@@ -8,6 +8,72 @@
     body {
        font-family: 'Noto Sans KR', sans-serif;
   margin: 0; 
+  }
+  
+  .profile-tool{
+  margin : 0;
+  border-bottom: 1px solid #eee;
+  }
+  .profile-bar{
+  display : flex;
+  flex-direction : row;
+  justify-content: space-between; /* 양쪽 끝에 배치하도록 설정 */
+  }
+  .profile-bar li {
+  text-align : center;
+  list-style: none; /* 기본 리스트 스타일 제거 */
+  margin : 0;
+  padding : 5px 30px;
+  cursor: pointer;
+}
+
+.profile-tool .profile-bar li:hover {
+  background-color: #555; /* 호버 시 배경색 */
+  color: white; /* 호버 시 텍스트 색상 */
+}
+.popup_bg{
+position: absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background: rgba(0,0,0,0.7);
+display:none;
+z-index: 1; /* z-index 값 설정 */
+}
+
+.popup{
+position : absolute;
+left : calc(30% - 300px);
+top : calc(50% - 300px);
+width : 600px;
+height : 600px;
+background : white;
+display:none;
+ z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
+
+}
+.popup > #messenger-out{
+font-size: 2rem; 
+float: right; 
+margin-right:5px;
+cursor: pointer;
+}
+
+.popup-logout{
+position : absolute;
+left : calc(50% - 150px);
+top : calc(50% - 200px);
+width : 200px;
+height : 100px;
+background : white;
+display:none;
+ z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
+border-radius: 3px;
+}
+
+
+
 }
 
 </style>
@@ -26,10 +92,38 @@
 	// 문서 읽어올때 showImage 함수 호출 - 파라미터는 세션값등으로 부터 개인 유저별 정보 넣어줘야함
 		var empno = ${empno};
         showImage(empno);
+    // 로그아웃 기능    
+	$("#logout").on("click",function(){
+		$(".popup_bg").css({"display":"block"});
+    	$(".popup-logout").css({ "display": "block" });
+		// 예 -> 로그아웃하기
+    	$("#logout-yes").on("click",function(){
+    		location.href="logout";
+    	});
+    	// 취소 -> 원래대로
+    	$("#cancle").on("click",function(){
+    		$(".popup_bg").css({"display":"none"});
+        	$(".popup-logout").css({ "display": "none" });
+    	});
+    	
+	});
         
-        
+    // 메신저 클릭시 모달팝업 생성
+    $("#messenger").on("click",function(){
+    	$(".popup_bg").css({"display":"block"});
+    	$(".popup").css({ "display": "block" });
     });
+    $("#messenger-out").on("click",function(){
+    	$(".popup_bg").css({"display":"none"});
+    	$(".popup").css({ "display": "none" });
+    });
+    
+    
+    }); // end of ready(function)
+	
 
+    
+    
     function openPop(){
     	var width = 400;
         var height = 200;
@@ -72,6 +166,14 @@
                 <p> ${user.getName()}</p>
                 <p>${user.getDname()}</p>
             </div>
+            </div>
+            <div class="profile-tool">
+            <ul class="profile-bar">
+            	<li id="logout" style="margin-left:30px;"><i class="bi bi-box-arrow-left" style="font-size: 2rem;"></i></li>
+            	<li id="messenger" style="margin-right:30px;"><i class="bi bi-envelope" style="font-size: 2rem;"></i></li>
+            	
+            	
+            </ul>
             </div>
     <!-- ul 태그내 메뉴 -->
     <ul>
@@ -120,7 +222,23 @@
       <div>
       <h1>Main page</h1>
       </div>
+      
+    <!--  모달 팝업창-->
+    <div class="popup">
+ <i class="bi bi-x" id="messenger-out"></i>
+    </div>
+	<div class="popup_bg"></div> 
     </main>
+    
+    <div class="popup-logout">
+    	<div style="text-align:center;margin-top:10px;"><b>로그아웃 하시겠습니까?</b></div>
+    	<div style="margin-top:20px; margin-left:30px;">
+    	<button id="logout-yes">로그아웃</button>
+    	<button id="cancle">취소</button>
+    	</div>
+    </div>
+    
+    
 </body>
 <script>
    
