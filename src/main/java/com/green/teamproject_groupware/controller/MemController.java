@@ -3,19 +3,23 @@ package com.green.teamproject_groupware.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,10 +37,16 @@ public class MemController {
 	@Autowired
 	MemService service;
 	
+	@Autowired
+	private JavaMailSender mailSender;
+	
+    @Autowired
+    SqlSession sqlSession; 
+	
 	@RequestMapping("/main")
 	public String main(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
-			
+		
 		if(empno !=null) {
 		EmpDto user = service.getUserByEmpno(Integer.parseInt(empno));
 		model.addAttribute("user", user);
@@ -49,31 +59,12 @@ public class MemController {
 		 return "redirect:/login";
 	}
 	
-	@RequestMapping("/findPW")
-	public String findPW() {
-		return "findPW";
-		
-	}
-	
-	
 	
 	@RequestMapping("/login")
 	public String login() {
 
 		return "login";
 	}
-	
-	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request) {
-		
-//		현재 세션이 있으면 세션을 반환, 없으면 새로 생성하지말고 null을 반환
-		HttpSession session = request.getSession(false);
-		if (session != null) { // 세션이 null이 아니면 = 현재 세션이 있으면
-            session.invalidate(); 
-        }
-		return "redirect:login";
-	}
-	
 	
 //	로그인 메소드
 	@RequestMapping("/loginYn")
@@ -83,9 +74,9 @@ public class MemController {
 		
 		String empno = param.get("empno");
 		log.info("empno ====>"+empno);
-		if(result==1) { // 로그인 성공        
+		if(result==1) {
 			session.setAttribute("empno", empno);
-				
+			
 			return "redirect:main";
 		}else {
 			return "redirect:login";
@@ -107,46 +98,72 @@ public class MemController {
 		return "regist";
 	}
 	
-	@RequestMapping("/registerOk")
-	public String registerOk(@RequestParam HashMap<String, String>param) {
-		log.info("@# registerOk");
-		
-		service.write(param);
-		
-		return "redirect:login";
+	@RequestMapping("/signUp")
+	public String signUp(@RequestParam HashMap<String, String> param, HttpSession session) {
+	    log.info("@# signUp");
+
+	    // 회원가입 정보를 DB에 저장
+	    UserInfoDto userInfoDto = new UserInfoDto();
+	    userInfoDto.setEmpno(param.get("empno"));
+	    userInfoDto.setName(param.get("name"));
+	    userInfoDto.setPassword(param.get("password"));
+	    userInfoDto.setEmail(param.get("email"));
+	    userInfoDto.setTel(param.get("tel"));
+	    userInfoDto.setAddress(param.get("address"));
+
+	    sqlSession.getMapper(IMemDao.class).signUp(userInfoDto);
+
+	    // 회원 가입 성공 시 세션에 사용자 정보 저장
+	    session.setAttribute("empno", param.get("empno"));
+
+	    return "redirect:/login"; 
 	}
 	
 	@RequestMapping("/checkempno")
 	@ResponseBody
 	public String checkEmpno(String empno,Model model) {
 		log.info("받은 empno ==>"+empno);
-
 			String result = ""+service.checkEmpno(empno);
-			
 			return result;
-			
-//			model.addAttribute("result", result);
-
 	}
-	@RequestMapping("/checkemail")
+		
+	@RequestMapping(value="/mailCheck", method= RequestMethod.GET)
 	@ResponseBody
-	public String checkEmail(@RequestParam("email") String email,@RequestParam("empno")String empno,Model model) {
-		log.info("받은 email ==>"+email);
-		log.info("받은 empno ==>"+empno);
-		
-		HashMap<String, String> param = new HashMap<>();
-		param.put("email",email);
-		param.put("empno",empno);
-		
-		
-			String result = ""+service.checkEmail(param);
-			
-			return result;
-			
-//			model.addAttribute("result", result);
+	public String mailCheckGET(String email) throws Exception{
 
+		/* 뷰(View)로부터 넘어온 데이터 확인 */
+		System.out.println("이메일 데이터 전송확인");
+		System.out.println("이메일:"+email);
+		/*인증번호 생성*/
+		Random random=new Random();
+		int checkNum=random.nextInt(888888)+111111;
+		System.out.println("인증번호:"+checkNum);
+
+		/*이메일 인증*/
+		String setFrom="ohjay8118@gmail.com";
+		String toMail=email;
+		String title="GroupWare 회원가입 인증 메일입니다.";
+		String content=
+				"홈페이지를 방문해 주셔서 감사합니다"+
+				"<br><br>"+
+				"회원님의 인증번호는 "+checkNum	+"입니다."+
+				"<br>"+
+				"해당 인증번호를 비밀번호 확인란에 기입하여 주세요.";
+
+		try{
+			MimeMessage message=mailSender.createMimeMessage();
+			MimeMessageHelper helper =new MimeMessageHelper(message, true,"utf-8");
+			helper.setFrom(setFrom);
+			helper.setTo(toMail);
+			helper.setSubject(title);
+			helper.setText(content,true);
+			mailSender.send(message);
+
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		String num=Integer.toString(checkNum);
+		return num;
 	}
-	
-	
 	
 }

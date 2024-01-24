@@ -17,5 +17,5 @@ public class FBDto {
 	private Timestamp bdate;
 	private int bhit;
 	private int empno;
-	 private byte[] imageData; // 이미지 데이터를 저장할 필드
+
 }

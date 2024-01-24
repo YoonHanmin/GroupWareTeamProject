@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import com.green.teamproject_groupware.dao.IMemDao;
 import com.green.teamproject_groupware.dto.EmpDto;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service("MemberService")
+@Transactional
 public class MemServiceImpl implements MemService{
 	
 	//dao 호출
@@ -64,11 +66,18 @@ public class MemServiceImpl implements MemService{
 		
 	}
 	
-	
 	@Override
-	public int checkEmail(HashMap<String, String> param) {
-		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-		log.info("서비스 메소드 리턴값 ==>"+dao.checkEmail(param));
-		return dao.checkEmail(param);
+	public void signUp(UserInfoDto userInfo) {
+	    try {
+	        if (userInfo == null) {
+	            throw new IllegalArgumentException("회원 정보가 유효하지 않습니다.");
+	        }
+
+	        IMemDao dao = sqlSession.getMapper(IMemDao.class);
+	        dao.signUp(userInfo);
+	    } catch (Exception e) {
+	        log.error("회원가입 중 에러 발생: " + e.getMessage(), e);
+	        throw new RuntimeException("회원가입 중 에러 발생");
+	    }
 	}
 }

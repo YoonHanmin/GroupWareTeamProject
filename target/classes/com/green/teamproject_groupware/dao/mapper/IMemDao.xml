@@ -22,9 +22,9 @@
         select count(*) from userinfo where empno=#{empno}
     </select>
     
-	<select id="checkEmail" parameterType="hashmap" resultType="int">
-        select count(*) from emp where email= #{email} and empno= #{empno}
-    </select>
-	
+    <insert id="signUp" parameterType="com.green.teamproject_groupware.dto.UserInfoDto">
+	    INSERT INTO USERINFO (empno, name, password, email, tel, address)
+	    VALUES (#{empno}, #{name}, #{password}, #{email}, #{tel}, #{address})
+	</insert>
 	
 </mapper>

@@ -65,9 +65,7 @@
             </div>
         </div>
         <div class="form-group row">
-        <label for="fileInput" class="col-sm-2 col-form-label">이미지 업로드</label>
-        <div class="col-sm-10">
-            <input type="file" name="file" id="fileInput">
+
         </div>
     </div>
         <div class="form-group row">
