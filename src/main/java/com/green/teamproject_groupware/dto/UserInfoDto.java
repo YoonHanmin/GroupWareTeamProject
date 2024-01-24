@@ -6,17 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class UserInfoDto {
-    private int empno;
-    private String name;
-    private String password;
-    private String email;
-    private String tel;
-		
+		private String empno;
+		private String name;
+		private String password;
+		private String email;
+		private String tel;
+		private String address;
 		
 	}
 

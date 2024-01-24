@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import com.green.teamproject_groupware.dao.IMemDao;
+import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.UserInfoDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +22,22 @@ public class MemServiceImpl implements MemService{
 	private SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<UserInfoDto> loginYn(HashMap<String, String>param) {
-		
-		String mPw = param.get("mem_pwd");
+	public int loginYn(HashMap<String, String>param) {
+		log.info("@# param====>> "+param);
+		String mPw = param.get("password");
 		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-		ArrayList<UserInfoDto> dtos = dao.loginYn(param);
-		
-		return dtos;
+		UserInfoDto dtos = dao.loginYn(param);
+		log.info("@# dtos의 password ==>"+dtos.getPassword());
+		int result;
+		if(dtos ==null ||dtos.getPassword()==null) {
+			result = 0; //존재하지않는 아이디
+		}
+		if(mPw.equals(dtos.getPassword())) {
+			result= 1; // 로그인 성공			 
+		}else {
+			result = -1; //비밀번호 불일치
+		}
+		return result;
 	}
 	
 	@Override
@@ -37,16 +47,20 @@ public class MemServiceImpl implements MemService{
 		dao.write(param);
 		
 	}
-
+	
 	@Override
-	public HashMap<String, String> getEmployeeInfo(int empno) {
+	public EmpDto getUserByEmpno(int empno) {
 		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-		return dao.getEmployeeInfo(empno);
+		EmpDto user = dao.getUserByEmpno(empno);
+		return user;
 	}
-
+	
 	@Override
-	public void signup(HashMap<String, String> param) {
+	public int checkEmpno(String empno) {
 		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-		dao.signup(param);
+		log.info("@# 로그값 ==>"+dao.checkEmpno(empno));
+		
+		return dao.checkEmpno(empno);
+		
 	}
 }

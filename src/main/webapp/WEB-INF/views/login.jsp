@@ -27,28 +27,43 @@
       <div id="loginBox">
      
         <!-- 로그인 페이지 타이틀 -->
-        <div id="loginBoxTitle">AssemWork</div>
+        <div id="loginBoxTitle"><a href="login"><img src="resources/images/logo.png" width="230px" height="100px"></a></div>
         <!-- 아이디, 비번, 버튼 박스 -->
         <div id="inputBox">
-          <div class="input-form-box"><span>아이디 </span><input type="text" name="#" class="form-control"></div>
-          <div class="input-form-box"><span>비밀번호 </span><input type="password" name="#" class="form-control"></div>
+        	<form name="loginform" action="loginYn" method="post">
+          <div class="input-form-box"><span>아이디 </span><input type="text" name="empno" class="form-control"></div>
+          <div class="input-form-box"><span>비밀번호 </span><input type="password" name="password" class="form-control"></div>
           <div class="button-login-box" >
-            <button type="button" class="btn btn-outline-secondary" style="width:100%; margin-bottom: 5px;">로그인</button>
+            <button type="button" onclick="check()" class="btn btn-outline-secondary" style="width:100%; margin-bottom: 5px;">로그인</button>
             <button type="button" class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">PW찾기</button>
-<!--             <button type="button" class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">회원가입</button> -->
-           	<button type="button" class="btn btn-outline-secondary" style="width: 48%; margin-bottom: 5px;" onclick="goToRegist()">
-	    		<a href="regist" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
-	      			  회원가입	
-	    		</a>
-			</button>
+            <button type="button" onclick="location.href='regist'"class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">회원가입</button>
           </div>
+          </form>
         </div>
         
       </div>
     </div>
-
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    
   </body>
 </html>
+<script>
+function check(){
+	if(document.loginform.empno.value.length==0){
+		alert("ID(사번)를 입력하세요.");
+		loginform.empno.focus();
+		
+		return;
+	}
+	if(document.loginform.empno.value.length!=8){
+		alert("ID(사번)는 8자리 입니다.");
+		loginform.empno.focus();
+		
+		return;
+	}
+	if(document.loginform.password.value.length==0){
+		alert("비밀번호를 입력하세요.");
+		loginform.password.focus();
+		return;
+	}
+	document.loginform.submit();
+}
+</script>

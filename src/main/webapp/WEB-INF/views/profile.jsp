@@ -24,23 +24,46 @@
         text-align: center; /* 텍스트 정렬을 가운데로 조정 */
 }
 </style>
-<script>
+ <script>
+        function showPreview(input) {
+            if (input.files && input.files[0]) {
+            	
 
+                var reader = new FileReader();
 
-</script>
+                reader.onload = function (e) {
+                    $('.profile-photo').attr('src', e.target.result);
+                }
+            	
+ 				
+ 
+            } // end of 파일확장자 유효성 검사
+                reader.readAsDataURL(input.files[0]);
+        }
+        
+
+        $(document).ready(function () {
+            // 파일 선택 시 미리보기 함수 호출
+            $('input[type=file]').change(function () {
+            	
+                showPreview(this);            		
+            	
+            });
+        });
+    </script>
 </head>
 
 <body>
 
 <div class="profileImg">
 		<div class="profile">
-		<img src = "${pageContext.request.contextPath}/photoView" class = "profile-photo">
+		<img src = "" class = "profile-photo">
 		</div>
 	</div>
 	<div class="uploadDiv">
 	<form method="post" action="uploadFormAction" enctype="multipart/form-data">
 		<input type="file" name="uploadFile" multiple>
-		<input type="hidden" name="name" value="본인사번값">
+		<input type="hidden" name="name" value="${empno} ">
 		<input type="submit" value="변경하기">
 		</form>
 	</div>
