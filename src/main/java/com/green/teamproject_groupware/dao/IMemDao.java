@@ -17,4 +17,5 @@ public interface IMemDao {
 	public EmpDto getUserByEmpno(int empno);
 	public void write(HashMap<String, String> param);
 	public int checkEmpno(String empno);
+	public void signUp(UserInfoDto userInfo);
 }

@@ -9,7 +9,6 @@ import lombok.Setter;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class UserInfoDto {
 		private String empno;
 		private String name;
