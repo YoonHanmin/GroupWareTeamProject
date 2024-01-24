@@ -151,9 +151,9 @@
 		
 <!-- 		JavaMail API Dependency -->
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>javax.mail-api</artifactId>
-			<version>1.5.4</version>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
 		</dependency>
 		<!--  json변환 관련 jackson-databind 디펜던시 -->
 		<dependency>

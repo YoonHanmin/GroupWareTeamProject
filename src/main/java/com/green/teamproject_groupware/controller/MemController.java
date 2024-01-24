@@ -2,17 +2,21 @@ package com.green.teamproject_groupware.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.teamproject_groupware.dao.IMemDao;
 import com.green.teamproject_groupware.dto.EmpDto;
@@ -49,15 +53,6 @@ public class MemController {
 	public String login() {
 
 		return "login";
-	}
-	
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-	    // 세션 제거
-	    session.invalidate();
-	    
-	    // 로그인 페이지로 리다이렉트
-	    return "redirect:login";
 	}
 	
 //	로그인 메소드
@@ -100,4 +95,25 @@ public class MemController {
 		
 		return "redirect:login";
 	}
+	
+	@RequestMapping("/checkempno")
+	@ResponseBody
+	public String checkEmpno(String empno,Model model) {
+		log.info("받은 empno ==>"+empno);
+		
+		
+		
+	
+			String result = ""+service.checkEmpno(empno);
+			
+			return result;
+			
+//			model.addAttribute("result", result);
+		
+		
+		
+	}
+	
+	
+	
 }

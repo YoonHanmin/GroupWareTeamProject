@@ -54,4 +54,13 @@ public class MemServiceImpl implements MemService{
 		EmpDto user = dao.getUserByEmpno(empno);
 		return user;
 	}
+	
+	@Override
+	public int checkEmpno(String empno) {
+		IMemDao dao = sqlSession.getMapper(IMemDao.class);
+		log.info("@# 로그값 ==>"+dao.checkEmpno(empno));
+		
+		return dao.checkEmpno(empno);
+		
+	}
 }

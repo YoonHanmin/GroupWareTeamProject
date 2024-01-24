@@ -10,7 +10,8 @@
 
     <title>Document</title>
    
-
+ 	
+    <link rel="stylesheet" href="resources/js/jquery.js">
     <link rel="stylesheet" href="resources/css/bootstrap.css">
     <link rel="stylesheet" href="resources/css/login.css">
 </head>
@@ -25,13 +26,46 @@
         font-family: 'Noto Sans KR', sans-serif;
     }
 </style>
+
+
 <body>
    <div class="container">
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">사원번호</span>
-        <input type="text" class="form-control" placeholder="ex)20240101" aria-label="Username" aria-describedby="basic-addon1">
-        <button class="btn btn-secondary col-3">인증</button>
+        <input type="text" name="empno" class="form-control" placeholder="ex)20240101" aria-label="Username" aria-describedby="basic-addon1">
+        <button id="empbtn"class="btn btn-secondary col-3">인증</button>
       </div>
+      
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   <script>
+      $(document).ready(function () {
+         $("#empbtn").on("click", function () {
+            var empno = $("input[name='empno']").val();
+           
+            $.ajax({
+                type: "POST",
+                url: "checkempno", // 실제 컨트롤러 매핑 경로로 변경
+                data: { empno : empno },
+                success: function (data) {
+//                 	var dat = JSON.stingfy(data);
+//                 	 var integerData = $(xml).find('Integer').text();
+                	
+                	
+                	console.log("data===>>>"+data);
+                 if(data==1){
+                	 alert("중복된 아이디");
+                 }else if(data == 0){
+                	 
+                	 alert("사용가능한 아이디");
+                 }
+                 
+                },
+               
+             });
+          });
+       });
+   </script>
+      
     <div class="input-group mb-3">
         <span class="input-group-text" id="basic-addon1">비밀번호</span>
         <input type="text" class="form-control" placeholder="8자리" aria-label="Username" aria-describedby="basic-addon1">
@@ -89,6 +123,9 @@
         <span><button class="btn btn-secondary " >회원가입</button></span>
       </div>
       </div>
+      
+
+
 
 </body>
 </html>

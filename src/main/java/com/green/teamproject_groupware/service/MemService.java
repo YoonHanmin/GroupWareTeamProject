@@ -15,4 +15,5 @@ public interface MemService {
 	public int loginYn(HashMap<String, String> param);
 	public EmpDto getUserByEmpno(int empno);
 	public void write(HashMap<String, String> param);
+	public int checkEmpno(String empno);
 }
