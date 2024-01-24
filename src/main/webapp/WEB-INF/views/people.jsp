@@ -4,16 +4,23 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
+   
+<link rel="stylesheet" href="resources/css/bootstrap.css">
+    <script src="resources/js/jquery.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<%@ include file="/WEB-INF/views/inc/header_link.jsp" %>   
+ 
 </head>
+ 
 <style>
 .header{
 height : 130px;
 border-bottom: 1px solid #eee;
+display : flex;
 }
 
 .info{
@@ -23,9 +30,11 @@ border-bottom: 1px solid #eee;
 .content table td{
 border-bottom: 1px solid #eee;
 text-align : center;
+height:40px;
+margin : 10px;
 }
 .content table tr,th{
-border-bottom: 1px solid #eee;
+border-bottom: 2px solid #eee;
 text-align : center;
 }
 
@@ -35,37 +44,65 @@ margin: 30px auto; /* Corrected syntax */
     border-collapse: collapse;
 
 }
-
+.item a {
+font-weight : bold;
+font-size : 20px;
+margin-top : 30px;
+}
+.item ul {
+margin-top : 10px;
+}
 .content{
 width : 100%;
 
 }
+
+
+
+/* :hover 상태일 때 ul 태그에 적용되는 스타일 */
+.nav.nav-underline:hover {
+  background-color : white;
+  color:#386FA4;
+}
+
+/* :hover 상태일 때 li 태그에 적용되는 스타일 */
+.nav.nav-underline li:hover {
+    background-color : white;
+  color:#386FA4;
+}
+
+
+
 </style>
+ 
 <body>
-<%@ include file="/WEB-INF/views/inc/nav.jsp" %>  
+<%-- <%@ include file="/WEB-INF/views/inc/nav.jsp" %>   --%>
+ <jsp:include page="nav2.jsp"/>
 
-
+        
+ <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
+  
  <main>
       <div class="header">
       	<ul class="nav nav-underline">
-  <li class="nav-item">
-    <a class="nav-link" aria-current="page" href="#">구성원</a>
+  <li class="item">
+    <a class="people" aria-current="page" href="#" style="color:#386FA4;"><i class="bi bi-people-fill" style="color:#386FA4;"></i> 구성원</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">조직도</a>
+  <li class="item">
+    <a class="company" href="#" style="color:#386FA4;"><i class="bi bi-list-ul" style="color:#386FA4;"></i> 조직도</a>
   </li>
 </ul>      	
       </div>
       
       
       <div class="info">
-      총 00명
+      ${user.getName()}명
       </div>
       
       
       
       <div class="content">
-      	<table width="800px" border="1">
+      	<table width="800px" >
     <thead>
         <tr style="width:60px; height:50px;">
        	    <th>부서</th>
@@ -106,5 +143,6 @@ width : 100%;
       
       
     </main>
+   
 </body>
 </html>

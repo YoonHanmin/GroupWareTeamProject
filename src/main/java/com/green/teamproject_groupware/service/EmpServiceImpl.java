@@ -28,4 +28,11 @@ public class EmpServiceImpl implements EmpService {
 		return list;
 	}
 	
+	
+	@Override
+	public EmpDto getEmpByEmpno(String empno) {
+		EmpDao dao = sqlSession.getMapper(EmpDao.class);
+		EmpDto dto = dao.getEmpByEmpno(empno);
+		return dto;
+	}
 }

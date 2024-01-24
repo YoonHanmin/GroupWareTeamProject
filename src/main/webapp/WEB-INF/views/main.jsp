@@ -181,7 +181,7 @@ border-radius: 3px;
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
                 <li><a href="#" target="_blank" onclick="openPop()" >프로필사진 변경</a></li>
-                <li><a href="#">내 사원 정보</a></li>
+                <li><a href="myinfo">내 사원 정보</a></li>
             </ul>
         </li>
         <li ><a href="people"><i class="bi bi-building"></i> 회사정보</a>

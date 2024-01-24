@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
 <link rel="stylesheet" href="resources/css/bootstrap.css">
     <link rel="stylesheet" href="resources/css/main.css">
     <script src="resources/js/jquery.js"></script>
@@ -145,9 +141,7 @@ border-radius: 3px;
     		
     	}
 </script>
-</head>
-<body>
- <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
+    <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
     <nav>
     <div class="profile">
 <!--     	<button style="float:left;">로그아웃</button> -->
@@ -155,8 +149,8 @@ border-radius: 3px;
         
         </div>
             <div class="user-info">
-                <p> ${user.getName()} 님  ${user.getDname()}</p>
-                
+                <p> ${user.getName()}</p>
+                <p>${user.getDname()}</p>
             </div>
             </div>
             <div class="profile-tool">
@@ -173,7 +167,7 @@ border-radius: 3px;
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
                 <li><a href="#" target="_blank" onclick="openPop()" >프로필사진 변경</a></li>
-                <li><a href="#">서브메뉴2</a></li>
+                <li><a href="#">내 사원 정보</a></li>
             </ul>
         </li>
         <li ><a href="people"><i class="bi bi-building"></i> 회사정보</a>
@@ -210,5 +204,17 @@ border-radius: 3px;
         </li>
       </ul>
     </nav>
-</body>
-</html>
+     <!--  모달 팝업창-->
+    <div class="popup">
+ <i class="bi bi-x" id="messenger-out"></i>
+    </div>
+	<div class="popup_bg"></div> 
+   
+    
+    <div class="popup-logout">
+    	<div style="text-align:center;margin-top:10px;"><b>로그아웃 하시겠습니까?</b></div>
+    	<div style="margin-top:20px; margin-left:30px;">
+    	<button id="logout-yes">로그아웃</button>
+    	<button id="cancle">취소</button>
+    	</div>
+    </div>

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -35,7 +36,7 @@ public class MemController {
 	@RequestMapping("/main")
 	public String main(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
-		
+			
 		if(empno !=null) {
 		EmpDto user = service.getUserByEmpno(Integer.parseInt(empno));
 		model.addAttribute("user", user);
@@ -48,12 +49,31 @@ public class MemController {
 		 return "redirect:/login";
 	}
 	
+	@RequestMapping("/findPW")
+	public String findPW() {
+		return "findPW";
+		
+	}
+	
+	
 	
 	@RequestMapping("/login")
 	public String login() {
 
 		return "login";
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		
+//		현재 세션이 있으면 세션을 반환, 없으면 새로 생성하지말고 null을 반환
+		HttpSession session = request.getSession(false);
+		if (session != null) { // 세션이 null이 아니면 = 현재 세션이 있으면
+            session.invalidate(); 
+        }
+		return "redirect:login";
+	}
+	
 	
 //	로그인 메소드
 	@RequestMapping("/loginYn")
@@ -63,9 +83,9 @@ public class MemController {
 		
 		String empno = param.get("empno");
 		log.info("empno ====>"+empno);
-		if(result==1) {
+		if(result==1) { // 로그인 성공        
 			session.setAttribute("empno", empno);
-			
+				
 			return "redirect:main";
 		}else {
 			return "redirect:login";
@@ -100,18 +120,31 @@ public class MemController {
 	@ResponseBody
 	public String checkEmpno(String empno,Model model) {
 		log.info("받은 empno ==>"+empno);
-		
-		
-		
-	
+
 			String result = ""+service.checkEmpno(empno);
 			
 			return result;
 			
 //			model.addAttribute("result", result);
+
+	}
+	@RequestMapping("/checkemail")
+	@ResponseBody
+	public String checkEmail(@RequestParam("email") String email,@RequestParam("empno")String empno,Model model) {
+		log.info("받은 email ==>"+email);
+		log.info("받은 empno ==>"+empno);
+		
+		HashMap<String, String> param = new HashMap<>();
+		param.put("email",email);
+		param.put("empno",empno);
 		
 		
-		
+			String result = ""+service.checkEmail(param);
+			
+			return result;
+			
+//			model.addAttribute("result", result);
+
 	}
 	
 	

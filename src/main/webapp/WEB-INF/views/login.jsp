@@ -35,7 +35,7 @@
           <div class="input-form-box"><span>비밀번호 </span><input type="password" name="password" class="form-control"></div>
           <div class="button-login-box" >
             <button type="button" onclick="check()" class="btn btn-outline-secondary" style="width:100%; margin-bottom: 5px;">로그인</button>
-            <button type="button" class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">PW찾기</button>
+            <button type="button" onclick="location.href='findPW'" class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">PW찾기</button>
             <button type="button" onclick="location.href='regist'"class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">회원가입</button>
           </div>
           </form>
@@ -66,4 +66,6 @@ function check(){
 	}
 	document.loginform.submit();
 }
+
+
 </script>

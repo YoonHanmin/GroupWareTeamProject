@@ -63,4 +63,12 @@ public class MemServiceImpl implements MemService{
 		return dao.checkEmpno(empno);
 		
 	}
+	
+	
+	@Override
+	public int checkEmail(HashMap<String, String> param) {
+		IMemDao dao = sqlSession.getMapper(IMemDao.class);
+		log.info("서비스 메소드 리턴값 ==>"+dao.checkEmail(param));
+		return dao.checkEmail(param);
+	}
 }

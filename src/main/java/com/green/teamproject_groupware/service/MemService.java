@@ -16,4 +16,5 @@ public interface MemService {
 	public EmpDto getUserByEmpno(int empno);
 	public void write(HashMap<String, String> param);
 	public int checkEmpno(String empno);
+	public int checkEmail(HashMap<String, String> param);
 }

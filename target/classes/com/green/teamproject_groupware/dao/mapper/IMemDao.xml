@@ -21,5 +21,10 @@
 	<select id="checkEmpno"  resultType="int">
         select count(*) from userinfo where empno=#{empno}
     </select>
+    
+	<select id="checkEmail" parameterType="hashmap" resultType="int">
+        select count(*) from emp where email= #{email} and empno= #{empno}
+    </select>
+	
 	
 </mapper>
