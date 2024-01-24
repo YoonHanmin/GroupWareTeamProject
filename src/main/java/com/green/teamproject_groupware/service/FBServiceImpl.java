@@ -2,15 +2,11 @@ package com.green.teamproject_groupware.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.green.teamproject_groupware.dao.FBDao;
+import com.green.teamproject_groupware.dto.FBCriteria;
 import com.green.teamproject_groupware.dto.FBDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +18,29 @@ public class FBServiceImpl implements FBService{
 	@Autowired
 	private SqlSession sqlSession;
 	
+//	@Override
+//	public ArrayList<FBDto> free_board_list() {
+//		log.info("@# FBServiceImpl.list() start");
+//		
+//		FBDao dao = sqlSession.getMapper(FBDao.class);
+//		ArrayList<FBDto> free_board_list = dao.free_board_list();
+//		
+//		log.info("@# FBServiceImpl.list() end");
+//		return free_board_list;
+//	}
+	
 	@Override
 	public ArrayList<FBDto> free_board_list() {
-		log.info("@# FBServiceImpl.list() start");
-		
-		FBDao dao = sqlSession.getMapper(FBDao.class);
-		ArrayList<FBDto> free_board_list = dao.free_board_list();
-		
-		log.info("@# FBServiceImpl.list() end");
-		return free_board_list;
+	    log.info("@# FBServiceImpl.list() start");
+
+	    FBDao dao = sqlSession.getMapper(FBDao.class);
+	    
+	    // 모든 데이터 가져오기
+	    ArrayList<FBDto> originalList = dao.free_board_list();
+
+	    log.info("@# FBServiceImpl.list() end");
+	    log.info("@# FBServiceImpl.list() end. Original List: {}", originalList);
+	    return originalList;
 	}
 
 	@Override
@@ -72,7 +82,6 @@ public class FBServiceImpl implements FBService{
 		FBDao dao = sqlSession.getMapper(FBDao.class);
 		dao.delete(param);
 		
-		
 		log.info("@# FBServiceImpl.delete() end");
 	}
 
@@ -81,6 +90,28 @@ public class FBServiceImpl implements FBService{
 		FBDao dao = sqlSession.getMapper(FBDao.class);
 		 dao.increaseHit(param);
 		
+	}
+
+	@Override
+	public ArrayList<FBDto> list(FBCriteria cri) {
+		log.info("@# FBServiceImpl.list(FBCriteria cri) start");
+		log.info("@# cri===>"+cri);
+		
+		FBDao dao = sqlSession.getMapper(FBDao.class);
+//		ArrayList<BDto> list = dao.list();
+		
+		log.info("@# FBServiceImpl.list(FBCriteria cri) end");
+		return dao.listWithPaging(cri);
+	}
+
+	@Override
+	public int getTotalCount(FBCriteria cri) {
+	log.info("@# BServiceImpl.getTotalCount() start");
+	
+	FBDao dao = sqlSession.getMapper(FBDao.class);
+	
+	log.info("@# BServiceImpl.getTotalCount() end");
+	return dao.getTotalCount(cri);
 	}
 
 }

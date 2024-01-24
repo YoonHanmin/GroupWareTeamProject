@@ -6,14 +6,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+ <script src="resources/js/jquery.js"></script>
+<script>
+function showImage(fileCallPath){
 
+	console.log("##@#@# fileCallpath : "+fileCallPath);
+//		profile-img 클래스의 div의 html요소에 컨트롤러 메소드 호출하여 원본 이미지 파일을 출력하는 img태그를 삽입한다. 
+	$(".profile-img").html("<img src='./display?fileName="+encodeURI(fileCallPath)+".jpg'>")
+	
+}
+</script>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
     <h2 class="mb-4">글 내용 보기</h2>
     <form method="post" action="modify" >
-        <input type="hidden" name="bid" value="${content_view.bid}">
+<%--         <input type="hidden" name="bid" value="${content_view.bid}"> --%>
+        	<input type="hidden" name="pageNum" value="${pageMaker.pageNum}">
+			<input type="hidden" name="amount" value="${pageMaker.amount}">
+			<input type="hidden" name="bid" value="${pageMaker.bid}">
         <table class="table table-bordered" style="max-width: 500px;">    
             <body>
                 <tr>
@@ -44,13 +56,12 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-<!--                         <input type="submit" class="btn btn-primary" value="수정"> -->
-                        <input type="submit" class="btn btn-primary" value="수정" onclick="return confirm('수정하시겠습니까?');">
-                        <a href="free_board_list" class="btn btn-secondary">목록보기</a>
-                        <!-- 삭제 버튼 -->
-<a href="delete?bid=${content_view.bid}" class="btn btn-danger" onclick="return confirm('삭제하시겠습니까?');">삭제</a>
-                        
-<%--                         <a href="delete?bid=${content_view.bid}" class="btn btn-danger">삭제</a> --%>
+                       			 <input type="submit" class="btn btn-primary" value="수정" onclick="return confirm('수정하시겠습니까?');">
+<!--                         <a href="free_board_list" class="btn btn-secondary">목록보기</a> -->
+                       			 &nbsp;&nbsp;<input  type="submit" value="목록보기" formaction="free_board_list">
+                        		<!-- 삭제 버튼 -->
+<%-- 								<a href="delete?bid=${content_view.bid}" class="btn btn-danger" onclick="return confirm('삭제하시겠습니까?');">삭제</a> --%>
+                        		&nbsp;&nbsp;<input type="submit" value="삭제" formaction="delete" onclick="return confirm('삭제하시겠습니까?');">
                     </td>
                 </tr>
             </body>
@@ -62,60 +73,6 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- 	<table width="500" border="1"> -->
-<!-- 		<form  method="post" action="modify"> -->
-<%-- 			<input type="hidden" name="bid" value="${content_view.bid}"> --%>
-<!-- 			<tr> -->
-<!-- 				<td>번호</td> -->
-<!-- 				<td> -->
-<%-- 					${content_view.bid} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td>히트</td> -->
-<!-- 				<td> -->
-<%-- 					${content_view.bhit} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td>사원번호</td> -->
-<!-- 				<td> -->
-<%-- 					${content_view.empno} --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td>이름</td> -->
-<!-- 				<td> -->
-<%-- 					<input type="text" name="bname" value="${content_view.bname}"> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td>제목</td> -->
-<!-- 				<td> -->
-<%-- 					<input type="text" name="btitle" value="${content_view.btitle}"> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td>사원번호</td> -->
-<!-- 				<td> -->
-<%-- 					<input type="text" name="empno" value="${content_view.empno}"> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td>내용</td> -->
-<!-- 				<td> -->
-<%-- 					<input type="text" name="bcontent" value="${content_view.bcontent}"> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 			<tr> -->
-<!-- 				<td colspan="2"> -->
-<!-- 					<input type="submit" value="수정"> -->
-<!-- 					&nbsp;&nbsp;<a href="free_board_list">목록보기</a> -->
-<%-- 					&nbsp;&nbsp;<a href="delete?bid=${content_view.bid}">삭제</a> --%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-<!-- 		</form> -->
-<!-- 	</table> -->
 </body>
 </html>
 

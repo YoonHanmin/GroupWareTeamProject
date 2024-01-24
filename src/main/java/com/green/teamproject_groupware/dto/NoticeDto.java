@@ -9,13 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FBDto {
-	private int bid;
-	private String bname;
-	private String btitle;
-	private String bcontent;
-	private Timestamp bdate;
-	private int bhit;
-	private int empno;
+public class NoticeDto {
+	private int nid;
+	private String nname;
+	private String ntitle;
+	private String ncontent;
+	private Timestamp ndate;
+	private int nhit;
+	private int nempno;
 
 }
