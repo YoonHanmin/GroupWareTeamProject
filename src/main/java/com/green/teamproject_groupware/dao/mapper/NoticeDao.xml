@@ -1,0 +1,102 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.teamproject_groupware.dao.NoticeDao">
+
+	<sql id="criteria">
+		<if test='ntype == "T"'>
+			(btitle LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "C"'>
+			(ncontent LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "W"'>
+			(nname LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "TC"'>
+			(ntitle LIKE '%'|| #{nkeyword} ||'%' OR ncontent LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "TW"'>
+			(ntitle LIKE '%'|| #{nkeyword} ||'%' OR nname LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "TCW"'>
+			(ntitle LIKE '%'|| #{nkeyword} ||'%' OR ncontent LIKE '%'|| #{nkeyword} ||'%' OR nname LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+	</sql>
+
+    <select id="notice_list" resultType="com.green.teamproject_groupware.dto.NoticeDto">
+        select nid, nname, ntitle, ncontent, ndate, nhit from notice_board
+        order by nid desc
+    </select>
+    
+    <update id="nincreaseHit" parameterType="java.util.HashMap">
+        UPDATE notice_board
+        SET nhit = nhit + 1
+        WHERE nid = #{nid}
+    </update>
+    
+    <insert id="nwrite" >
+    insert into notice_board(nid, nname, ntitle, ncontent, nhit)
+    values (notice_board_SEQ.NEXTVAL,#{nname},#{ntitle},#{ncontent},0)
+</insert>
+    
+     <select id="nlistWithPaging" resultType="com.green.teamproject_groupware.dto.NoticeDto">
+<![CDATA[
+			SELECT nid, nname, ntitle, ncontent, ndate, nhit 
+			  FROM (SELECT rownum rn, nid, nname, ntitle, ncontent, ndate, nhit 
+					  FROM notice_board
+					 WHERE 
+					  ]]>
+					  <include refid="criteria"></include>
+					  <![CDATA[
+					 		rownum <= (#{npageNum} * #{namount})
+					 ORDER BY nid DESC
+					 )
+			 WHERE rn > (#{npageNum}-1) * #{namount}
+		 ]]>
+    </select>
+    
+<!--     <insert id="write" > -->
+<!--     	insert into free_board(bid, bname, btitle, bcontent, bhit) values -->
+<!--     										  (free_board_SEQ.NEXTVAL,#{bname},#{btitle},#{bcontent},0) -->
+<!--     </insert> -->
+    
+
+    <select id="ncontentView" resultType="com.green.teamproject_groupware.dto.NoticeDto">
+        select nid, nname, ntitle, ncontent, ndate, nhit, nempno from notice_board where nid=#{nid}
+    </select>
+    
+    <update id="nmodify">
+    	update notice_board set nname=#{nname}, ntitle=#{ntitle}, ncontent=#{ncontent} where nid=#{nid}
+    </update>
+    
+    <delete id="ndelete">
+    	delete from notice_board  where nid=#{nid}
+    </delete>
+    
+ <select id="getTotalCount" resultType="int">
+       select count(*) from notice_board
+	   where
+		<if test='ntype == "T"'>
+			(ntitle LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "C"'>
+			(ncontent LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "W"'>
+			(nname LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "TC"'>
+			(ntitle LIKE '%'|| #{nkeyword} ||'%' OR ncontent LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "TW"'>
+			(ntitle LIKE '%'|| #{nkeyword} ||'%' OR nname LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+		<if test='ntype == "TCW"'>
+			(ntitle LIKE '%'|| #{nkeyword} ||'%' OR ncontent LIKE '%'|| #{nkeyword} ||'%' OR nname LIKE '%'|| #{nkeyword} ||'%') AND
+		</if>
+        1=1
+    </select>
+    
+</mapper>

@@ -4,8 +4,32 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.FBDao">
 
+	<sql id="criteria2">
+		
+<!-- 		<if test="type == 'T'.toString()"> -->
+		<if test='type == "T"'>
+			(btitle LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "C"'>
+			(bcontent LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "W"'>
+			(bname LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "TC"'>
+			(btitle LIKE '%'|| #{keyword} ||'%' OR bcontent LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "TW"'>
+			(btitle LIKE '%'|| #{keyword} ||'%' OR bname LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "TCW"'>
+			(btitle LIKE '%'|| #{keyword} ||'%' OR bcontent LIKE '%'|| #{keyword} ||'%' OR bname LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+	</sql>
+
     <select id="free_board_list" resultType="com.green.teamproject_groupware.dto.FBDto">
         select bid, bname, btitle, bcontent, bdate, bhit from free_board
+        order by bid desc
     </select>
     
     <update id="increaseHit" parameterType="java.util.HashMap">
@@ -15,9 +39,25 @@
     </update>
     
     <insert id="write" >
-    insert into free_board(bid, bname, btitle, bcontent, bhit, imagedata)
-    values (free_board_SEQ.NEXTVAL,#{bname},#{btitle},#{bcontent},0, #{imagedata, jdbcType=BLOB})
+    insert into free_board(bid, bname, btitle, bcontent, bhit)
+    values (free_board_SEQ.NEXTVAL,#{bname},#{btitle},#{bcontent},0)
 </insert>
+    
+     <select id="listWithPaging" resultType="com.green.teamproject_groupware.dto.FBDto">
+<![CDATA[
+			SELECT bid, bname, btitle, bcontent, bdate, bhit 
+			  FROM (SELECT rownum rn, bid, bname, btitle, bcontent, bdate, bhit 
+					  FROM free_board
+					 WHERE 
+					  ]]>
+					  <include refid="criteria2"></include>
+					  <![CDATA[
+					 		rownum <= (#{pageNum} * #{amount})
+					 ORDER BY bid DESC
+					 )
+			 WHERE rn > (#{pageNum}-1) * #{amount}
+		 ]]>
+    </select>
     
 <!--     <insert id="write" > -->
 <!--     	insert into free_board(bid, bname, btitle, bcontent, bhit) values -->
@@ -36,5 +76,29 @@
     <delete id="delete">
     	delete from free_board where bid=#{bid}
     </delete>
+    
+ <select id="getTotalCount" resultType="int">
+       select count(*) from free_board
+	   where
+		<if test='type == "T"'>
+			(btitle LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "C"'>
+			(bcontent LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "W"'>
+			(bname LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "TC"'>
+			(btitle LIKE '%'|| #{keyword} ||'%' OR bcontent LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "TW"'>
+			(btitle LIKE '%'|| #{keyword} ||'%' OR bname LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+		<if test='type == "TCW"'>
+			(btitle LIKE '%'|| #{keyword} ||'%' OR bcontent LIKE '%'|| #{keyword} ||'%' OR bname LIKE '%'|| #{keyword} ||'%') AND
+		</if>
+        1=1
+    </select>
     
 </mapper>
