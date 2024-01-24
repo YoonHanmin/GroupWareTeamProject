@@ -35,7 +35,12 @@
           <div class="button-login-box" >
             <button type="button" class="btn btn-outline-secondary" style="width:100%; margin-bottom: 5px;">로그인</button>
             <button type="button" class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">PW찾기</button>
-            <button type="button" class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">회원가입</button>
+<!--             <button type="button" class="btn btn-outline-secondary" style="width:48%; margin-bottom: 5px;">회원가입</button> -->
+           	<button type="button" class="btn btn-outline-secondary" style="width: 48%; margin-bottom: 5px;" onclick="goToRegist()">
+	    		<a href="regist" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
+	      			  회원가입	
+	    		</a>
+			</button>
           </div>
         </div>
         

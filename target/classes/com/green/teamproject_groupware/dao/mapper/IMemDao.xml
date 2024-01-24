@@ -6,12 +6,22 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.IMemDao">
     
-    <select id="loginYn" parameterType="hashmap"  resultType="com.green.teamproject_groupware.dto.MemDto">
-        select mem_pwd from mvc_member where mem_uid=#{mem_uid}
+    <select id="loginYn" parameterType="hashmap"  resultType="com.green.teamproject_groupware.dto.UserInfoDto">
+        select mem_pwd from USERINFO where mem_uid=#{mem_uid}
     </select>
     
     <insert id="write" parameterType="hashmap">
-    	insert into mvc_member values(#{mem_uid},#{mem_pwd},#{mem_name})
+    	insert into USERINFO values(#{mem_uid},#{mem_pwd},#{mem_name})
     </insert>
+    
+	<!--     EMP 테이블 사원번호조회 쿼리 추가 -->
+	<select id="getEmployeeInfo" parameterType="int" resultType="hashmap">
+	    SELECT empno FROM EMP WHERE empno = #{empno}
+	</select>
+	<!--     회원가입 처리 쿼리 추가 -->
+	<insert id="signup" parameterType="hashmap">
+	    INSERT INTO USERINFO (empno, name, password, email, tel)
+	    VALUES (#{empno}, #{name}, #{password}, #{email}, #{tel})
+	</insert>
 
 </mapper>

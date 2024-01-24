@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import com.green.teamproject_groupware.dao.IMemDao;
-import com.green.teamproject_groupware.dto.MemDto;
+import com.green.teamproject_groupware.dto.UserInfoDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,11 +21,11 @@ public class MemServiceImpl implements MemService{
 	private SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<MemDto> loginYn(HashMap<String, String>param) {
+	public ArrayList<UserInfoDto> loginYn(HashMap<String, String>param) {
 		
 		String mPw = param.get("mem_pwd");
 		IMemDao dao = sqlSession.getMapper(IMemDao.class);
-		ArrayList<MemDto> dtos = dao.loginYn(param);
+		ArrayList<UserInfoDto> dtos = dao.loginYn(param);
 		
 		return dtos;
 	}
@@ -36,5 +36,17 @@ public class MemServiceImpl implements MemService{
 		IMemDao dao = sqlSession.getMapper(IMemDao.class);
 		dao.write(param);
 		
+	}
+
+	@Override
+	public HashMap<String, String> getEmployeeInfo(int empno) {
+		IMemDao dao = sqlSession.getMapper(IMemDao.class);
+		return dao.getEmployeeInfo(empno);
+	}
+
+	@Override
+	public void signup(HashMap<String, String> param) {
+		IMemDao dao = sqlSession.getMapper(IMemDao.class);
+		dao.signup(param);
 	}
 }
