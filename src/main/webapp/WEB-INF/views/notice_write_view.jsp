@@ -11,27 +11,25 @@
 
 <script type="text/javascript">
  function fn_submit() {
-        // 사용자가 입력한 값들 가져오기
         var nname = $("#nname").val();
         var ntitle = $("#ntitle").val();
         var ncontent = $("#ncontent").val();
 
-        // 필수 입력 검사
-        if (ntitle.trim() === "" || bcontent.trim() === "") {
+        if (ntitle.trim() === "" || ncontent.trim() === "") {
             alert("글 제목과 내용은 필수 입력 항목입니다.");
             return;
         }
         
-        // Ajax로 서버에 전송
         $.ajax({
             type: "post",
-            data: $("#frm").serialize(),  // form 데이터를 직렬화하여 전송
-            url: "write",
+            data: $("#frm").serialize(),
+            url: "nwrite",
             success: function (data) {
                 alert("등록 완료");
                 location.href = "notice_list";
             },
-            error: function () {
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
                 alert("오류 발생");
             }
         });
@@ -45,7 +43,7 @@
     <div >
     <form id="frm" method="post" action="nwrite" >
         <div >
-            <label for="bname" >이름</label>
+            <label for="nname" >이름</label>
             <div>
                 <input type="text"  name="nname" id="nname" placeholder="이름을 입력하세요">
             </div>

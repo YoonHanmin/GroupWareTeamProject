@@ -113,6 +113,19 @@ border-radius: 5px;
         <link rel="stylesheet" href="resources/css/main.css">
     <script>
     $(document).ready(function () {
+        // ... 여러분의 기존 코드 ...
+
+        // "서브메뉴1"을 클릭했을 때의 이벤트 리스너를 추가합니다
+        $('li:contains("서브메뉴1")').click(function (event) {
+            event.stopPropagation(); // 클릭 이벤트가 상위 li까지 전파되지 않도록 합니다
+            // 클릭한 li의 하위 ul의 가시성을 토글합니다
+            $(this).children('ul').slideToggle();
+        });
+
+        // ... 여러분의 기존 코드 ...
+    });
+    
+    $(document).ready(function () {
         $('nav li').click(function () {
             // 클릭한 li 요소의 하위 ul 요소를 토글하여 보이거나 감춤
             $(this).find('ul').slideToggle();
