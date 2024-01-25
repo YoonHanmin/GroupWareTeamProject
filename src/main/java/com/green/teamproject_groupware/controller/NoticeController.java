@@ -73,6 +73,7 @@ public class NoticeController {
 		model.addAttribute("pageMaker", param);
 		
 		nservice.nincreaseHit(param);
+		log.info("@# notice_content_view>>>>>>>>>>>>>>>>>>"+dto.getNcontent());
 		
 		return "notice_content_view";
 	}

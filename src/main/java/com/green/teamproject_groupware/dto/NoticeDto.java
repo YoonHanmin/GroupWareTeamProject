@@ -17,5 +17,4 @@ public class NoticeDto {
 	private Timestamp ndate;
 	private int nhit;
 	private int nempno;
-
 }
