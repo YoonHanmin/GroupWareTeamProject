@@ -1,6 +1,7 @@
 package com.green.teamproject_groupware.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,12 @@ public class EmpServiceImpl implements EmpService {
 		EmpDao dao = sqlSession.getMapper(EmpDao.class);
 		EmpDto dto = dao.getEmpByEmpno(empno);
 		return dto;
+	}
+	
+	@Override
+	public int changeProfile(HashMap<String, String> param) {
+		EmpDao dao = sqlSession.getMapper(EmpDao.class);
+		return dao.changeProfile(param);
+		
 	}
 }

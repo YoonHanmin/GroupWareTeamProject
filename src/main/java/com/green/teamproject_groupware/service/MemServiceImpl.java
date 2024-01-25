@@ -67,6 +67,13 @@ public class MemServiceImpl implements MemService{
 	}
 	
 	@Override
+	public int checkEmail(HashMap<String, String> param) {
+		IMemDao dao = sqlSession.getMapper(IMemDao.class);
+		
+		return dao.checkEmail(param);
+	}
+	
+	@Override
 	public void signUp(UserInfoDto userInfo) {
 	    try {
 	        if (userInfo == null) {

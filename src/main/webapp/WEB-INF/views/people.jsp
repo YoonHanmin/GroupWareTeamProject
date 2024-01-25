@@ -96,7 +96,7 @@ width : 100%;
       
       
       <div class="info">
-      ${user.getName()}명
+      ${dto.getName()}명
       </div>
       
       

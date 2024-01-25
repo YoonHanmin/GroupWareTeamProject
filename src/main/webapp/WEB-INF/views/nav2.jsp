@@ -88,8 +88,10 @@ border-radius: 3px;
             $(this).find('ul').slideToggle();
         });
 	// 문서 읽어올때 showImage 함수 호출 - 파라미터는 세션값등으로 부터 개인 유저별 정보 넣어줘야함
-		var empno = ${empno};
-        showImage(empno);
+// 		var empno = "${empno}"";
+			var profile = "${dto.getProfileimage()}";
+			
+        showImage(profile);
     // 로그아웃 기능    
 	$("#logout").on("click",function(){
 		$(".popup_bg").css({"display":"block"});
@@ -136,7 +138,7 @@ border-radius: 3px;
 
     		console.log("##@#@# fileCallpath : "+fileCallPath);
 //     		profile-img 클래스의 div의 html요소에 컨트롤러 메소드 호출하여 원본 이미지 파일을 출력하는 img태그를 삽입한다. 
-    		$(".profile-img").html("<img src='./display?fileName="+encodeURI(fileCallPath)+".jpg'>")
+    		$(".profile-img").html("<a href='main'><img src='./display?fileName="+encodeURI(fileCallPath)+"'></a>")
     		
     	}
 </script>
@@ -148,8 +150,8 @@ border-radius: 3px;
         
         </div>
             <div class="user-info">
-                <p> ${user.getName()}</p>
-                <p>${user.getDname()}</p>
+                <p> ${dto.getName()}</p>
+                <p>${dto.getDname()}</p>
             </div>
             </div>
             <div class="profile-tool">
@@ -167,9 +169,10 @@ border-radius: 3px;
             <ul>
                 <li><a href="#" target="_blank" onclick="openPop()" >프로필사진 변경</a></li>
                 <li><a href="myinfo">내 사원 정보</a></li>
+                <li><a href="people">회사정보</a></li>
             </ul>
         </li>
-        <li ><a href="people"><i class="bi bi-building"></i> 회사정보</a>
+        <li ><a href="messenger"><i class="bi bi-envelope"></i> 메신저</a>
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
                 <li><a href="#">사원검색</a></li>

@@ -91,9 +91,9 @@ margin-right : 20px;
 </style>
  <script>
  $(document).ready(function () {
-		var empno = "${empno}";
-		console.log("사원번호는 ==>"+empno);
-		$("#profile-image").html("<img src='./display?fileName="+encodeURI(empno)+".jpg'>");
+		var profile = "${dto.getProfileimage()}";
+		console.log("프로필사진명은 ==>"+profile);
+		$("#profile-image").html("<img src='./display?fileName="+encodeURI(profile)+"'>");
 
  });
  

@@ -2,6 +2,8 @@ package com.green.teamproject_groupware.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +20,25 @@ public class EmpController {
 	EmpService service;
 	
 	@RequestMapping("/people")
-	public String people(Model model) {
+	public String people(HttpSession session,Model model) {
+		String empno = (String)session.getAttribute("empno");
+		EmpDto dto = service.getEmpByEmpno(empno);
+		model.addAttribute("dto", dto);
 		ArrayList<EmpDto> list = service.getEmp();
 		model.addAttribute("list", list);
 		
 		return "people";
 	}
 	
+	@RequestMapping("/myinfo")
+	public String myinfo(HttpSession session,Model model) {
+		String empno = (String)session.getAttribute("empno");
+		EmpDto dto = service.getEmpByEmpno(empno);
+		model.addAttribute("dto", dto);
+		
+		
+		return "myinfo";
+	}
 	
 	
 	

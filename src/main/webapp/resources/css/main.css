@@ -8,7 +8,7 @@
 }
 main {
 margin-left: 250px; /* nav의 너비만큼 main을 오른쪽으로 이동 */
-        padding: 1px 16px;
+/*         padding: 1px 0; */
         height: 1000px;
        
 }

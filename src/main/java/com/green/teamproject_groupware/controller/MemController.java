@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -18,6 +19,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -84,6 +86,18 @@ public class MemController {
 	
 	}
 	
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        // 로그아웃 후 리다이렉트할 경로를 지정합니다.
+        return "redirect:/login";
+    }
+	
+	
 	@RequestMapping("/login_ok")
 	public String login_ok() {
 		log.info("@# login_ok");
@@ -119,6 +133,13 @@ public class MemController {
 	    return "redirect:/login"; 
 	}
 	
+	@RequestMapping("/findPW")
+	public String findPW() {
+		return "findPW";
+	}
+	
+	
+	
 	@RequestMapping("/checkempno")
 	@ResponseBody
 	public String checkEmpno(String empno,Model model) {
@@ -126,7 +147,36 @@ public class MemController {
 			String result = ""+service.checkEmpno(empno);
 			return result;
 	}
+	
+	@RequestMapping("/checkemail")
+	@ResponseBody
+	public String checkEmail(@RequestBody HashMap<String, String>param,HttpSession session,Model model) {
+			log.info("@#이메일 ==>"+param.get("email"));
+			log.info("@사번==>"+param.get("empno"));
+			
+		log.info("받은 값 ==>"+param);
+			String result = ""+service.checkEmail(param);
+			if(result.equals("1")) {
+				session.setAttribute("emailVerified", true);
+				
+			}
+			return result;
+	}
+	
+	@RequestMapping("/changePW")
+	public String changePW(HttpSession session) {
+//		인증여부 검사함
+		Boolean emailVerified = (Boolean) session.getAttribute("emailVerified");
+		if (emailVerified != null && emailVerified) {
+	        // 변경 비밀번호 페이지로 이동
+	        return "changePW";
+	    } else {
+	        // 이메일 인증이 되지 않았으면 다른 페이지로 리다이렉트 또는 에러 처리
+	        return "redirect:/login"; // 예시로 로그인 페이지로 리다이렉트
+	    }
 		
+	}
+	
 	@RequestMapping(value="/mailCheck", method= RequestMethod.GET)
 	@ResponseBody
 	public String mailCheckGET(String email) throws Exception{

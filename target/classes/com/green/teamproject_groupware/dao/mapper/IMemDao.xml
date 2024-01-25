@@ -11,7 +11,7 @@
     </select>
     
     <select id="getUserByEmpno"  resultType="com.green.teamproject_groupware.dto.EmpDto">
-        select empno,name,dname from emp where empno=#{empno}
+        select empno,name,dname,profileimage from emp where empno=#{empno}
     </select>
     
     <insert id="write" parameterType="hashmap">
@@ -20,6 +20,10 @@
     
 	<select id="checkEmpno"  resultType="int">
         select count(*) from userinfo where empno=#{empno}
+    </select>
+    
+    <select id="checkEmail"  resultType="int">
+        select count(*) from emp where empno=#{empno} and email=#{email}
     </select>
     
     <insert id="signUp" parameterType="com.green.teamproject_groupware.dto.UserInfoDto">
