@@ -100,7 +100,7 @@ margin-right : 20px;
  
  </script>
 <body>
- <jsp:include page="nav2.jsp"/>
+ <jsp:include page="../nav2.jsp"/>
  
  <main>
  	<div class="header">
@@ -113,74 +113,12 @@ margin-right : 20px;
   </li>
 </ul>      	
       </div>
-      
-      
       <div class="info">
-      
       </div>
       
         <div class="content">
         
         
-        	<div class="myinfo">
-        		<div id="profile-image">
-<!--         		<img src="resources/images/profile.jpg" width="150px" height="150px"> -->
-        		</div>
-				<div id="profile-id">
-        		<span id="profile-name"> ${dto.getName() }</span><br>
-        		부서<span id="profile-dept"> &nbsp;&nbsp;&nbsp;<b>${dto.getDname() }</b></span><br>
-        		직책<span id="profile-position">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>${dto.getPosition()}</b></span><br>
-        		
-        		
-				</div>        		
-        	</div>
-        	
-        	
-        	<div class="description">
-        	
-        	
-        	
-        	
-        	
-        	<div class="profile-info">
-        	<h3>사원정보</h3>
-        		</div>
-        		
-        				<div id="profile-table">
-			        			<table>
-				        		<tr>
-				        			<th>사번</th>
-				        			<td>${dto.getEmpno()}</td>
-				        			<th>상태</th>
-				        			<td>${dto.getStatus()}</td>
-				        		</tr>
-				        		<tr>
-				        			<th>입사일</th>
-				        			<td><fmt:formatDate value="${dto.hiredate}" pattern="yy/MM/dd" /></td>
-				        			<th>생년월일</th>
-				        			<td><fmt:formatDate value="${dto.birthday}" pattern="yyyy/MM/dd" /></td>
-				        		</tr>
-				        		<tr>
-				        			<th>부서</th>
-				        			<td>${dto.getDname()}</td>
-				        			<th>직위</th>
-				        			<td>${dto.getPosition()}</td>
-				        		</tr>
-								<tr>
-				        			<th>이메일</th>
-				        			<td>${dto.getEmail()}</td>
-				        			<th>휴대번호</th>
-				        			<td>${dto.getPhone()}</td>
-				        		</tr>				        	
-				        	<tr>
-				        			<th>주소</th>
-				        			<td>${dto.getAddress()}</td>
-				        			
-				        		</tr>	
-				        			</table>
-        					</div>
-        		
-        		</div>
         	
         	</div>
         

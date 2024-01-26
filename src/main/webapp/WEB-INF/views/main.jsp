@@ -11,7 +11,7 @@
   }
 /*  메인 레이아웃 양식 */
   .header{
-height : 130px;
+height : 80px;
 border-bottom: 1px solid #eee;
 display : flex;
 }
@@ -21,14 +21,17 @@ height : 100px;
 border-bottom: 1px solid #eee;
 }
 
-
 .item a {
 font-weight : bold;
-font-size : 20px;
-margin-top : 30px;
+font-size : 25px;
+margin-top : 10px;
 }
 .item ul {
-margin-top : 10px;
+/* margin-top : 10px; */
+height : 80px;
+}
+.item {
+list-style: none;
 }
 .content{
 width : 100%;
@@ -252,14 +255,14 @@ border-radius: 5px;
         </li>
         <li><a href="#"><i class="bi bi-boxes"></i> 자원요청</a>
             <ul>
-                <li><a href="#">서브메뉴1</a></li>
+                <li><a href="resource">자원 신청</a></li>
                 <li><a href="#">서브메뉴2</a></li>
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
             <ul>
-                <li><a href="#">서브메뉴1</a></li>
-                <li><a href="#">서브메뉴2</a></li>
+                <li><a href="notice_list">공지사항</a></li>
+                <li><a href="free_board_list">자유게시판</a></li>
             </ul>
         </li>
       </ul>
@@ -268,13 +271,13 @@ border-radius: 5px;
     <!--  메인 -->
     
     <main>
-     <div class="header">
+    <div class="header">
       	<ul class="nav nav-underline">
   <li class="item">
-    <a class="people" aria-current="page" href="#" style="color:#386FA4;"><i class="bi bi-people-fill" style="color:#386FA4;"></i>내 사원정보</a>
+    <a class="people" aria-current="page" href="#" style="color:black;"><i class="bi bi-people-fill" style="color:black;"></i>내 사원정보</a>
   </li>
   <li class="item">
-    <a class="company" href="#" style="color:#386FA4;"><i class="bi bi-list-ul" style="color:#386FA4;"></i>비밀번호 변경</a>
+    <a class="company" href="#" style="color:black;"><i class="bi bi-list-ul" style="color:black;"></i>비밀번호 변경</a>
   </li>
 </ul>      	
       </div>
@@ -294,6 +297,22 @@ border-radius: 5px;
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
 
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
  		
  	</div>
  	
