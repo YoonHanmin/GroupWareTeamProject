@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +25,12 @@ border-bottom: 1px solid #eee;
 .item a {
 font-weight : bold;
 font-size : 25px;
-margin-top : 10px;
+margin-top: 20px; 
+ text-decoration: none; /* 밑줄 제거 */
+color : black;
 }
+.item ul li a{
+margin-top : 20px;}
 .item ul {
 /* margin-top : 10px; */
 height : 80px;
@@ -233,18 +238,18 @@ border-radius: 5px;
                 <li><a href="people">회사 정보</a></li>
             </ul>
         </li>
-        <li ><a href="messenger"><i class="bi bi-envelope"></i> 메신저</a>
+        <li ><a href="receive"><i class="bi bi-envelope"></i> 메신저</a>
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
-                <li><a href="#">사원검색</a></li>
-                <li><a href="#">조직도</a></li>
+                <li><a href="#">메시지 작성</a></li>
+                <li><a href="receive">내 메시지함</a></li>
             </ul>
         </li>
         
         <li><a href="#"><i class="bi bi-calendar-week"></i>  휴가관리</a>
             <ul>
-                <li><a href="#">서브메뉴1</a></li>
-                <li><a href="#">서브메뉴2</a></li>
+                <li><a href="#">휴가 신청하기</a></li>
+                <li><a href="#">휴가 신청내역</a></li>
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-file-earmark-check"></i>  전자결재</a> 
@@ -288,6 +293,7 @@ border-radius: 5px;
 <!--       </div> -->
       
         <div class="content">
+ 
       </div>
       
       

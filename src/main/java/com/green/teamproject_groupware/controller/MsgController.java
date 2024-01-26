@@ -41,6 +41,7 @@ public class MsgController {
 		EmpDto dto = service.getEmpByEmpno(empno);
 		model.addAttribute("dto", dto);
 		ArrayList<MsgDto> list = msgService.getReceiveMsg(empno);
+		log.info("getTime ==>"+list.get(0).getTime());
 		log.info("@#보내는이 프로필 ==>"+list.get(0).getFrom_profileimage());
 		log.info("@#받는이 프로필 ==>"+list.get(0).getTo_profileimage());
 		model.addAttribute("list",list);
@@ -51,9 +52,11 @@ public class MsgController {
 	@RequestMapping("/send")
 	public String send(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
-		
+		EmpDto dto = service.getEmpByEmpno(empno);
+		model.addAttribute("dto", dto);
 	
 		ArrayList<MsgDto> list = msgService.getSendMsg(empno);
+		
 		model.addAttribute("list",list);
 		return "msg/send";
 		

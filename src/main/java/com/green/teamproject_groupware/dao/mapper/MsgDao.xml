@@ -27,7 +27,25 @@ ORDER BY
     M.MSGID DESC
     </select>
     <select id="getSendMsg" resultType="com.green.teamproject_groupware.dto.MsgDto">
-    	select * from msg where from_id = #{empno} order by msgid desc;
+    		SELECT 
+    M.MSGID,M.to_id,M.from_id,M.title,M.content,m.time,m.hit,
+    TO_EMP.NAME AS TO_NAME,
+    TO_EMP.POSITION AS TO_POSITION,
+    TO_EMP.DNAME AS TO_DNAME,
+    TO_EMP.PROFILEIMAGE as To_PROFILEIMAGE,
+    FROM_EMP.NAME AS FROM_NAME,
+    FROM_EMP.POSITION AS FROM_POSITION,
+    FROM_EMP.DNAME AS FROM_DNAME,
+    from_emp.profileimage AS FROM_PROFILEIMAGE
+FROM 
+    MSG M
+JOIN 
+    EMP TO_EMP ON M.TO_ID = TO_EMP.EMPNO
+JOIN 
+    EMP FROM_EMP ON M.FROM_ID = FROM_EMP.EMPNO
+where m.from_id = #{empno}
+ORDER BY 
+    M.MSGID DESC
     </select>
    
 </mapper>

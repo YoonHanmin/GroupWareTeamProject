@@ -70,11 +70,18 @@ cursor: pointer;
 .item a {
 font-weight : bold;
 font-size : 25px;
-
+margin-top: 20px; 
+ text-decoration: none; /* 밑줄 제거 */
+color : black;
 }
+.item ul li a{
+margin-top : 20px;}
 .item ul {
 /* margin-top : 10px; */
 height : 80px;
+}
+.item {
+list-style: none;
 }
 .content{
 width : 100%;
@@ -212,13 +219,8 @@ height : 80px;
         <div class="content">	
         	</div>
         
-       <!--  모달 팝업창-->
-    <div class="popup">
- <i class="bi bi-x" id="messenger-out"></i>
-    </div>
-	<div class="popup_bg"></div> 
-    </main>
-    
+   
+
   
         
         

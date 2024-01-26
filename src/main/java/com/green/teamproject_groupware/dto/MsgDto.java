@@ -15,7 +15,7 @@ public class MsgDto {
 	private int from_id;
 	private String title;
 	private String content;
-	private Timestamp date;
+	private Timestamp time;
 	private int hit;
 	private String to_name;
 	private String to_position;
