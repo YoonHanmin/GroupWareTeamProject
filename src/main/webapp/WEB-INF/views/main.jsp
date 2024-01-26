@@ -9,6 +9,33 @@
        font-family: 'Noto Sans KR', sans-serif;
   margin: 0; 
   }
+/*  메인 레이아웃 양식 */
+  .header{
+height : 130px;
+border-bottom: 1px solid #eee;
+display : flex;
+}
+
+.info{
+height : 100px;
+border-bottom: 1px solid #eee;
+}
+
+
+.item a {
+font-weight : bold;
+font-size : 20px;
+margin-top : 30px;
+}
+.item ul {
+margin-top : 10px;
+}
+.content{
+width : 100%;
+
+}
+  
+/*   메인 레이아웃 양식 끝 */
   
   .profile-tool{
   margin : 0;
@@ -47,9 +74,10 @@ position : absolute;
 left : calc(30% - 300px);
 top : calc(50% - 300px);
 width : 600px;
-height : 600px;
+height : 300px;
 background : white;
 display:none;
+border-radius: 8px;
  z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
 
 }
@@ -69,7 +97,7 @@ height : 100px;
 background : white;
 display:none;
  z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
-border-radius: 3px;
+border-radius: 5px;
 }
 
 
@@ -85,13 +113,29 @@ border-radius: 3px;
         <link rel="stylesheet" href="resources/css/main.css">
     <script>
     $(document).ready(function () {
+        // ... 여러분의 기존 코드 ...
+
+        // "서브메뉴1"을 클릭했을 때의 이벤트 리스너를 추가합니다
+        $('li:contains("서브메뉴1")').click(function (event) {
+            event.stopPropagation(); // 클릭 이벤트가 상위 li까지 전파되지 않도록 합니다
+            // 클릭한 li의 하위 ul의 가시성을 토글합니다
+            $(this).children('ul').slideToggle();
+        });
+
+        // ... 여러분의 기존 코드 ...
+    });
+    
+    $(document).ready(function () {
         $('nav li').click(function () {
             // 클릭한 li 요소의 하위 ul 요소를 토글하여 보이거나 감춤
             $(this).find('ul').slideToggle();
         });
 	// 문서 읽어올때 showImage 함수 호출 - 파라미터는 세션값등으로 부터 개인 유저별 정보 넣어줘야함
+		var profile = "${user.profileimage}";
+	
+	
 		var empno = ${empno};
-        showImage(empno);
+        showImage(profile);
     // 로그아웃 기능    
 	$("#logout").on("click",function(){
 		$(".popup_bg").css({"display":"block"});
@@ -139,7 +183,8 @@ border-radius: 3px;
 
     		console.log("##@#@# fileCallpath : "+fileCallPath);
 //     		profile-img 클래스의 div의 html요소에 컨트롤러 메소드 호출하여 원본 이미지 파일을 출력하는 img태그를 삽입한다. 
-    		$(".profile-img").html("<img src='./display?fileName="+encodeURI(fileCallPath)+".jpg'>")
+//     		$(".profile-img").html("<img src='./display?fileName="+encodeURI(fileCallPath)+".jpg'>")
+    		$(".profile-img").html("<a href='main'><img src='./display?fileName="+encodeURI(fileCallPath)+"'></a>")
     		
     	}
 </script>
@@ -182,9 +227,10 @@ border-radius: 3px;
             <ul>
                 <li><a href="#" target="_blank" onclick="openPop()" >프로필사진 변경</a></li>
                 <li><a href="myinfo">내 사원 정보</a></li>
+                <li><a href="people">회사 정보</a></li>
             </ul>
         </li>
-        <li ><a href="people"><i class="bi bi-building"></i> 회사정보</a>
+        <li ><a href="messenger"><i class="bi bi-envelope"></i> 메신저</a>
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
                 <li><a href="#">사원검색</a></li>
@@ -218,17 +264,47 @@ border-radius: 3px;
         </li>
       </ul>
     </nav>
+    
+    <!--  메인 -->
+    
     <main>
-      <div>
-      <h1>Main page</h1>
+     <div class="header">
+      	<ul class="nav nav-underline">
+  <li class="item">
+    <a class="people" aria-current="page" href="#" style="color:#386FA4;"><i class="bi bi-people-fill" style="color:#386FA4;"></i>내 사원정보</a>
+  </li>
+  <li class="item">
+    <a class="company" href="#" style="color:#386FA4;"><i class="bi bi-list-ul" style="color:#386FA4;"></i>비밀번호 변경</a>
+  </li>
+</ul>      	
       </div>
       
+      
+<!--       <div class="info"> -->
+      
+<!--       </div> -->
+      
+        <div class="content">
+      </div>
+      
+      
+      
+    </main>
     <!--  모달 팝업창-->
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
+
+ 		
+ 	</div>
+ 	
+ 
+ 
     </div>
+    
+    
+    
+<!--     팝업 배경 창 -->
 	<div class="popup_bg"></div> 
-    </main>
     
     <div class="popup-logout">
     	<div style="text-align:center;margin-top:10px;"><b>로그아웃 하시겠습니까?</b></div>

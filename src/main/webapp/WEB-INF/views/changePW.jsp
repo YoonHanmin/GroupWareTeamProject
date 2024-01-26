@@ -31,7 +31,9 @@
 <body>
    <div class="container">
     <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">사원번호</span>
+        <span class="input-group-text" id="basic-addon1">비밀번호</span>
+        <input type="text" name="empno" class="form-control" placeholder="ex)20240101" aria-label="Username" aria-describedby="basic-addon1">
+        <span class="input-group-text" id="basic-addon1">비밀번호 확인</span>
         <input type="text" name="empno" class="form-control" placeholder="ex)20240101" aria-label="Username" aria-describedby="basic-addon1">
         <button id="empbtn"class="btn btn-secondary col-3">인증</button>
       </div>
@@ -112,18 +114,11 @@
    </script>
       
       
-      <div class="input-group mb-3">
-        <input type="text" name="emailID" class="form-control" placeholder="E-mail ID" aria-label="Username">
-        <span class="input-group-text">@</span>
-        <input type="text" name="domain" class="form-control" placeholder="ex)naver.com" aria-label="Server">
-        <!-- <input type="submit" class="form-control" value="인증"> -->
-        <button id="emailbtn" class="btn btn-secondary col-3">인증</button>
-      </div>
-
+    
        
       <div class="input-group mb-3 d-flex justify-content-between" justify-content-between>
         <span><button class="btn btn-secondary"onclick="location.href='login'">취소</button></span>
-        <span><button class="btn btn-secondary" id="changePW" onclick="location.href='changePW'">비밀번호 변경</button></span>
+        <span><button class="btn btn-secondary" id="changePW" >비밀번호 변경</button></span>
       </div>
       </div>
       

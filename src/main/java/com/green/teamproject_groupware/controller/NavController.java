@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +25,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.green.teamproject_groupware.dto.UserInfoDto;
+import com.green.teamproject_groupware.service.EmpService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
 public class NavController {
-
+	@Autowired
+	private EmpService service;
+	
 	@RequestMapping("/profile")
 	public String profile(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
@@ -80,7 +85,7 @@ public class NavController {
 				String[] parts = filename.split("\\.");
 				
 				if(parts.length>2) {
-					
+					return "changeProfileFail";
 				}
 //				확장자 제거한 파일명
 		        String oriname = parts[0];
@@ -90,9 +95,13 @@ public class NavController {
 		       filename = saveFileName+"."+ext;
 		        log.info(filename);
 				File saveFile = new File(uploadFolder,filename);
+				HashMap<String, String> param = new HashMap<>();
+				param.put("empno", saveFileName);
+				param.put("profileimage", filename);
 				try{
 //					transferTo : savaFile 내용을 저장
 					uploadFile.transferTo(saveFile);
+					service.changeProfile(param);
 				}catch(IOException e) {
 					e.printStackTrace();
 				}
@@ -127,5 +136,11 @@ public class NavController {
 			}// ajax의 success function(result)의 result값으로 "deleted"가 전송됨
 			return new ResponseEntity<String>("deleted",HttpStatus.OK);
 		}
+		
+		@RequestMapping("/changeProfileFail")
+		public String changeProfileFail() {
+			return "changeProfileFail";
+		}
+		
 		
 }

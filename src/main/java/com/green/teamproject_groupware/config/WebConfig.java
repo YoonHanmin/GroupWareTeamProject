@@ -6,14 +6,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.green.teamproject_groupware.interceptor.SessionInterceptor;
 
-@Configuration
-public class WebConfig implements WebMvcConfigurer {
-
-	
-	public void addInterceptor(InterceptorRegistry registry) {
-		registry.addInterceptor(new SessionInterceptor())
-		.addPathPatterns("/**") // 모든 경로에 대해서
-		.excludePathPatterns("/login"); // 로그인페이지는 예외
-	}
-	
-}
+//@Configuration
+//public class WebConfig implements WebMvcConfigurer {
+//
+//	
+//	public void addInterceptor(InterceptorRegistry registry) {
+//		registry.addInterceptor(new SessionInterceptor())
+//		.addPathPatterns("/**") // 모든 경로에 대해서
+//		.excludePathPatterns("/login"); // 로그인페이지는 예외
+//	}
+//	
+//}

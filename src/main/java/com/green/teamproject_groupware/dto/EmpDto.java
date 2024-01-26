@@ -26,5 +26,5 @@ private String profileimage;
 private String dname;
 private String status;
 private Timestamp birthday;
-
+private String grade;
 }

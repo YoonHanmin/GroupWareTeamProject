@@ -36,10 +36,11 @@
         WHERE nid = #{nid}
     </update>
     
-    <insert id="nwrite" >
-    insert into notice_board(nid, nname, ntitle, ncontent, nhit)
-    values (notice_board_SEQ.NEXTVAL,#{nname},#{ntitle},#{ncontent},0)
-</insert>
+	<insert id="nwrite" >
+	    insert into notice_board(nid, nname, ntitle, ncontent, nhit)
+	    values (notice_board_SEQ.NEXTVAL, #{nname}, #{ntitle}, #{ncontent}, 0)
+	</insert>
+
     
      <select id="nlistWithPaging" resultType="com.green.teamproject_groupware.dto.NoticeDto">
 <![CDATA[

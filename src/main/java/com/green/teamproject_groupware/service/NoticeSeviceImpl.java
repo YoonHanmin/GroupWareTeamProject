@@ -38,8 +38,18 @@ public class NoticeSeviceImpl implements NoticeService{
 	public void nwrite(HashMap<String, String> param) {
 		log.info("@# NoticeSeviceImpl.write() start");
 		
-		NoticeDao dao = sqlSession.getMapper(NoticeDao.class);
-		dao.nwrite(param);
+		 try {
+		        NoticeDao dao = sqlSession.getMapper(NoticeDao.class);
+		        dao.nwrite(param);
+		        log.info("@# Write Success!");
+		    } catch (Exception e) {
+		        log.error("@# Write Failed: " + e.getMessage());
+		        e.printStackTrace();
+		        throw new RuntimeException("Write Failed", e);
+		    }
+
+//		NoticeDao dao = sqlSession.getMapper(NoticeDao.class);
+//		dao.nwrite(param);
 		
 		log.info("@# NoticeSeviceImpl.write() end");		
 	}
