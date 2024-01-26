@@ -136,7 +136,6 @@ border-radius: 3px;
 //     	컨트롤러를 호출해서 이미지정보를 가져와 보여주는 함수
     	function showImage(fileCallPath){
 
-    		console.log("##@#@# fileCallpath : "+fileCallPath);
 //     		profile-img 클래스의 div의 html요소에 컨트롤러 메소드 호출하여 원본 이미지 파일을 출력하는 img태그를 삽입한다. 
     		$(".profile-img").html("<a href='main'><img src='./display?fileName="+encodeURI(fileCallPath)+"'></a>")
     		

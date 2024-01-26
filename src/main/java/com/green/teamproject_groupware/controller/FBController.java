@@ -2,6 +2,9 @@ package com.green.teamproject_groupware.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.FBCriteria;
 import com.green.teamproject_groupware.dto.FBDto;
 import com.green.teamproject_groupware.dto.PageDTO;
+import com.green.teamproject_groupware.service.EmpService;
 import com.green.teamproject_groupware.service.FBService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +28,9 @@ public class FBController {
 	
 	@Autowired
 	private FBService service;
+	@Autowired
+	private EmpService empservice;
+	
 
 	@RequestMapping("/free_board_list_old")
 	public String list(Model model) {
@@ -35,16 +43,22 @@ public class FBController {
 	}
 	
 	@RequestMapping("/free_board_list")
-	public String list(FBCriteria cri, Model model) {
+	public String list(HttpSession session, FBCriteria cri, Model model) {
 		log.info("@# list");
 		log.info("@# cri===>"+cri);
+		
+		String empno = (String) session.getAttribute("empno");
+		EmpDto dto = empservice.getEmpByEmpno(empno);
+		model.addAttribute("dto", dto);
+		log.info("FB컨트롤러 유저이름===>"+dto.getName());
+		log.info("FB컨트롤러 프사이름===>"+dto.getProfileimage());
 		
 		model.addAttribute("free_board_list", service.list(cri));
 		int total = service.getTotalCount(cri);
 		model.addAttribute("pageMaker", new PageDTO(total, cri));
 		
 		
-		return "free_board_list";
+		return "community/freeboard";
 	}
 	
 //	@RequestMapping("/free_board_list")
@@ -69,7 +83,7 @@ public class FBController {
 	@RequestMapping("/write_view")
 	public String write_view() {
 		log.info("@# write_view");
-		
+		 
 		return "write_view";
 	}
 	
@@ -77,8 +91,8 @@ public class FBController {
 	public String content_view(@RequestParam HashMap<String, String> param, Model model) {
 		log.info("@# content_view");
 		
-		FBDto dto = service.contentView(param);
-		model.addAttribute("content_view", dto);
+		FBDto boarddto = service.contentView(param);
+		model.addAttribute("content_view", boarddto);
 		model.addAttribute("pageMaker", param);
 		
 		service.increaseHit(param);
