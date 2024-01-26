@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.teamproject_groupware.dao.SupplyDao">
+
+    <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto">
+        select supply_id, bname, btitle, bcontent, bdate, bhit from supply_TABLE
+        order by bid desc
+    </select>
+    
+	<insert id="write" >
+	    insert into supply_TABLE(supply_id, bname, btitle, bcontent, bhit)
+	    values (free_board_SEQ.NEXTVAL, #{bname}, #{btitle}, #{bcontent}, 0)
+	</insert>
+    
+    <select id="contentView" resultType="com.green.teamproject_groupware.dto.SupplyDto">
+        select supply_id, bname, btitle, bcontent, bdate, bhit, empno from supply_TABLE where bid=#{bid}
+    </select>
+    
+    <update id="modify">
+    	update supply_TABLE set bname=#{bname}, btitle=#{btitle}, bcontent=#{bcontent} where supply_id=#{supply_id}
+    </update>
+    
+    <delete id="delete">
+    	delete from supply_TABLE where supply_id=#{supply_id}
+    </delete>
+    
+
+</mapper>

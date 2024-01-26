@@ -221,7 +221,6 @@ margin-right : 20px;
 				<td>${boarddto.bid}</td>
 				<td>${boarddto.bname}</td>
 				<td>
-<%-- 					<a href="content_view?bid=${dto.bid}">${dto.btitle}</a> --%>
 					<a class="move_link" href="${boarddto.bid}">${boarddto.btitle}</a>
 				</td>
 				<td>${boarddto.bdate}</td>
