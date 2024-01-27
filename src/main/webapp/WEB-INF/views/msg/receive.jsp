@@ -114,6 +114,10 @@ width : 400px;
 height : 100%;
 background-color : white; 
 }
+.msg-list table{
+width : 400px;
+height : 100%;
+}
 .msg-list table td{
 
 border : 1px solid #eee;
@@ -136,10 +140,11 @@ margin-top : 30px;
 font-weight : bold;
 height:80px ;
 width: 120px;
+cursor: pointer;
 
 }
 .msg-view{
-	display : flex;
+/* 	display : flex; */
 	flex-direction : row;
 	flex-wrap : wrap;
 	margin-left : 5px;
@@ -149,6 +154,7 @@ width: 120px;
 	background-color: white;
 	width:800px;
 	height : 500px;
+	display : none;
 }
 .msg-view-img{
 width : 130px;
@@ -188,7 +194,67 @@ margin-top : 30px;
 font-weight : bold;
 height:80px ;
 width: 200px;
+opacity: 0.5;
 
+}
+/* 팝업 배경 스타일  */
+.popup_bg{
+position: absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background: rgba(0,0,0,0.5);
+display:none;
+z-index: 1; /* z-index 값 설정 */
+}
+/*  사원정보 팝업 스타일 */
+.popup-empinfo{
+position : absolute;
+left : calc(50% - 300px);
+top : calc(50% - 300px);
+width : 400px;
+height : 400px;
+background : white;
+display:none;
+border-radius: 8px;
+ z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
+
+}
+.popup-empinfo > #popup-empinfo-out{
+font-size: 2rem; 
+float: right; 
+margin-right:5px;
+cursor: pointer;
+}
+.popup-empinfo-info table td{
+width:50px;
+text-align : center;
+}
+.popup-empinfo-info table tr{
+height:30px;
+}
+/*  사원정보 팝업 스타일  끝*/
+
+/* 새 메시지 보내기 팝업 스타일 */
+
+.popup-send{
+position : absolute;
+left : calc(50% - 300px);
+top : calc(50% - 300px);
+width : 800px;
+height : 600px;
+background : white;
+display:none;
+border-radius: 8px;
+ z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
+}
+
+.popup-send > #popup-send-out{
+font-size: 2rem; 
+float: right; 
+margin-right:5px;
+cursor: pointer;
 }
 </style>
 
@@ -242,7 +308,7 @@ width: 200px;
       			</div>
       			<ul class="msg-menu">
       				<li>
-      				<span id="new-msg"><i class="fa-sharp fa-regular fa-paper-plane"> <a href="">작성하기</a></i></span></li>
+      				<span id="new-msg"><i class="fa-sharp fa-regular fa-paper-plane">작성하기</i></span></li>
       				
       			</ul>
       </div>
@@ -264,21 +330,19 @@ width: 200px;
       	 <c:forEach items="${list}" var="list" varStatus="status">
 		<c:set var="date"><fmt:formatDate value="${list.getTime()}" pattern="MM/dd" /></c:set>
 	
-      		<tr> <!--  개별 메시지 박스  -->
-   
 			<c:if test="${not once and date eq yesterday}">
 		 	<c:set var="once" value="true" />
-		 	
-					<td style="">
+		 		<tr>
+					<td>
 					
-					<div style="width:400px; height:40px; border: 1px solid #ccc; padding: 6px; display: flex;background-color:	#84c1ff;">
-					<p style="text-align:center; font-weight:bold; color:black; margin-left:170px;">TODAY</p>
+					<div style="width:400px; height:40px; border: 1px solid #ccc; padding: 6px; display: flex; flex-direction:column;
+				background-color:	#84c1ff;"> 
+					<p style="text-align:center; font-weight:bold; color:black; margin-left:60px;">TODAY</p>
 					</div>
 					</td>
-					
-    		</c:if>
-
-
+					</c:if>
+					</tr>
+      		<tr> <!--  개별 메시지 박스  -->
       			<td>
       			
       	 <!-- view를 읽기위해 메시지 정보를 사용자에게 보이지않게 담아두는 공간 -->
@@ -291,6 +355,13 @@ width: 200px;
       	 <input type="hidden" id="from_position" value="${list.getFrom_position() }">
       	 <input type="hidden" id="from_dname" value="${list.getFrom_dname() }">
       	 <input type="hidden" id="from_profileimage" value="${list.getFrom_profileimage() }">
+      	 <input type="hidden" id="from_email" value="${list.getFrom_email() }">
+      	 <input type="hidden" id="to_email" value="${list.getTo_email() }">
+      	 <input type="hidden" id="from_phone" value="${list.getFrom_phone() }">
+      	 <input type="hidden" id="from_status" value="${list.getFrom_status() }">
+      	 <input type="hidden" id="from_hiredate" value="${list.getFrom_hiredate() }">
+      	
+      	 
       	 
   			<div style="width:400px; height:90px; border: 1px solid #ccc; padding: 6px; display: flex; cursor: pointer;">
    				 <img src="./display?fileName=${list.getFrom_profileimage()}" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 10px;margin-top:5px;flex-shrink: 0; object-fit: cover;">
@@ -322,19 +393,26 @@ width: 200px;
       		</tr>
       		</c:forEach>
       	</table>
+    	
+      	</div> <!--  end of msg-list -->
       	
       	
-      	</div>
       	<!--  메시지 보기 -->
       	<div class="msg-content">
       			<div class="msg-view">
-      				<div class="msg-view-img">
+      				<div class="msg-view-img" style="cursor: pointer">
       				
       				</div>
       				<div class="msg-view-title">
-      					받는사람 :<span id="to"> <a href="" style="text-decoration: none; color:black;">&nbsp;&nbsp;한효주 과장 gywn@naver.com </a></span>
-      					<p>보낸사람 :</p>
-      					<p>2024년 1월 26일 목요일 오후 4시 24분</p>
+      					<div style="margin-top : 10px; margin-left : 10px;">
+      					<span id="msg-title-1"> <a href="" style="text-decoration: none; font-weight:bold; color:black; text-size:30px;" ></a></span>
+      					</div>
+      					<div style="margin-top : 10px; margin-left : 10px;">
+      					보낸사람 : <span id="to"> <a href="" style="text-decoration: none; font-weight:bold; color:black;" ></a></span>
+      					</div>
+      					<div style="margin-top : 10px; margin-left : 10px;">
+      					<p id="msgtime"></p>
+      					</div>
       				</div>
       				
       				
@@ -342,12 +420,7 @@ width: 200px;
       				
       				</div>
       			</div>
-      			
-      			
-      			
-      			
-      			
-      			
+
       	</div> <!--  end of msg-content -->
       	
       	
@@ -360,20 +433,90 @@ width: 200px;
       
       
         <div class="content">	
+
         	</div>
         
 
   
         
-        
-      
+          <!--  모달 팝업창-->
+    <div class="popup-empinfo">
+ <i class="bi bi-x" id="popup-empinfo-out"></i>
+ 	<div class="popup-empinfo-img">
+ 	</div>
+ 	<div class= "popup-empinfo-name" style=" text-align: center;">
+ 		<span style="font-size:30px; font-weight:bold"></span>
+ 	</div>
+ 	
+ 	<div style="margin-bottom:10px;">
+ 		<span><i class="fa-solid fa-phone fa-2x" style="color: green; margin-left:100px;"></i></span>
+ 		<span><i class="fa-solid fa-envelope fa-2x" style="color :#3366cc; margin-left:130px; "></i></span>
+ 		
+ 	</div>
+ 	
+ 	<div class="popup-empinfo-info" style="text-align:center;">
+ 		<table style="margin-left : 25px;">
+ 			<tr>
+ 				<th >소속부서</th>
+ 				<td id="1" ></td>
+ 				<th>직위</th>
+ 				<td id="2"></td>
+ 			</tr>
+ 			<tr >
+ 				<th>H.P</th>
+ 				<td id="4"></td>
+ 			</tr>
+ 			<tr>
+ 				<th>이메일</th>
+ 				<td id="3" ></td>
+ 			</tr>	
+ 			<tr >
+ 				<th>상태</th>
+ 				<td id="5"></td>
+ 				<th>입사년도</th>
+ 				<td id="6"></td>
+ 			</tr>
+ 			
+ 		</table>
+ 	</div>
+ 	</div>
+<!--  	새 메시지 작성 -->
+ 	<div class="popup-send">
+ 	 <i class="bi bi-x" id="popup-send-out"></i>
+ 	 <div>
+ 	 	<table>
+ 	 		<tr>
+ 	 		<th>받는사람 : </th>
+ 	 		<td><input type="text" name="to_id"></td>
+ 	 		</tr>
+ 	 		<tr>
+ 	 		<th>참조 : </th>
+ 	 		<td><input type="text" name="to_id"></td>
+ 	 		</tr>
+ 	 		<tr>
+ 	 		<th>제목 : </th>
+ 	 		<td><input type="text" name="to_id"></td>
+ 	 		</tr>
+ 	 		<tr>
+ 	 		<td colspan="2"><textarea name="content"></td>
+ 	 		</tr>
+ 	 	
+ 	 	
+ 	 	</table>
+ 	 </div>
+ 	</div>
+ 	
+ 	<!--     팝업 배경 창 -->
+	<div class="popup_bg"></div> 
  </main>
-</body>
 <script>
 $(document).ready(function () {
+	console.log("Hello");
     // 특정 td를 클릭했을 때
     $('td').on('click', function() {
+			// 화면 최상단으로 이동    	
     	 $("html, body").scrollTop(0);
+    		$(".msg-view").css({"display":"flex"});
         // 클릭된 td에 대한 정보 추출
         var from_id = $(this).find("input[id='from_id']").val();
         var title = $(this).find("input[id='title']").val();
@@ -382,22 +525,65 @@ $(document).ready(function () {
         var from_position = $(this).find("input[id='from_position']").val();
         var from_dname = $(this).find("input[id='from_dname']").val();
         var from_profileimage = $(this).find("input[id='from_profileimage']").val();
+        var from_email = $(this).find("input[id='from_email']").val();
+        var time = $(this).find("input[id='time']").val();
+        var from_phone = $(this).find("input[id='from_phone']").val();
+        var from_status = $(this).find("input[id='from_status']").val();
+        var hiredate = $(this).find("input[id='from_hiredate']").val();
+        var from_hiredate = hiredate.substr(0,4);
+     
        
-        // 추출된 정보 사용
-        console.log("from_id : " + from_id);
-        console.log("title: " + title);
-        console.log("content: " + content);
-        console.log("from_name: " + from_name);
-        console.log("from_position: " + from_position);
-        console.log("from_dname: " + from_dname);
-        console.log("from_profileimage: " + from_profileimage);
+      
         var imageHtml = "<img src='./display?fileName=" + from_profileimage + "' style='width: 120px; height: 120px; border-radius: 10%; margin-left: 10px; margin-top: 5px; flex-shrink: 0; object-fit: cover;'>";
-	$(".msg-view-img").html(imageHtml);
-// 	$(".msg-view-title").html(imageHtml);
+        var imageHtml_pop = "<img src='./display?fileName=" + from_profileimage + "' style='width: 160px; height: 160px; border-radius: 50%; margin-left: 115px; margin-top: 10px; flex-shrink: 0; object-fit: cover;'>";
+	// 메시지 내용 출력
+        $(".msg-view-img").html(imageHtml);
+ 	$("#to a").text(from_name +"    "+from_position+"               "+from_email);
+ 	$("#msg-title-1 a").text(title);
 	$(".msg-view-content").text(content);
-			
-       
+	$("#msgtime").text(time);
+	
+	// 팝업 사원 정보
+	$(".popup-empinfo-img").html(imageHtml_pop);
+	$(".popup-empinfo-name span").text(from_name);
+	$(".popup-empinfo-info table #1").text(from_dname);
+	$(".popup-empinfo-info table #2").text(from_position);
+	$(".popup-empinfo-info table #3").text(from_email);
+	$(".popup-empinfo-info table #4").text(from_phone);
+	$(".popup-empinfo-info table #5").text(from_status);
+	$(".popup-empinfo-info table #6").text(from_hiredate);
+	
+	
+	
+	
+	 // 사원 이미지 클릭시 모달팝업 생성
+    $(".msg-view-img").on("click",function(){
+    	$(".popup_bg").css({"display":"block"});
+    	$(".popup-empinfo").css({ "display": "block" });
     });
+    $("#popup-empinfo-out").on("click",function(){
+    	$(".popup_bg").css({"display":"none"});
+    	$(".popup-empinfo").css({ "display": "none" });
+    });  
+	
+    }); //end of td click function
+    
+    $('#new-msg').on('click', function() {
+        	$(".popup_bg").css({"display":"block"});
+        	$(".popup-send").css({ "display": "block" });
+    });
+        
+        $("#popup-send-out").on("click",function(){
+        	$(".popup_bg").css({"display":"none"});
+        	$(".popup-send").css({ "display": "none" });
+        });  
+    	
+    	
+    	
+    
+    
+    
 });
 </script>
+</body>
 </html>
