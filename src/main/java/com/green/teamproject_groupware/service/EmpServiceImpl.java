@@ -43,4 +43,11 @@ public class EmpServiceImpl implements EmpService {
 		return dao.changeProfile(param);
 		
 	}
+	
+	@Override
+	public EmpDto getEmpByName(String name) {
+		EmpDao dao = sqlSession.getMapper(EmpDao.class);
+		EmpDto dto = dao.getEmpByName(name);
+		return dto;
+	}
 }

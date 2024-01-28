@@ -31,4 +31,11 @@ public class MsgServiceImpl implements MsgService {
 		return list;
 	}
 	
+	@Override
+	public int sendMsg(MsgDto dto) {
+		MsgDao dao = sqlSession.getMapper(MsgDao.class);
+		return dao.sendMsg(dto);
+		
+	}
+	
 }

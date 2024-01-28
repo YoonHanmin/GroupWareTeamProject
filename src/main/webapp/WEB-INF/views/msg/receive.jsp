@@ -6,6 +6,195 @@
 <!--      hiredate 날짜 포맷 형식 변경 -->
       <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
       <script src="resources/js/jquery.js"></script>
+      <script>
+$(document).ready(function () {
+	
+    // 특정 td를 클릭했을 때
+    $('.msg-list td').on('click', function() {
+			// 화면 최상단으로 이동    	
+    	 $("html, body").scrollTop(0);
+    		$(".msg-view").css({"display":"flex"});
+        // 클릭된 td에 대한 정보 추출
+        var from_id = $(this).find("input[id='from_id']").val();
+        var title = $(this).find("input[id='title']").val();
+        var content = $(this).find("input[id='content']").val();
+        var from_name = $(this).find("input[id='from_name']").val();
+        var from_position = $(this).find("input[id='from_position']").val();
+        var from_dname = $(this).find("input[id='from_dname']").val();
+        var from_profileimage = $(this).find("input[id='from_profileimage']").val();
+        var from_email = $(this).find("input[id='from_email']").val();
+        var time = $(this).find("input[id='time']").val();
+        var from_phone = $(this).find("input[id='from_phone']").val();
+        var from_status = $(this).find("input[id='from_status']").val();
+        var hiredate = $(this).find("input[id='from_hiredate']").val();
+        var from_hiredate = hiredate.substr(0,4);
+     
+       
+      
+        var imageHtml = "<img src='./display?fileName=" + from_profileimage + "' style='width: 120px; height: 120px; border-radius: 10%; margin-left: 10px; margin-top: 5px; flex-shrink: 0; object-fit: cover;'>";
+        var imageHtml_pop = "<img src='./display?fileName=" + from_profileimage + "' style='width: 160px; height: 160px; border-radius: 50%; margin-left: 115px; margin-top: 10px; flex-shrink: 0; object-fit: cover;'>";
+	// 메시지 내용 출력
+        $(".msg-view-img").html(imageHtml);
+ 	$("#to a").text(from_name +"    "+from_position+"               "+from_email);
+ 	$("#msg-title-1 a").text(title);
+	$(".msg-view-content").text(content);
+	$("#msgtime").text(time);
+	
+	// 팝업 사원 정보
+	$(".popup-empinfo-img").html(imageHtml_pop);
+	$(".popup-empinfo-name span").text(from_name);
+	$(".popup-empinfo-info table #1").text(from_dname);
+	$(".popup-empinfo-info table #2").text(from_position);
+	$(".popup-empinfo-info table #3").text(from_email);
+	$(".popup-empinfo-info table #4").text(from_phone);
+	$(".popup-empinfo-info table #5").text(from_status);
+	$(".popup-empinfo-info table #6").text(from_hiredate);
+	
+	
+	
+	
+	 // 사원 이미지 클릭시 모달팝업 생성
+    $(".msg-view-img").on("click",function(){
+    	$(".popup_bg").css({"display":"block"});
+    	$(".popup-empinfo").css({ "display": "block" });
+    });
+    $("#popup-empinfo-out").on("click",function(){
+    	$(".popup_bg").css({"display":"none"});
+    	$(".popup-empinfo").css({ "display": "none" });
+    });  
+	
+    }); //end of td click function
+    
+    $('#new-msg').on('click', function() {
+        	$(".popup_bg").css({"display":"block"});
+        	$(".popup-send").css({ "display": "block" });
+    });
+        
+        $("#popup-send-out").on("click",function(){
+        	$(".popup_bg").css({"display":"none"});
+        	$(".popup-send").css({ "display": "none" });
+        	$(".popup-search").css({ "display": "none" });
+        
+        	
+        });  
+       
+    $('.to-add').on('click', function() {
+    	// 받는사람 검색창 초기화
+    	
+        	$(".popup_bg").css({"display":"block"});
+        	$(".popup-search").css({ "display": "block" });
+    });
+    
+ 
+        
+        $("#popup-search-out").on("click",function(){
+//         	$(".popup_bg").css({"display":"none"});
+        	$(".popup-search").css({ "display": "none" });
+        });  
+       
+        
+//         엔터키 입력시 사원검색 버튼 클릭 효과
+        $('.add-search').find("input[id='add-id']").keypress(function (e) {
+            if (e.which === 13) { // 13은 엔터 키의 keyCode입니다.
+                e.preventDefault(); // 엔터 키의 기본 동작을 막습니다.
+                $('#add-search-btn').click(); // 버튼 클릭과 동일한 동작을 수행합니다.
+            }
+        });
+        
+        
+    $('#add-search-btn').on('click',function(){
+    	var add_id = $('.add-search').find("input[id='add-id']").val();
+    	
+    	 $.ajax({
+             type: "POST",
+             url: "searchName", // 실제 컨트롤러 매핑 경로로 변경
+             data: { name : add_id },
+             headers: {
+                 "Accept": "application/json"
+             },
+             success: function (data) {
+//             	 var profileimage = data.profileimage;
+            	 console.log(data.name);
+    	 var imageHtml = "<img src='./display?fileName=" + data.profileimage + "' style='width: 80px; height: 80px; border-radius: 10%; margin-left: 10px; margin-top: 5px; flex-shrink: 0; object-fit: cover;'>";
+                 // 서버로부터 받은 JSON 데이터 사용
+                 console.log("Received data:", data);
+				$(".search-img").html(imageHtml);
+				$("#search-name").text("이름 :    "+data.name+"    "+data.position);
+				$("#search-dname").text("소속부서 :    "+data.dname);
+				$("#search-email").text("이메일 :    "+ data.email);
+				
+				
+	 var addedElements = []; // 초기화를 위한 배열			
+    $('.search-info').on('click',function(){
+    	
+    	// 새로 클릭시 이전 검색내용 초기화
+    	addedElements.forEach(function (element) {
+            element.remove();
+        });
+    	
+    	var addedElement = $("<span>").text(data.name+"        "+data.position).append("<i id='delete-add' class='bi bi-x' ></i><input type='hidden' id='send_empno' value='"+data.empno+"'>")
+    	.addClass("added-element").hide(); // 처음에는 숨겨둡니다.
+    	$(".popup-search").css({ "display": "none" });
+ 
+   		
+   		
+   	
+    	$(".to-add").before(addedElement);
+    	addedElement.show("slow");
+    	
+    	addedElements.push(addedElement);
+   		
+    });
+	
+	 $('#delete-add').on('click',function(){
+		 $(this).parent().remove();
+	 });
+                
+             },
+             error: function (error) {
+                 console.error("Error fetching data:", error);
+             }
+         });
+    	
+    	
+    });	// end of add-search-btn click
+    	
+    $(".msg-send-1").on("click",function(){
+    	var send_empno = $("#msg-to-empno").find("input[id='send_empno']").val();
+    	var send_title = $("#msg-send-title").find("input[id='send_title']").val();
+    	var send_content = $("#send_content").val();
+    	 
+    	console.log(send_empno);
+    	console.log(send_title);
+    	console.log(send_content);
+    	
+    	$.ajax({
+            type: "POST",
+            url: "sendMsg", // 실제 컨트롤러 매핑 경로로 변경
+            data: { to_id : send_empno,
+            	title : send_title,
+            	content : send_content },
+            
+        	
+            success: function (data) {
+            	if(data==1){
+            		alert("메시지 전송 완료");
+            		location.href="receive";
+            		
+            	}
+            },
+            error: function (error) {
+                alert("메시지 전송 실패!!");
+                location.href="receive";
+            }
+   			 });
+    });
+    
+    
+});
+
+	
+</script>
 <!DOCTYPE html>
 
 <html>
@@ -243,19 +432,117 @@ position : absolute;
 left : calc(50% - 300px);
 top : calc(50% - 300px);
 width : 800px;
-height : 600px;
+height : 620px;
+background : white;
+display:none;
+border-radius: 8px;
+ z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
+}
+.popup-send-header{
+width : 800px;
+height : 30px;
+background-color: #eee; 
+border-radius: 8px 8px 0 0;
+}
+.popup-send-header > #popup-send-out{
+font-size: 2rem; 
+float: right; 
+margin-right:5px;
+cursor: pointer;
+}
+.to-add{
+border : 1px solid #84c1ff;
+border-radius: 6px;
+color : black;
+background-color: #84c1ff;
+margin-top : 30px;
+font-weight : bold;
+height:80px ;
+width: 120px;
+cursor: pointer;
+}
+
+/* 받는사람 찾기 기능 */
+.popup-search{
+position : absolute;
+left : calc(50% - 715px);
+top : calc(50% - 300px);
+width : 400px;
+height : 150px;
 background : white;
 display:none;
 border-radius: 8px;
  z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
 }
 
-.popup-send > #popup-send-out{
+.popup-search > #popup-search-out{
 font-size: 2rem; 
 float: right; 
 margin-right:5px;
 cursor: pointer;
 }
+
+
+.add-search{
+margin-left : 100px;
+ margin-top : 10px;
+ width : 233px;
+ height : 30px;
+ background-color : #eee;
+ border-radius : 5px;
+}
+.add-search > form > input{
+border : none;
+/* background : rgba(0,0,0,0.5); */
+color : black;
+padding-left : 5px;
+background-color : #eee;
+margin-left : 10px;
+margin-top : 6px;
+width : 200px;
+height : 20px;
+}
+
+.add-search > form > span{
+font-weight : bold;
+cursor: pointer;
+
+}
+/*  사원 클릭시 받는사람에 추가되는 요소 */
+ .added-element{ 
+ border : 1px solid #aed581; 
+ border-radius: 6px; 
+ color : black; 
+ background-color: #aed581; 
+ margin-top : 10px; 
+ font-weight : bold; 
+ height:30px ; 
+ width: 100px; 
+ 
+ text-decoration: none; 
+font-weight:bold; 
+ color:black; 
+ }
+.added-element {
+      margin-left: 10px;
+    }
+    
+#delete-add{
+cursor: pointer;}    
+
+.msg-send-1{
+border : 1px solid #84c1ff;
+border-radius: 6px;
+color : black;
+background-color: #84c1ff;
+margin-top : 30px;
+font-weight : bold;
+height:100px ;
+width: 120px;
+cursor: pointer;
+}
+
+
 </style>
 
 
@@ -482,108 +769,71 @@ cursor: pointer;
  	</div>
 <!--  	새 메시지 작성 -->
  	<div class="popup-send">
+ 	<div class="popup-send-header">
  	 <i class="bi bi-x" id="popup-send-out"></i>
- 	 <div>
- 	 	<table>
- 	 		<tr>
- 	 		<th>받는사람 : </th>
- 	 		<td><input type="text" name="to_id"></td>
- 	 		</tr>
- 	 		<tr>
- 	 		<th>참조 : </th>
- 	 		<td><input type="text" name="to_id"></td>
- 	 		</tr>
- 	 		<tr>
- 	 		<th>제목 : </th>
- 	 		<td><input type="text" name="to_id"></td>
- 	 		</tr>
- 	 		<tr>
- 	 		<td colspan="2"><textarea name="content"></td>
- 	 		</tr>
+ 	 </div>
+ 			 <div style="margin-top : 10px;">
+			<div id="msg-to-empno" style="margin-botton:10px;">
+ 	 		<span><b>받는사람 :</b></span>
+ 	 		<span class="to-add" style="margin-left : 10px; displsy:inline-box;">추가</span>
+ 	 		</div>
+ 	 		
+ 	 			<div id="msg-ref-empno" style="margin-botton:10px;">
+ 	 		<span><b>참조 :</b></span>
+ 	 		<span class="ref-add" style="margin-left : 10px; displsy:inline-box;">추가</span>
+ 	 		</div>
+ 	 		
+ 	 		<div id="msg-send-title" style="margin-botton:10px;">
+ 	 		<b>제목 : </b><input type="text" id="send_title" size="70"> 	 		
+ 	 		</div>
+ 	 		<div style="margin-botton:10px;">
+ 	 		<textarea id="send_content" rows="17" cols="93" style="margin-left:6px; margin-top:25px;"></textarea>
+ 	 		</div>
+ 	 		<div style="margin-top:10px;">
+ 	 		<span class="msg-send-1" style="margin-left : 700px; displsy:inline-box;">메세지 전송</span>
+ 	 		</div>
  	 	
- 	 	
- 	 	</table>
+ 	 
  	 </div>
  	</div>
+<!--  	받는사람 검색 팝업 -->
+ 	<div class="popup-search">
+ 	<i class="bi bi-x" id="popup-search-out"></i>
+ 			<div class="add-search">	
+      			<form>
+      				<input id="add-id" type="text">
+      				<span id="add-search-btn"><i class="bi bi-search fas"></i></span>
+      			</form>
+      		</div>
+      		
+      		<div class="search-list">
+      			
+      			
+      		</div>	
+      				
+  			<div class="search-info" style="width:400px; height:100px; border: 1px solid #ccc; padding: 6px; display: flex; cursor: pointer;">
+      			<div class="search-img">
+   				
+      			</div>
+   				 <div style="flex-grow: 0;margin-left : 20px;">
+      				<h6 style="margin: 0;color:black;"><b id="search-name"></b></h6>
+      					<p id="search-dname" style="margin: 0;width:300px; white-space: nowrap; overflow: hidden; font-weight: bold; color:black;"></p>
+      					<p id="search-email" style="margin: 0;width:300px; white-space: nowrap; overflow: hidden; font-weight: bold; color:black;"></p>
+     					
+    					</div>
+  				</div>
+      				
+      				
+      				
+ 	</div>
+ 	
+ 	
+ 	
+ 	
  	
  	<!--     팝업 배경 창 -->
 	<div class="popup_bg"></div> 
  </main>
-<script>
-$(document).ready(function () {
-	console.log("Hello");
-    // 특정 td를 클릭했을 때
-    $('td').on('click', function() {
-			// 화면 최상단으로 이동    	
-    	 $("html, body").scrollTop(0);
-    		$(".msg-view").css({"display":"flex"});
-        // 클릭된 td에 대한 정보 추출
-        var from_id = $(this).find("input[id='from_id']").val();
-        var title = $(this).find("input[id='title']").val();
-        var content = $(this).find("input[id='content']").val();
-        var from_name = $(this).find("input[id='from_name']").val();
-        var from_position = $(this).find("input[id='from_position']").val();
-        var from_dname = $(this).find("input[id='from_dname']").val();
-        var from_profileimage = $(this).find("input[id='from_profileimage']").val();
-        var from_email = $(this).find("input[id='from_email']").val();
-        var time = $(this).find("input[id='time']").val();
-        var from_phone = $(this).find("input[id='from_phone']").val();
-        var from_status = $(this).find("input[id='from_status']").val();
-        var hiredate = $(this).find("input[id='from_hiredate']").val();
-        var from_hiredate = hiredate.substr(0,4);
-     
-       
-      
-        var imageHtml = "<img src='./display?fileName=" + from_profileimage + "' style='width: 120px; height: 120px; border-radius: 10%; margin-left: 10px; margin-top: 5px; flex-shrink: 0; object-fit: cover;'>";
-        var imageHtml_pop = "<img src='./display?fileName=" + from_profileimage + "' style='width: 160px; height: 160px; border-radius: 50%; margin-left: 115px; margin-top: 10px; flex-shrink: 0; object-fit: cover;'>";
-	// 메시지 내용 출력
-        $(".msg-view-img").html(imageHtml);
- 	$("#to a").text(from_name +"    "+from_position+"               "+from_email);
- 	$("#msg-title-1 a").text(title);
-	$(".msg-view-content").text(content);
-	$("#msgtime").text(time);
-	
-	// 팝업 사원 정보
-	$(".popup-empinfo-img").html(imageHtml_pop);
-	$(".popup-empinfo-name span").text(from_name);
-	$(".popup-empinfo-info table #1").text(from_dname);
-	$(".popup-empinfo-info table #2").text(from_position);
-	$(".popup-empinfo-info table #3").text(from_email);
-	$(".popup-empinfo-info table #4").text(from_phone);
-	$(".popup-empinfo-info table #5").text(from_status);
-	$(".popup-empinfo-info table #6").text(from_hiredate);
-	
-	
-	
-	
-	 // 사원 이미지 클릭시 모달팝업 생성
-    $(".msg-view-img").on("click",function(){
-    	$(".popup_bg").css({"display":"block"});
-    	$(".popup-empinfo").css({ "display": "block" });
-    });
-    $("#popup-empinfo-out").on("click",function(){
-    	$(".popup_bg").css({"display":"none"});
-    	$(".popup-empinfo").css({ "display": "none" });
-    });  
-	
-    }); //end of td click function
-    
-    $('#new-msg').on('click', function() {
-        	$(".popup_bg").css({"display":"block"});
-        	$(".popup-send").css({ "display": "block" });
-    });
-        
-        $("#popup-send-out").on("click",function(){
-        	$(".popup_bg").css({"display":"none"});
-        	$(".popup-send").css({ "display": "none" });
-        });  
-    	
-    	
-    	
-    
-    
-    
-});
-</script>
 </body>
+
 </html>

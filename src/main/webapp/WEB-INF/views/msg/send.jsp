@@ -405,7 +405,7 @@ opacity: 0.5;
 <script>
 $(document).ready(function () {
     // 특정 td를 클릭했을 때
-    $('td').on('click', function() {
+    $('.msg-list td').on('click', function() {
 			// 화면 최상단으로 이동    	
     	 $("html, body").scrollTop(0);
     		$(".msg-view").css({"display":"flex"});

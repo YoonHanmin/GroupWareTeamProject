@@ -299,29 +299,10 @@ border-radius: 5px;
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
 
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
- 		
  	</div>
  	
  
  
-    </div>
-    
     
     
 <!--     팝업 배경 창 -->

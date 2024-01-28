@@ -55,4 +55,9 @@ ORDER BY
     M.MSGID DESC
     </select>
    
+	<insert id="sendMsg" parameterType="com.green.teamproject_groupware.dto.MsgDto">
+	insert into msg (to_id,from_id,title,content,time) values(#{to_id},#{from_id},#{title},#{content},sysdate)
+	</insert>
+   
+   
 </mapper>
