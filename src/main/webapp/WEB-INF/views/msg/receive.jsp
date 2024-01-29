@@ -13,8 +13,40 @@ $(document).ready(function () {
     $('.msg-list td').on('click', function() {
 			// 화면 최상단으로 이동    	
     	 $("html, body").scrollTop(0);
+			
+			
+			
+			
+			
+			
+			
+			
     		$(".msg-view").css({"display":"flex"});
         // 클릭된 td에 대한 정보 추출
+        var msgid = $(this).find("input[id='msgid']").val();
+        var hit = $(this).find("input[id='hit']").val();
+        
+        console.log("업데이트전 hit ==> "+hit);
+        
+    	 $.ajax({ // td클릭시 조회수 1 증가
+             type: "POST",
+             url: "uphit", // 실제 컨트롤러 매핑 경로로 변경
+             data: { msgid : msgid
+      				},
+             success: function (data) {
+             	if(data==1){
+             		hit = 1;
+             		
+             		
+             	}
+             },
+             error: function (error) {
+                 alert("다시 시도해주세요.");
+                 location.href="receive";
+             }
+    			 });
+    	 
+    	 console.log("이건왜 hit ==> "+hit);
         var from_id = $(this).find("input[id='from_id']").val();
         var title = $(this).find("input[id='title']").val();
         var content = $(this).find("input[id='content']").val();
@@ -34,12 +66,13 @@ $(document).ready(function () {
         var imageHtml = "<img src='./display?fileName=" + from_profileimage + "' style='width: 120px; height: 120px; border-radius: 10%; margin-left: 10px; margin-top: 5px; flex-shrink: 0; object-fit: cover;'>";
         var imageHtml_pop = "<img src='./display?fileName=" + from_profileimage + "' style='width: 160px; height: 160px; border-radius: 50%; margin-left: 115px; margin-top: 10px; flex-shrink: 0; object-fit: cover;'>";
 	// 메시지 내용 출력
+	
         $(".msg-view-img").html(imageHtml);
  	$("#to a").text(from_name +"    "+from_position+"               "+from_email);
  	$("#msg-title-1 a").text(title);
 	$(".msg-view-content").text(content);
 	$("#msgtime").text(time);
-	
+
 	// 팝업 사원 정보
 	$(".popup-empinfo-img").html(imageHtml_pop);
 	$(".popup-empinfo-name span").text(from_name);
@@ -64,6 +97,9 @@ $(document).ready(function () {
     });  
 	
     }); //end of td click function
+    
+    
+    
     
     $('#new-msg').on('click', function() {
         	$(".popup_bg").css({"display":"block"});
@@ -101,6 +137,10 @@ $(document).ready(function () {
             }
         });
         
+//         검색 클릭시 submit
+        $('#msg-search-btn').on("click",function(){
+        	$('#search-box').submit();
+        });
         
     $('#add-search-btn').on('click',function(){
     	var add_id = $('.add-search').find("input[id='add-id']").val();
@@ -295,7 +335,7 @@ border : 1px solid #eee;
 margin-left : 2px;
 width : 1000px;
 height : 100%;
-background-color :#eaf4ff;
+background-color :white;
 }
 
 .msg-list{
@@ -340,11 +380,18 @@ cursor: pointer;
 	margin-top : 5px;
 	border : 1px solid #eee;
 	border-radius : 5px;
-	background-color: white;
+	background-color: #fffff0;
 	width:800px;
 	height : 500px;
 	display : none;
 }
+
+  .msg-view-title,
+  .msg-view-content {
+    /* 제외할 요소에 대한 스타일을 추가하세요. */
+    /* 예를 들어, 배경을 투명하게 만들고 싶다면 다음과 같이 작성할 수 있습니다. */
+    background-color: white;
+  }
 .msg-view-img{
 width : 130px;
 height : 130px;
@@ -588,9 +635,9 @@ cursor: pointer;
       
       <div class="info">
       		<div class="msg-search">	
-      			<form>
-      			<input type="text">
-      			<span><i class="bi bi-search"></i></span>
+      			<form id="search-box" action="/receive" method="get">
+      			<input type="text" name="username">
+      			<span id="msg-search-btn"><i class="bi bi-search"></i></span>
       			</form>
       			</div>
       			<ul class="msg-menu">
@@ -637,6 +684,7 @@ cursor: pointer;
       	 <input type="hidden" id="title" value="${list.getTitle() }">
       	 <input type="hidden" id="content" value="${list.getContent() }">
       	 <input type="hidden" id="time" value="${list.getTime() }">
+      	 <input type="hidden" id="msgid" value="${list.getMsgid() }">
       	 <input type="hidden" id="hit" value="${list.getHit() }">
       	 <input type="hidden" id="from_name" value="${list.getFrom_name() }">
       	 <input type="hidden" id="from_position" value="${list.getFrom_position() }">
@@ -649,8 +697,14 @@ cursor: pointer;
       	 <input type="hidden" id="from_hiredate" value="${list.getFrom_hiredate() }">
       	
       	 
-      	 
-  			<div style="width:400px; height:90px; border: 1px solid #ccc; padding: 6px; display: flex; cursor: pointer;">
+      	 <c:choose>
+      	 <c:when test="${list.getHit() eq 0}">
+  			<div style="width:400px; height:90px; border: 1px solid #ccc; padding: 6px; display: flex; cursor: pointer; border-left: 3px solid #3366cc;">      	 
+      	 </c:when>
+      	 <c:otherwise>
+  			<div style="width:400px; height:90px; border: 1px solid #ccc; padding: 6px; display: flex; cursor: pointer; ">      	 
+      	 </c:otherwise>
+      	 </c:choose>
    				 <img src="./display?fileName=${list.getFrom_profileimage()}" style="width: 70px; height: 70px; border-radius: 50%; margin-right: 10px;margin-top:5px;flex-shrink: 0; object-fit: cover;">
    				 <div style="flex-grow: 0;">
       				<h6 style="margin: 0;"><b id="msg-name">${list.getFrom_name()}</b> ${list.getFrom_position()}
@@ -668,14 +722,21 @@ cursor: pointer;
       						</c:choose>
       						
       						</h6>
-      					<p id="msgtitle" style="margin: 0;width:300px; white-space: nowrap; overflow: hidden; font-weight: bold; color:#3366cc;">${list.getTitle()}&nbsp;&nbsp;</p>
+      						<c:choose>
+      						<c:when test="${list.getHit() eq 0}">
+      					<p id="msgtitle" style="margin: 0;width:300px; white-space: nowrap; overflow: hidden; font-weight: bold; color:#3366cc;">${list.getTitle()}&nbsp;&nbsp;</p>      						
+      						</c:when>
+      						<c:otherwise>
+      					<p id="msgtitle" style="margin: 0;width:300px; white-space: nowrap; overflow: hidden; font-weight: bold; color:black;">${list.getTitle()}&nbsp;&nbsp;</p>      						
+      						</c:otherwise>
+      						</c:choose>
      						<p id="msgcontent"style="width:300px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
             ${list.getContent()}
 
 
         </p>
     					</div>
-  				</div>
+  				
 			</td>
       		</tr>
       		</c:forEach>

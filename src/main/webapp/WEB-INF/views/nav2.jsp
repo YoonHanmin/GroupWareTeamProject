@@ -187,8 +187,8 @@ border-radius: 3px;
         </li>
         <li><a href="#"><i class="bi bi-file-earmark-check"></i>  전자결재</a> 
             <ul>
-                <li><a href="#">서브메뉴1</a></li>
-                <li><a href="#">서브메뉴2</a></li>
+                <li><a href="approval">전자결재함</a></li>
+                <li><a href="approval_write">전자결재 작성</a></li>
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-boxes"></i> 자원요청</a>

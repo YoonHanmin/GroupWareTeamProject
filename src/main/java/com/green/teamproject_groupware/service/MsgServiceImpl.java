@@ -1,6 +1,7 @@
 package com.green.teamproject_groupware.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,19 @@ public class MsgServiceImpl implements MsgService {
 		MsgDao dao = sqlSession.getMapper(MsgDao.class);
 		return dao.sendMsg(dto);
 		
+	}
+	
+	@Override
+	public ArrayList<MsgDto> getMsgByEmpno(HashMap<String, String> param) {
+		MsgDao dao = sqlSession.getMapper(MsgDao.class);
+		ArrayList<MsgDto> list = dao.getMsgByEmpno(param);
+		return list;
+	}
+	
+	@Override
+	public int uphit(int msgid) {
+		MsgDao dao = sqlSession.getMapper(MsgDao.class);
+		return dao.uphit(msgid);
 	}
 	
 }
