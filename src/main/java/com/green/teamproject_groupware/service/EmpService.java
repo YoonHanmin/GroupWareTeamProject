@@ -10,4 +10,5 @@ public interface EmpService {
 	public ArrayList<EmpDto> getEmp();
 	public EmpDto getEmpByEmpno(String empno);
 	public int changeProfile(HashMap<String, String> param);
+	public EmpDto getEmpByName(String name);
 }

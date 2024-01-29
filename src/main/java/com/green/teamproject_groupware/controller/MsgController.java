@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.MsgDto;
@@ -41,9 +43,7 @@ public class MsgController {
 		EmpDto dto = service.getEmpByEmpno(empno);
 		model.addAttribute("dto", dto);
 		ArrayList<MsgDto> list = msgService.getReceiveMsg(empno);
-		log.info("getTime ==>"+list.get(0).getTime());
-		log.info("@#보내는이 프로필 ==>"+list.get(0).getFrom_profileimage());
-		log.info("@#받는이 프로필 ==>"+list.get(0).getTo_profileimage());
+
 		model.addAttribute("list",list);
 		return "msg/receive";
 		
@@ -62,6 +62,29 @@ public class MsgController {
 		
 	}
 	
+	@RequestMapping("/searchName")
+	@ResponseBody
+	public EmpDto searchName(String name,Model model) {
+		log.info("받은 empno ==>"+name);
+			EmpDto dto = service.getEmpByName(name);
+			return dto;
+	}
 	
+	@RequestMapping("/sendMsg")
+	@ResponseBody
+	public String searchName(HttpSession session,Model model
+			,@RequestParam("to_id")String to_id,@RequestParam("title")String title,@RequestParam("content")String content) {
+		String id = (String)session.getAttribute("empno");
+		int from_id=Integer.parseInt(id);
+		MsgDto dto = new MsgDto();
+		dto.setTo_id(Integer.parseInt(to_id));
+		dto.setFrom_id(from_id);
+		dto.setTitle(title);
+		dto.setContent(content);
+		String result = ""+msgService.sendMsg(dto);
+		log.info("메세지 전송===>"+result);
+		return result;
+		
+	}
 	
 }
