@@ -8,9 +8,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
-<script type="text/javascript"></script>
-
 <title>Insert title here</title>
 </head>
 <style>
@@ -172,6 +169,9 @@ margin-right : 20px;
     <div class="info">
       <h2> 자원요청 카테고리</h2> 
     </div>
+     <div class="info">
+		<button id="showSupplyListBtn" onclick="redirectToSupplyList()">내가 신청한 목록 보기</button>
+    </div>
       
     <div class="content">
 <!-- 	  <div class="resource-box" onclick="openModal('supplies')">Supplies</div> -->
@@ -181,41 +181,44 @@ margin-right : 20px;
 	  <div class="resource-box" data-modal="modal4">Meal</div>
 	  <div class="resource-box" data-modal="modal5">Reservation</div>
      </div>        
-
-<!-- Modal 1 - Supplies -->
+     
+     <!-- Modal 1 - Supplies -->
 <div id="modal1" class="modal">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h2>비품 신청입니다</h2>
-        <form id="suppliesForm" action="/submitForm" method="post">
-            <input type="hidden" name="category" value="supplies">
-            <label for="itemName">물품명:</label>
-            <input type="text" id="itemName" name="itemName" required>
+        <form id="suppliesForm" class="resource-form" action="/submitSuppliesForm">
+            <label for="sempno">사원번호:</label>
+            <input type="text" id="sempno" name="sempno" required>
+            <label for="item">물품명:</label>
+            <input type="text" id="item" name="item" required>
             <label for="quantity">수량:</label>
             <input type="text" id="quantity" name="quantity" required>
-            <label for="purpose">목적:</label>
-            <textarea id="purpose" name="purpose" rows="4" required></textarea>
+            <label for="sdescription">설명:</label>
+            <textarea id="sdescription" name="sdescription" rows="4" required></textarea>
             <input type="submit" value="제출">
         </form>
+        <div id="successMessage" style="display: none; color: green;">
+            비품신청이 완료되었습니다.
+        </div>
     </div>
 </div>
 
 <!-- Modal 2 - Vehicle -->
-<div id="modal2" class="modal">
-    <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h2>차량 신청입니다</h2>
-        <form id="vehicleForm" action="/submitForm" method="post">
-            <input type="hidden" name="category" value="vehicle">
-           <label for="itemName">차량 번호:</label>
-            <input type="text" id="itemName" name="itemName" required>
-            <label for="quantity">수량:</label>
-            <input type="text" id="quantity" name="quantity" required>
-            <label for="purpose">목적:</label>
-            <input type="submit" value="제출">
-        </form>
-    </div>
-</div>
+<!-- <div id="modal2" class="modal"> -->
+<!--     <div class="modal-content"> -->
+<!--         <span class="modal-close">&times;</span> -->
+<!--         <h2>차량 신청입니다</h2> -->
+<!--         <form id="vehicleForm" action="/submitForm" method="post"> -->
+<!--            <label for="itemName">차량 번호:</label> -->
+<!--             <input type="text" id="itemName" name="itemName" required> -->
+<!--             <label for="quantity">수량:</label> -->
+<!--             <input type="text" id="quantity" name="quantity" required> -->
+<!--             <label for="purpose">목적:</label> -->
+<!--             <input type="submit" value="제출"> -->
+<!--         </form> -->
+<!--     </div> -->
+<!-- </div> -->
         
 <!-- Modal 3 - Expense -->
 <div id="modal3" class="modal">
@@ -223,7 +226,6 @@ margin-right : 20px;
         <span class="modal-close">&times;</span>
         <h2>지출 비용 처리</h2>
         <form id="expenseForm" action="/submitForm" method="post">
-            <input type="hidden" name="category" value="expense">
             <div id="fontSubject">
 				개인경비청구서 
 				<input type="hidden" name="subject" value="개인경비청구서 " readonly />
@@ -246,7 +248,6 @@ margin-right : 20px;
         <span class="modal-close">&times;</span>
         <h2>식비</h2>
         <form id="mealForm" action="/submitForm" method="post">
-            <input type="hidden" name="category" value="meal">
              <label for="itemName">식사 인원:</label>
             <input type="text" id="itemName" name="itemName" required>
             <label for="quantity">비용:</label>
@@ -264,7 +265,6 @@ margin-right : 20px;
         <span class="modal-close">&times;</span>
         <h2>숙소</h2>
         <form id="reservationForm" action="/submitForm" method="post">
-            <input type="hidden" name="category" value="reservation">
             <label for="itemName">사용 금액:</label>
             <input type="text" id="itemName" name="itemName" required>
             <label for="quantity">숙박 인원:</label>
@@ -274,42 +274,74 @@ margin-right : 20px;
         </form>
     </div>
 </div>
-
-
  </main>
 </body>
 </html>
+
 <script>
+
+function redirectToSupplyList() {
+    window.location.href = "/supply_list";
+}
+
 $(document).ready(function () {
+
     $(".resource-box").click(function () {
         var modalId = $(this).data("modal");
-
         $("#" + modalId).css("display", "flex");
     });
 
     $(".modal-close").click(function () {
         $(this).closest(".modal").css("display", "none");
     });
-});
 
-$(document).ready(function () {
-    $("#suppliesForm").submit(function (event) {
+    // 각 모달에 대한 submit 이벤트 처리
+    $(".resource-form").submit(function (event) {
         event.preventDefault(); // 기본 폼 제출 방지
-
-        var formData = $(this).serialize(); // 폼 데이터 직렬화
-
+        var modalId = $(this).closest(".modal").attr("id");
+        var formData = {
+                sempno: $("#" + modalId + " #sempno").val(),
+                item: $("#" + modalId + " #item").val(),
+                quantity: $("#" + modalId + " #quantity").val(),
+                sdescription: $("#" + modalId + " #sdescription").val()
+               
+                
+            };
+			
+        console.log("폼 데이터:", formData); // 추가된 코드
+        
         $.ajax({
             type: "POST",
-            url: "/submitSuppliesForm", // 실제 서버 엔드포인트로의 URL로 변경
-            data: formData,
+            url: "/submitForm", // 적절한 서버 URL로 수정
+            contentType: "application/json", // JSON 형식으로 데이터 전송
+            data: JSON.stringify(formData), // JSON 데이터로 직렬화
             success: function (response) {
-                // 서버에서의 응답에 따라 클라이언트 동작을 정의할 수 있습니다.
+                // 서버 응답 처리
                 console.log("서버 응답:", response);
+                
+             // 제출 후 폼 초기화
+                $("#" + modalId + " form")[0].reset();
             },
             error: function (error) {
+                // 오류 처리
                 console.error("오류 발생:", error);
             }
         });
+        
+        // 모달 닫기
+        $(this).closest(".modal").css("display", "none");
     });
 });
+
+// $(document).ready(function () {
+//     // "목록보기" 버튼 클릭 시 비품 목록을 가져오는 함수 호출
+    $("#showSupplyListBtn").click(function () {
+        fetchSupplyList();
+    });
+
 </script>
+
+        
+
+    
+

@@ -4,27 +4,31 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.SupplyDao">
 
+<!--     <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto"> -->
+<!--         select supply_id, item, sdescription, quantity, sdate from supply_TABLE -->
+<!--         order by supply_id desc -->
+<!--     </select> -->
     <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto">
-        select supply_id, bname, btitle, bcontent, bdate, bhit from supply_TABLE
-        order by bid desc
+        select supply_id, item, sdescription, quantity from supply_TABLE
+        order by supply_id desc
     </select>
+
     
-	<insert id="write" >
-	    insert into supply_TABLE(supply_id, bname, btitle, bcontent, bhit)
-	    values (free_board_SEQ.NEXTVAL, #{bname}, #{btitle}, #{bcontent}, 0)
-	</insert>
-    
+    <insert id="write">
+    insert into supply_TABLE(supply_id, sempno, item, quantity, sdescription)
+    values (supply_TABLE_SEQ.NEXTVAL, #{sempno, jdbcType=VARCHAR}, #{item, jdbcType=VARCHAR}, #{quantity, jdbcType=INTEGER}, #{sdescription, jdbcType=VARCHAR})
+</insert>
+
     <select id="contentView" resultType="com.green.teamproject_groupware.dto.SupplyDto">
-        select supply_id, bname, btitle, bcontent, bdate, bhit, empno from supply_TABLE where bid=#{bid}
+        select supply_id, sname, item, quantity, sdescription, sdate, sempno from supply_TABLE where supply_id=#{supply_id}
     </select>
     
     <update id="modify">
-    	update supply_TABLE set bname=#{bname}, btitle=#{btitle}, bcontent=#{bcontent} where supply_id=#{supply_id}
+    	update supply_TABLE set item=#{item}, quantity=#{quantity}, sdescription=#{sdescription} where supply_id=#{supply_id}
     </update>
     
     <delete id="delete">
     	delete from supply_TABLE where supply_id=#{supply_id}
     </delete>
-    
 
 </mapper>

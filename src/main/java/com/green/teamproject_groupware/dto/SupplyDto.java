@@ -11,9 +11,10 @@ import lombok.Data;
 @NoArgsConstructor
 public class SupplyDto {
 	private int supply_id;
-	private String bname;
-	private String btitle;
-	private String bcontent;
-	private Timestamp bdate;
-	private int bhit;
+	private String sempno;
+	private String sname;
+	private String item;
+	private int quantity;
+	private String sdescription;
+	private Timestamp sdate;
 }
