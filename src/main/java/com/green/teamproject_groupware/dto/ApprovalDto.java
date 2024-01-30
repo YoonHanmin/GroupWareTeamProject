@@ -15,15 +15,16 @@ public class ApprovalDto {
 	private String doc_name;
 	private String doc_dname;
 	private Timestamp doc_date;
-	private Timestamp doc_expire;
-	private int doc_confidential;
+	private String doc_expire;
+	private String doc_confidential;
 	private int first_empno;
 	private int second_empno;
 	private int third_empno;
 	private int first_approval;
 	private int second_approval;
 	private int third_approval;
-
-	
+	private String doc_title;
+	private String doc_content;
+	private int doc_status;
 	
 }

@@ -331,6 +331,7 @@ $('#add-search-btn').on('click',function(){
          success: function (data) {
 //         	 var profileimage = data.profileimage;
         	 console.log(data.name);
+        	 
 	 var imageHtml = "<img src='./display?fileName=" + data.profileimage + "' style='width: 80px; height: 80px; border-radius: 10%; margin-left: 10px; margin-top: 5px; flex-shrink: 0; object-fit: cover;'>";
              // 서버로부터 받은 JSON 데이터 사용
              console.log("Received data:", data);
@@ -344,12 +345,13 @@ $('#add-search-btn').on('click',function(){
 $('.search-info').on('click',function(){
 	$(".popup_bg").css({"display":"none"});
 	console.log("클릭후 이름 ==>"+linename);
+	
 	// 새로 클릭시 이전 검색내용 초기화
 // 	addedElements.forEach(function (element) {
 //         element.remove();
 //     });
-	
-	var addedElement = $("<div>").text(data.name+data.position).css({"border-bottom":"1px solid black"}).append("<input type='hidden' id='send_empno' value='"+data.empno+"'>").hide(); // 처음에는 숨겨둡니다.
+		
+	var addedElement = $("<div>").text(data.name+data.position).css({"border-bottom":"1px solid black"}).append("<input type='hidden' name='"+linename+"' value='"+data.empno+"'>").hide(); // 처음에는 숨겨둡니다.
 	$(".popup-search").css({ "display": "none" });
 		
 	
@@ -361,11 +363,54 @@ $('.search-info').on('click',function(){
 });
 		
  }
- 
+
 	 }); //ene of ajax
 }); // end of add-search-btn click 
  
 
+         
+      $("#approval_btn").on("click",function(){
+    	  var doc_empno = ${dto.getEmpno()};
+    	  var doc_name= '${dto.getName()}';
+    	  var doc_dname= '${dto.getDname()}';
+    	  var doc_date = $("#doc_date").val();
+    	  var doc_expire = $("#doc_expire").val();
+    	  var doc_confidential = $("#doc_confidential").val();
+    	  var first_empno = $("#line2").find("input[name='line2']").val();
+    	  var second_empno =$("#line3").find("input[name='line3']").val();
+    	  var third_empno = $("#line4").find("input[name='line4']").val();
+    	  var doc_title = $("#doc_title").val();
+    	  var doc_content = $("#doc_content").val();
+    	  
+    	  $.ajax({
+    	         type: "POST",
+    	         url: "docWrite", // 실제 컨트롤러 매핑 경로로 변경
+    	         data: JSON.stringify({ doc_empno : doc_empno,
+    	        	 doc_name : doc_name,
+    	        	 doc_dname : doc_dname,
+    	        	 doc_date : doc_date,
+    	        	 doc_expire : doc_expire,
+    	        	 doc_confidential : doc_confidential,
+    	        	 first_empno : first_empno,
+    	        	 second_empno : second_empno,
+    	        	 third_empno : third_empno,
+    	        	 doc_title : doc_title,
+    	        	 doc_content : doc_content
+    	         }),
+    	         contentType: "application/json",
+    	         success: function (data) {
+    	  			if(data=='1'){
+    	  				alert("기안 작성 완료!");
+    	  			
+    	  				window.location.href = "approval";
+    	  			}
+    	         }
+    	  }); //end of ajax
+
+      });   
+         
+         
+         
  }); // eno of ready
  </script>
 <body>
@@ -419,7 +464,7 @@ $('.search-info').on('click',function(){
                         <span style="margin-right: 20px;">[결재라인]</span>
                           <div id="line1" style="width:85px; height:85px; border: 1px solid black; background-color: white;cursor: pointer;">
                           
-                         		 <div style="border-bottom:1px solid black;">${dto.getName()}
+                         		 <div  style="border-bottom:1px solid black;">${dto.getName()}
                          		 </div>
                           </div> 
                            
@@ -447,10 +492,10 @@ $('.search-info').on('click',function(){
             </tr>
             <tr style="height:30px;">
                 <th>기안부서</th>
-                <td>${dto.getDname() }</td>
+                <td>${dto.getDname()}</td>
                 <th>기안일</th>
                 <td>
-                	<input type="date">
+                	<input id="doc_date" type="date">
                 </td>
                 <th>문서번호</th>
                 <td>111111</td>
@@ -461,7 +506,7 @@ $('.search-info').on('click',function(){
                 <td>${dto.getName()}</td>
                 <th>보존년한</th>
                 <td>
-                <select>
+                <select id="doc_expire">
                 	<option>1년</option>
                 	<option>2년</option>
                 	<option>3년</option>
@@ -470,7 +515,7 @@ $('.search-info').on('click',function(){
                 </td>
                 <th>비밀등급</th>
                 <td>
-                 <select>
+                 <select id="doc_confidential">
                 	<option>1급</option>
                 	<option>2급</option>
                 	<option>3급</option>
@@ -482,13 +527,13 @@ $('.search-info').on('click',function(){
             <tr style="height:30px;">
                 <th>제목</th>
                 <td colspan="5">
-                    <input type="text" size="95">
+                    <input id="doc_title" type="text" size="95">
                 </td>
             </tr>
             
             <tr>
             <td colspan="6">
-                <textarea style="margin-bottom:100px;" cols="113" rows="15">
+                <textarea id="doc_content"style="margin-bottom:100px;" cols="113" rows="15">
                 </textarea>
                 </td>
             </tr>
@@ -498,7 +543,7 @@ $('.search-info').on('click',function(){
             		<button type="button">돌아가기</button>
             	</td>
             	<td colspan="3">
-            		<button type="button">기안 작성</button>
+            		<button id="approval_btn" type="button">기안 작성</button>
             	</td>
             </tr>
         </table>

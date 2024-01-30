@@ -6,8 +6,43 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.ApprovalDao">
     <insert id="docWrite" parameterType="com.green.teamproject_groupware.dto.ApprovalDto">
-    	insert into approval (doc_empno,doc_name,doc_dname,doc_date,doc_expire,doc_confidential,first_empno,second_empno,third_empno) values(
-#{doc_empno},#{doc_name},#{doc_dname},sysdate,sysdate,#{doc_confidential},#{first_empno},#{second_empno},#{third_empno})
-    
+    	insert into approval (doc_empno,doc_name,doc_dname,doc_date,doc_expire,doc_confidential,first_empno,second_empno,third_empno,doc_title,doc_content) values(
+#{doc_empno},#{doc_name},#{doc_dname},sysdate,#{doc_expire},#{doc_confidential},#{first_empno},#{second_empno},#{third_empno},#{doc_title},#{doc_content})
     </insert>
+    
+    <select id="getAllDoc" resultType="com.green.teamproject_groupware.dto.ApprovalDto">
+    select * from approval where doc_empno = #{doc_empno}
+    </select>
+    
+    <select id="getTodoDoc" resultType="com.green.teamproject_groupware.dto.ApprovalDto" >
+    SELECT *
+FROM (
+    SELECT
+        DOC_ID,
+        doc_date,
+        doc_expire,
+        doc_confidential,
+        first_empno,
+        second_empno,
+        third_empno,
+        first_approval,
+        second_approval,
+        third_approval,
+        DOC_TITLE,
+        DOC_CONTENT,
+        DOC_STATUS,
+        CASE
+            WHEN FIRST_APPROVAL = 0 AND FIRST_EMPNO = #{empno} THEN 1
+            WHEN SECOND_APPROVAL = 0 AND SECOND_EMPNO = #{empno} AND FIRST_APPROVAL = 1 THEN 1
+            WHEN THIRD_APPROVAL = 0 AND THIRD_EMPNO = #{empno} AND FIRST_APPROVAL = 1 AND SECOND_APPROVAL = 1 THEN 1
+            ELSE 0
+        END AS APPROVAL_STATUS
+    FROM
+        approval
+    WHERE
+       #{empno} IN (FIRST_EMPNO, SECOND_EMPNO, THIRD_EMPNO)
+        AND DOC_STATUS = 0 
+) SubQuery
+WHERE APPROVAL_STATUS = 1
+    </select>
 </mapper>

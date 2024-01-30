@@ -118,7 +118,7 @@ display : flex;
 flex-direction: row;
 
 }
-.doc-list{
+.doc-todo{
 font-weight : bold;
 font-size : 24px;
 color : #4682b4;
@@ -161,7 +161,7 @@ margin-top : 40px;
 margin-left : 50px;
 }
 
-.doc-list:hover {
+.doc-todo:hover {
 	background-color : #eee;
 }
 .doc-ing:hover {
@@ -169,6 +169,21 @@ margin-left : 50px;
 }
 .doc-end:hover {
 	background-color : #eee;
+}
+.doclist {
+margin-top : 50px;
+margin-left : 300px;
+}
+.doclist table th{
+background-color: #eee; 
+}
+.doclist table{
+text-align : center;
+border-collapse: collapse;
+}
+.doclist table tbody tr:hover{
+background-color : #eee;
+cursor: pointer;
 }
 </style>
  <script>
@@ -204,14 +219,15 @@ margin-left : 50px;
         <div class="content">
         	
         	<div class="app-header">
-        		<div class="doc-list">
-        			<span>결재문서함</span>
+        		<div class="doc-todo">
+        			<span style="color:#0D47A1;">결재할 문서</span>
+        			<p>${todoList.size()}</p>
         		</div>
         		<div class="doc-ing">
-        			<span>결재중</span>
+        			<span style="color:363945">결재중 문서</span>
         		</div>
-        		<div class="doc-end">
-        			<span>결재완료</span>
+        		<div class="doc-end" style="color:#e53935;">
+        			<span>반려된 문서</span>
         		</div>
         	
         	
@@ -219,9 +235,49 @@ margin-left : 50px;
         
         	
         	<div class="app-list">
-        		<span>전자결재 목록</span>
+        		<span>전자결재함</span>
         	</div>
         	
+        		<div>
+        			<div class="doclist">
+        			<span style="font-size:20px;"><b>총 ${list.size()} 건</b></span>        		
+        				<table>
+        					<thead>
+        					<tr>
+        						<th>문서번호</th>
+        						<th>기안자</th>
+        						<th>기안일자</th>
+        						<th width="300px">문서 제목</th>
+        						<th>결재현황</th>	
+        					</tr>
+        					</thead>
+        					<tbody>
+        					<c:forEach items="${list}" var="list">
+        					
+        					<tr>
+        						<td>${list.getDoc_id()}</td>
+        						<td>${list.getDoc_name()}</td>
+        						<td><fmt:formatDate value="${list.getDoc_date()}" pattern="yy/MM/dd" /></td>
+        						<td>${list.getDoc_title()}</td>
+        						<c:choose>
+        							<c:when test="${list.getDoc_status() eq 0}">
+        						<td>결재중</td>        							
+        							</c:when>
+        							<c:when test="${list.getDoc_status() eq 1}">
+        						<td>반려</td>        							
+        							</c:when>
+        							<c:when test="${list.getDoc_status() eq 2}">
+        						<td>결재완료</td>        							
+        							</c:when>
+        						</c:choose>
+        					</tr>
+        					</c:forEach>
+        					</tbody>
+        				</table>
+        			</div>
+        			
+        			
+        		</div>
         	
         	</div>
         

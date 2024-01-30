@@ -48,12 +48,13 @@ public class MsgController {
 		EmpDto dto = service.getEmpByEmpno(empno);
 		log.info("@#유저네임은 ==>"+username);
 		
+//		검색명 없을시 전체 출력
 		if(username ==null) {
 		model.addAttribute("dto", dto);
 		ArrayList<MsgDto> list = msgService.getReceiveMsg(empno);
 		model.addAttribute("list",list);
 		}
-		else {
+		else { // 검색명 있을시 해당 이름의 메일만 출력
 			model.addAttribute("dto", dto);
 			HashMap<String, String> param = new HashMap<>();
 			EmpDto dtoByname = service.getEmpByName(username);
