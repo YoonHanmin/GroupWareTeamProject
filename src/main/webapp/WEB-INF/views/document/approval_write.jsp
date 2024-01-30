@@ -492,6 +492,15 @@ $('.search-info').on('click',function(){
                 </textarea>
                 </td>
             </tr>
+            
+            <tr>
+            	<td colspan="3">
+            		<button type="button">돌아가기</button>
+            	</td>
+            	<td colspan="3">
+            		<button type="button">기안 작성</button>
+            	</td>
+            </tr>
         </table>
         	</div>
         	</div>
