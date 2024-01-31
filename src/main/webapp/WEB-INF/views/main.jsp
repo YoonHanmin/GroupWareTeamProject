@@ -264,6 +264,7 @@ border-radius: 5px;
             <ul>
                 <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
+                <li><a href="picture_list">사진게시판</a></li>
             </ul>
         </li>
       </ul>
