@@ -247,6 +247,9 @@ display:none;
 .reject_list{
 display:none;
 }
+.inglist{
+display:none;
+}
 </style>
  <script>
  $(document).ready(function () {
@@ -376,19 +379,22 @@ display:none;
 		$(".todo_list").css({"display":"block"});
 		$(".doclist").css({"display":"none"});
 		$(".reject_list").css({"display":"none"});
+		$(".inglist").css({"display":"none"});
 		
 	});
 	$(".doc-ing").on("click",function(){
 		$(".app-list span").text("결재중인 문서 목록");
-		$(".doclist").css({"display":"block"});
+		$(".inglist").css({"display":"block"});
 		$(".todo_list").css({"display":"none"});
 		$(".reject_list").css({"display":"none"});
+		$(".doclist").css({"display":"none"});
 	});
 	$(".doc-end").on("click",function(){
 		$(".app-list span").text("반려된 문서 목록");
 		$(".doclist").css({"display":"none"});
 		$(".todo_list").css({"display":"none"});
 		$(".reject_list").css({"display":"block"});
+		$(".inglist").css({"display":"none"});
 	});
 	
 	
@@ -480,6 +486,47 @@ display:none;
         					</tbody>
         				</table>
         			</div>
+        			
+        			<div class="inglist">
+        			<span style="font-size:20px;"><b>총 ${ingList.size()} 건</b></span>        		
+        				<table>
+        					<thead>
+        					<tr>
+        						<th>문서번호</th>
+        						<th>기안자</th>
+        						<th>기안일자</th>
+        						<th width="300px">문서 제목</th>
+        						<th>결재현황</th>	
+        					</tr>
+        					</thead>
+        					<tbody>
+        					<c:forEach items="${ingList}" var="ingList">
+        					
+        					<tr>
+        						<td class="doc_id">${ingList.getDoc_id()}</td>
+        						<td>${ingList.getDoc_name()}</td>
+        						<td><fmt:formatDate value="${inglist.getDoc_date()}" pattern="yy/MM/dd" /></td>
+        						<td>${ingList.getDoc_title()}</td>
+        						<c:choose>
+        							<c:when test="${ingList.getDoc_status() eq 0}">
+        						<td>결재중</td>        							
+        							</c:when>
+        							<c:when test="${ingList.getDoc_status() eq 2}">
+        						<td>반려</td>        							
+        							</c:when>
+        							<c:when test="${ingList.getDoc_status() eq 1}">
+        						<td>결재완료</td>        							
+        							</c:when>
+        						</c:choose>
+        					</tr>
+        					
+        					</c:forEach>
+        					</tbody>
+        				</table>
+        			</div>
+        			
+        			
+        			
         			
 <!--         			결재해야할 문서 목록 -->
         			<div class="todo_list">

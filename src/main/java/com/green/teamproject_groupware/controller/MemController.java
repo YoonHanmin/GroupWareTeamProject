@@ -180,14 +180,13 @@ public class MemController {
 	@RequestMapping(value="/mailCheck", method= RequestMethod.GET)
 	@ResponseBody
 	public String mailCheckGET(String email) throws Exception{
-
 		/* 뷰(View)로부터 넘어온 데이터 확인 */
-		System.out.println("이메일 데이터 전송확인");
-		System.out.println("이메일:"+email);
+		log.info("이메일 데이터 전송확인");
+		log.info("이메일:"+email);
 		/*인증번호 생성*/
 		Random random=new Random();
 		int checkNum=random.nextInt(888888)+111111;
-		System.out.println("인증번호:"+checkNum);
+		log.info("인증번호:"+checkNum);
 
 		/*이메일 인증*/
 		String setFrom="ohjay8118@gmail.com";
@@ -199,7 +198,6 @@ public class MemController {
 				"회원님의 인증번호는 "+checkNum	+"입니다."+
 				"<br>"+
 				"해당 인증번호를 비밀번호 확인란에 기입하여 주세요.";
-
 		try{
 			MimeMessage message=mailSender.createMimeMessage();
 			MimeMessageHelper helper =new MimeMessageHelper(message, true,"utf-8");

@@ -839,10 +839,10 @@ cursor: pointer;
  	 		<span class="to-add" style="margin-left : 10px; displsy:inline-box;">추가</span>
  	 		</div>
  	 		
- 	 			<div id="msg-ref-empno" style="margin-botton:10px;">
- 	 		<span><b>참조 :</b></span>
- 	 		<span class="ref-add" style="margin-left : 10px; displsy:inline-box;">추가</span>
- 	 		</div>
+<!--  	 			<div id="msg-ref-empno" style="margin-botton:10px;"> -->
+<!--  	 		<span><b>참조 :</b></span> -->
+<!--  	 		<span class="ref-add" style="margin-left : 10px; displsy:inline-box;">추가</span> -->
+<!--  	 		</div> -->
  	 		
  	 		<div id="msg-send-title" style="margin-botton:10px;">
  	 		<b>제목 : </b><input type="text" id="send_title" size="70"> 	 		
