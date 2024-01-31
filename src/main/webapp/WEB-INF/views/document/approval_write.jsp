@@ -351,7 +351,7 @@ $('.search-info').on('click',function(){
 //         element.remove();
 //     });
 		
-	var addedElement = $("<div>").text(data.name+data.position).css({"border-bottom":"1px solid black"}).append("<input type='hidden' name='"+linename+"' value='"+data.empno+"'>").hide(); // 처음에는 숨겨둡니다.
+	var addedElement = $("<div>").text(data.name+data.position).css({"border-bottom":"1px solid black"}).append("<input type='hidden' name='"+linename+"' value='"+data.empno+"'>").hide(); // 처음에는 숨겨두기
 	$(".popup-search").css({ "display": "none" });
 		
 	
