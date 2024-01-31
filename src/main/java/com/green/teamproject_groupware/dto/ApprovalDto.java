@@ -26,5 +26,12 @@ public class ApprovalDto {
 	private String doc_title;
 	private String doc_content;
 	private int doc_status;
+	private String first_name;
+	private String second_name;
+	private String third_name;
+	private String doc_img;
+	private String first_img;
+	private String second_img;
+	private String third_img;
 	
 }
