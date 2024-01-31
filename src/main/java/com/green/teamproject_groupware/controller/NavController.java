@@ -47,11 +47,11 @@ public class NavController {
 		@GetMapping("/display")
 		@ResponseBody
 		public ResponseEntity<byte[]> getFile(String fileName){
-			log.info("@# fileName ===>"+fileName);
+			
 //			업로드 파일 경로 + 이름
 			File file = new File("D:\\dev\\ProjectUpload\\profile\\"+fileName);
 			
-			log.info("@# file ==>"+file);
+			
 			ResponseEntity<byte[]> result = null;
 			HttpHeaders header = new HttpHeaders();
 			try {

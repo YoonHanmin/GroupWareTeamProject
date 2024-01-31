@@ -12,8 +12,9 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.green.teamproject_groupware">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
+	
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
@@ -31,6 +32,32 @@
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
+
+<!-- SQL 로그 출력을 위한 설정 추가 시작 -->
+	<logger name="jdbc.sqlonly" additivity="false"> 
+		<level value="debug"/> 
+		<appender-ref ref="console"/> 
+	</logger>
+	<logger name="jdbc.sqltiming" additivity="false">
+		<level value="warn" />
+		<appender-ref ref="console"/> 
+	</logger>
+	<logger name="jdbc.audit" additivity="false"> 
+		<level value="warn"/>  
+		<appender-ref ref="console"/> 
+	</logger> 
+
+	<logger name="jdbc.resultset" additivity="false">
+		<level value="warn" />
+		<appender-ref ref="console"/> 
+	</logger>
+
+	<logger name="jdbc.resultsettable" additivity="false"> 
+		<level value="info"/>  
+		<appender-ref ref="console"/> 
+	</logger> 
+<!-- SQL 로그 출력을 위한 설정 추가 끝 -->
+
 
 	<!-- Root Logger -->
 	<root>
