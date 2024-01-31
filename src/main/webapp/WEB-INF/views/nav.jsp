@@ -184,7 +184,7 @@ border-radius: 3px;
             </ul>
         </li>
         
-        <li><a href="vacationRequest"><i class="bi bi-calendar-week"></i>  휴가관리</a>
+        <li><a href="#"><i class="bi bi-calendar-week"></i>  휴가관리</a>
             <ul>
                 <li><a href="vacationRequest">휴가신청</a></li>
                 <li><a href="myVacationRequests">휴가신청내역</a></li>

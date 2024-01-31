@@ -41,5 +41,5 @@ id="WebApp_ID" version="3.1">
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
+	
 </web-app>

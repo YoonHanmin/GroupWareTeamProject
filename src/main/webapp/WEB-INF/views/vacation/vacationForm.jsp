@@ -88,6 +88,24 @@ height : 40px;
 padding : 10px;
 margin-right : 20px;
 }
+
+.content-vacation {
+    width: 60%;
+    margin: 0 auto; /* 가운데 정렬을 위한 스타일 */
+}
+
+.vacation-box {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.vacation-item {
+    width: 30%; /* 상자 너비 조정 */
+    border: 1px solid #eee;
+    padding: 10px;
+    text-align: center;
+}
 </style>
  <script>
  $(document).ready(function () {
@@ -121,11 +139,21 @@ margin-right : 20px;
       
         <div class="content">
         
-        
-        	
-        	</div>
-        
-      
+        		<div class="content-vacation">
+				    <div class="vacation-box">
+				        <div class="vacation-item">
+				            <h3>연차</h3>
+				        </div>
+				        <div class="vacation-item">
+				            <h3>반차</h3>
+				        </div>
+				        <div class="vacation-item">
+				            <h3>휴가</h3>
+				        </div>
+				    </div>
+				</div>
+				
+        </div>
  </main>
 </body>
 </html>

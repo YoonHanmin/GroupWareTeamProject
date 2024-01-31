@@ -181,8 +181,8 @@ border-radius: 3px;
         
         <li><a href="#"><i class="bi bi-calendar-week"></i>  휴가관리</a>
             <ul>
-                <li><a href="#">서브메뉴1</a></li>
-                <li><a href="#">서브메뉴2</a></li>
+                <li><a href="vacationRequest">휴가신청</a></li>
+                <li><a href="myVacationRequests">휴가신청내역</a></li>
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-file-earmark-check"></i>  전자결재</a> 

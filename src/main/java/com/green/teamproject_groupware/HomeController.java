@@ -33,8 +33,8 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "vacationForm";
-//		return "login";
+//		return "vacation/vacationForm";
+		return "login";
 	}
 	
 }

@@ -117,12 +117,84 @@ margin-right : 20px;
       </div>
       
         <div class="content">
+      	    <table id="vacation-table">
+	            <thead>
+	            <tr>
+	            	<th>휴가 번호</th>
+	                <th>사원번호</th>
+	                <th>이름</th>
+	                <th>직급</th>
+	                <th>휴가 타입</th>
+	                <th>휴가 기간(일)</th>
+	                <th>휴가 사유</th>
+	                <th>휴가 시작일</th>
+	                <th>휴가 종료일</th>
+	                <th>신청 상태</th>
+	                <th>신청 일자</th>
+	            </tr>
+	            </thead>
+	            <tbody>
+	            <c:forEach var="vacation" items="${myVacationRequests}">
+	                <tr>
+			            <td>
+			                <c:choose>
+			                    <c:when test="${not empty vacation.empid}">
+			                        ${vacation.empid}
+			                    </c:when>
+			                    <c:otherwise>
+			                        <!-- If empId is empty, display input field -->
+			                        <input type="text" name="empId" value="${vacation.empId}" disabled>
+			                    </c:otherwise>
+			                </c:choose>
+			            </td>
+			            <td>
+			                <c:choose>
+			                    <c:when test="${not empty vacation.empno}">
+			                        ${vacation.empno}
+			                    </c:when>
+			                    <c:otherwise>
+			                        <!-- If empNo is empty, display input field -->
+			                        <input type="text" name="empno" value="${vacation.empno}" disabled>
+			                    </c:otherwise>
+			                </c:choose>
+			            </td>
+			            <td>
+			                <c:choose>
+			                    <c:when test="${not empty vacation.name}">
+			                        ${vacation.name}
+			                    </c:when>
+			                    <c:otherwise>
+			                        <!-- If name is empty, display input field -->
+			                        <input type="text" name="name" value="${vacation.name}" disabled>
+			                    </c:otherwise>
+			                </c:choose>
+			            </td>
+			            <td>
+			                <c:choose>
+			                    <c:when test="${not empty vacation.position}">
+			                        ${vacation.position}
+			                    </c:when>
+			                    <c:otherwise>
+			                        <!-- If position is empty, display input field -->
+			                        <input type="text" name="position" value="${vacation.position}" disabled>
+			                    </c:otherwise>
+			                </c:choose>
+			            </td>
+	                    <td>${vacation.position}</td>
+	                    <td>${vacation.vacationtype}</td>
+	                    <td>${vacation.vacationdays}</td>
+	                    <td>${vacation.reason}</td>
+	                    <td>${vacation.startdate}</td>
+	                    <td>${vacation.enddate}</td>
+	                    <td>${vacation.vacationtype}</td>
+	                    <td>${vacation.status}</td>
+	                    <td>${vacation.requestdate}</td>
+	                </tr>
+	            </c:forEach>
+	            </tbody>
+        </table>
         
-        
-        	
         	</div>
-        
-      
  </main>
 </body>
 </html>
