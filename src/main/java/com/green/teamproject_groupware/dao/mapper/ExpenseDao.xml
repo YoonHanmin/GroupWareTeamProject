@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.teamproject_groupware.dao.ExpenseDao">
+
+    <select id="expense_list" resultType="com.green.teamproject_groupware.dto.ExpenseDto">
+        select expense_id, usagePlace, edate from expense_TABLE
+        order by expense_id desc
+    </select>
+
+    
+    <insert id="expense_write">
+    insert into expense_TABLE(expense_id, eempno, usagePlace)
+    values (expense_TABLE_SEQ.NEXTVAL, #{eempno}, #{usagePlace})
+	</insert>
+
+    <select id="expense_contentView" resultType="com.green.teamproject_groupware.dto.ExpenseDto">
+        select expense_id, usagePlace, quantity, edate from expense_TABLE where expense_id=#{expense_id}
+    </select>
+    
+    <update id="expense_modify">
+    	update expense_TABLE set usagePlace=#{usagePlace} where expense_id=#{expense_id}
+    </update>
+    
+    <delete id="expense_delete">
+    	delete from expense_TABLE where expense_id=#{expense_id}
+    </delete>
+
+</mapper>

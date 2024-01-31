@@ -32,40 +32,40 @@ public class SupplyServiceImpl implements SupplyService{
 	}
 
 	@Override
-	public SupplyDto contentView(HashMap<String, String> param) {
+	public SupplyDto supply_contentView(HashMap<String, String> param) {
 		log.info("@# SupplyServiceImpl.contentView() start");
 		
 		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
-		SupplyDto dto = dao.contentView(param);
+		SupplyDto dto = dao.supply_contentView(param);
 		
 		return dto;
 	}
 
 	@Override
-	public void modify(HashMap<String, String> param) {
+	public void supply_modify(HashMap<String, String> param) {
 		log.info("@# SupplyServiceImpl.modify() start");
 		
 		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
-		dao.modify(param);
+		dao.supply_modify(param);
 		
 		
 	}
 	@Override
-	public void delete(HashMap<String, String> param) {
+	public void supply_delete(HashMap<String, String> param) {
 		log.info("@# SupplyServiceImpl.delete() start");
 		
 		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
-		dao.delete(param);
+		dao.supply_delete(param);
 		
 	}
 
 	@Override
-	public void write(SupplyDto formData) {
+	public void supply_write(SupplyDto formData1) {
 		log.info("@# SupplyDto.write() start");
 		
 		 try {
 			 SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
-		        dao.write(formData);
+		        dao.supply_write(formData1);
 		        log.info("@# Write Success!");
 		    } catch (Exception e) {
 		        log.error("@# Write Failed: " + e.getMessage());

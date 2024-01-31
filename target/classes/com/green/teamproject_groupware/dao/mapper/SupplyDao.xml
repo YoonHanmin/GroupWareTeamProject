@@ -4,30 +4,26 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.SupplyDao">
 
-<!--     <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto"> -->
-<!--         select supply_id, item, sdescription, quantity, sdate from supply_TABLE -->
-<!--         order by supply_id desc -->
-<!--     </select> -->
     <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto">
-        select supply_id, item, sdescription, quantity from supply_TABLE
+        select supply_id, item, sdescription, quantity, sdate from supply_TABLE
         order by supply_id desc
     </select>
 
     
-    <insert id="write">
+    <insert id="supply_write">
     insert into supply_TABLE(supply_id, sempno, item, quantity, sdescription)
     values (supply_TABLE_SEQ.NEXTVAL, #{sempno, jdbcType=VARCHAR}, #{item, jdbcType=VARCHAR}, #{quantity, jdbcType=INTEGER}, #{sdescription, jdbcType=VARCHAR})
-</insert>
+	</insert>
 
-    <select id="contentView" resultType="com.green.teamproject_groupware.dto.SupplyDto">
+    <select id="supply_contentView" resultType="com.green.teamproject_groupware.dto.SupplyDto">
         select supply_id, sname, item, quantity, sdescription, sdate, sempno from supply_TABLE where supply_id=#{supply_id}
     </select>
     
-    <update id="modify">
+    <update id="supply_modify">
     	update supply_TABLE set item=#{item}, quantity=#{quantity}, sdescription=#{sdescription} where supply_id=#{supply_id}
     </update>
     
-    <delete id="delete">
+    <delete id="supply_delete">
     	delete from supply_TABLE where supply_id=#{supply_id}
     </delete>
 

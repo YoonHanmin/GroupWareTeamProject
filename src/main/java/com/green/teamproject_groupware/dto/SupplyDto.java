@@ -17,4 +17,5 @@ public class SupplyDto {
 	private int quantity;
 	private String sdescription;
 	private Timestamp sdate;
+	
 }

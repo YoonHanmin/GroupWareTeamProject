@@ -18,7 +18,7 @@
                 <th>물품명</th>
                 <th>설명</th>
                 <th>수량</th>
-                <th>날짜</th>
+                <th>신청일</th>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +29,7 @@
                     <td>${dto.item}</td>
                     <td>${dto.sdescription}</td>
                     <td>${dto.quantity}</td>
-                </tr>
+                    <td>${dto.sdate}</td>
             </c:forEach>
         </tbody>
     </table>
