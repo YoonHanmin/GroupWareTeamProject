@@ -7,11 +7,11 @@ import com.green.teamproject_groupware.dto.SupplyDto;
 
 public interface SupplyService {
 	public ArrayList<SupplyDto> supply_list();
-	public void write(SupplyDto formData);
+	public void supply_write(SupplyDto formData1);
 //	public void write(HashMap<String, String> param);
 //	public boolean  write(SupplyDto request);
-	public SupplyDto contentView(HashMap<String, String> param);
-	public void modify(HashMap<String, String> param);
-	public void delete(HashMap<String, String> param);
+	public SupplyDto supply_contentView(HashMap<String, String> param);
+	public void supply_modify(HashMap<String, String> param);
+	public void supply_delete(HashMap<String, String> param);
 	
 }

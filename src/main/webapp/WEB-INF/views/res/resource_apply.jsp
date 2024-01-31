@@ -170,7 +170,13 @@ margin-right : 20px;
       <h2> 자원요청 카테고리</h2> 
     </div>
      <div class="info">
-		<button id="showSupplyListBtn" onclick="redirectToSupplyList()">내가 신청한 목록 보기</button>
+		<button onclick="redirectToSupplyList()">내가 신청한 비품 목록 </button>
+    </div>
+     <div class="info">
+		<button onclick="redirectToVehicleList()">내가 신청한 차량 목록 </button>
+    </div>
+     <div class="info">
+		<button onclick="redirectToExpenseList()">내가 신청한 비용처리 목록 </button>
     </div>
       
     <div class="content">
@@ -178,8 +184,7 @@ margin-right : 20px;
 	  <div class="resource-box" data-modal="modal1">Supplies</div>
 	  <div class="resource-box" data-modal="modal2">Vehicle</div>
 	  <div class="resource-box" data-modal="modal3">Expense</div>
-	  <div class="resource-box" data-modal="modal4">Meal</div>
-	  <div class="resource-box" data-modal="modal5">Reservation</div>
+	  <div class="resource-box" data-modal="modal4">Reservation</div>
      </div>        
      
      <!-- Modal 1 - Supplies -->
@@ -187,7 +192,7 @@ margin-right : 20px;
     <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h2>비품 신청입니다</h2>
-        <form id="suppliesForm" class="resource-form" action="/submitSuppliesForm">
+        <form id="suppliesForm" class="resource-form" action="/submitSuppliesForm" method="post">
             <label for="sempno">사원번호:</label>
             <input type="text" id="sempno" name="sempno" required>
             <label for="item">물품명:</label>
@@ -196,84 +201,73 @@ margin-right : 20px;
             <input type="text" id="quantity" name="quantity" required>
             <label for="sdescription">설명:</label>
             <textarea id="sdescription" name="sdescription" rows="4" required></textarea>
-            <input type="submit" value="제출">
+            <input type="submit" value="비품 신청하기">
         </form>
-        <div id="successMessage" style="display: none; color: green;">
-            비품신청이 완료되었습니다.
-        </div>
     </div>
 </div>
 
 <!-- Modal 2 - Vehicle -->
-<!-- <div id="modal2" class="modal"> -->
-<!--     <div class="modal-content"> -->
-<!--         <span class="modal-close">&times;</span> -->
-<!--         <h2>차량 신청입니다</h2> -->
-<!--         <form id="vehicleForm" action="/submitForm" method="post"> -->
-<!--            <label for="itemName">차량 번호:</label> -->
-<!--             <input type="text" id="itemName" name="itemName" required> -->
-<!--             <label for="quantity">수량:</label> -->
-<!--             <input type="text" id="quantity" name="quantity" required> -->
-<!--             <label for="purpose">목적:</label> -->
-<!--             <input type="submit" value="제출"> -->
-<!--         </form> -->
-<!--     </div> -->
-<!-- </div> -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>차량 신청입니다</h2>
+        <form id="vehicleForm" class="resource-form" action="/submitVehicleForm" method="post">
+        	<label for="vempno">사원번호:</label>
+            <input type="text" id="vempno" name="vempno" required>
+            <label for="vstartdate">시작일:</label>
+            <input type="date" id="vstartdate" name="vstartdate" required>
+            <label for="venddate">종료일:</label>
+            <input type="date" id="venddate" name="venddate" required>
+            <label for="vdescription">용도:</label>
+            <textarea id="vdescription" name="vdescription" rows="4" required></textarea>
+            <input type="submit" value="차량 신청하기">
+        </form>
+    </div>
+</div>
         
 <!-- Modal 3 - Expense -->
 <div id="modal3" class="modal">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
         <h2>지출 비용 처리</h2>
-        <form id="expenseForm" action="/submitForm" method="post">
+        <form id="expenseForm" class="resource-form" action="/submitExpenseForm" method="post" enctype="multipart/form-data">
             <div id="fontSubject">
-				개인경비청구서 
-				<input type="hidden" name="subject" value="개인경비청구서 " readonly />
-				<input type="hidden" name="information" value="개인경비청구서 입니다." readonly />
-			<textarea style="display: none;" name="guide_form">요청 사항 :
-				 </textarea>
-			</div>
-			<div id="fontpurpose">
-				경비 청구
-			</div>	
-            <input type="submit" value="제출">
+                <label for="eempno">사원번호:</label>
+                <input type="text" id="eempno" name="eempno" required>
+                <label for="usagePlace">사용처:</label>
+                <input type="text" id="usagePlace" name="usagePlace" required>
+                <label for="attachment">첨부 이미지:</label>
+                <input type="file" id="attachment" name="attachment" required>
+            </div>
+            <div id="fontpurpose">
+                경비 청구
+            </div>
+            <input type="submit" value="경비 청구하기">
         </form>
     </div>
 </div>
 
-        
-<!-- Modal 4 - Meal -->
+<!-- Modal 4 - Reservation -->
 <div id="modal4" class="modal">
     <div class="modal-content">
         <span class="modal-close">&times;</span>
-        <h2>식비</h2>
-        <form id="mealForm" action="/submitForm" method="post">
-             <label for="itemName">식사 인원:</label>
-            <input type="text" id="itemName" name="itemName" required>
-            <label for="quantity">비용:</label>
-            <input type="text" id="quantity" name="quantity" required>
-            <label for="purpose">비고:</label>
-            <input type="submit" value="제출">
+        <h2>숙소</h2>
+        <form id="reservationForm" class="resource-form" action="/submitReservationForm" method="post">
+         	<label for="rempno">사원번호:</label>
+            <input type="text" id="rempno" name="rempno" required>
+            <label for="numOfPeople">숙박 인원:</label>
+            <input type="text" id="numOfPeople" name="numOfPeople" required>
+            <label for="checkInDate">숙박 시작일:</label>
+            <input type="date" id="checkInDate" name="checkInDate" required>
+            <label for="checkOutDate">숙박 종료일:</label>
+            <input type="date" id="checkOutDate" name="checkOutDate" required>
+            <label for="details">상세:</label>
+            <input type="text" id="details" name="details" required>
+            <input type="submit" value="신청하기">
         </form>
     </div>
 </div>
 
-        
-<!-- Modal 5 - Reservation -->
-<div id="modal5" class="modal">
-    <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <h2>숙소</h2>
-        <form id="reservationForm" action="/submitForm" method="post">
-            <label for="itemName">사용 금액:</label>
-            <input type="text" id="itemName" name="itemName" required>
-            <label for="quantity">숙박 인원:</label>
-            <input type="text" id="quantity" name="quantity" required>
-            <label for="purpose">숙박일:</label>
-            <input type="submit" value="제출">
-        </form>
-    </div>
-</div>
  </main>
 </body>
 </html>
@@ -281,11 +275,20 @@ margin-right : 20px;
 <script>
 
 function redirectToSupplyList() {
+    // 원하는 리다이렉션 로직을 여기에 추가
     window.location.href = "/supply_list";
+}
+function redirectToVehicleList() {
+    window.location.href = "/vehicle_list";
+}
+function redirectToExpenseList() {
+    window.location.href = "/expense_list";
+}
+function redirectToReservationList() {
+    window.location.href = "/reservation_list";
 }
 
 $(document).ready(function () {
-
     $(".resource-box").click(function () {
         var modalId = $(this).data("modal");
         $("#" + modalId).css("display", "flex");
@@ -295,53 +298,102 @@ $(document).ready(function () {
         $(this).closest(".modal").css("display", "none");
     });
 
-    // 각 모달에 대한 submit 이벤트 처리
-    $(".resource-form").submit(function (event) {
-        event.preventDefault(); // 기본 폼 제출 방지
-        var modalId = $(this).closest(".modal").attr("id");
-        var formData = {
-                sempno: $("#" + modalId + " #sempno").val(),
-                item: $("#" + modalId + " #item").val(),
-                quantity: $("#" + modalId + " #quantity").val(),
-                sdescription: $("#" + modalId + " #sdescription").val()
-               
-                
-            };
-			
-        console.log("폼 데이터:", formData); // 추가된 코드
-        
+ // Modal 1 - Supplies
+    $("#suppliesForm").submit(function (event) {
+        event.preventDefault();
+        var formData1 = {
+            sempno: $("#sempno").val(),
+            item: $("#item").val(),
+            quantity: $("#quantity").val(),
+            sdescription: $("#sdescription").val()
+        };
+
         $.ajax({
             type: "POST",
-            url: "/submitForm", // 적절한 서버 URL로 수정
-            contentType: "application/json", // JSON 형식으로 데이터 전송
-            data: JSON.stringify(formData), // JSON 데이터로 직렬화
+            url: $(this).attr("action"),
+            contentType: "application/json",
+            data: JSON.stringify(formData1),
             success: function (response) {
-                // 서버 응답 처리
                 console.log("서버 응답:", response);
-                
-             // 제출 후 폼 초기화
-                $("#" + modalId + " form")[0].reset();
-            },
-            error: function (error) {
-                // 오류 처리
-                console.error("오류 발생:", error);
+                $("#suppliesForm")[0].reset();
+                $("#modal1").css("display", "none");
+                $("#successMessage").css("display", "block");
             }
         });
-        
-        // 모달 닫기
-        $(this).closest(".modal").css("display", "none");
     });
+
+    // Modal 2 - Vehicle
+    $("#vehicleForm").submit(function (event) {
+        event.preventDefault();
+        var formData2 = {
+            vempno: $("#vempno").val(),
+            vstartdate: $("#vstartdate").val(),
+            venddate: $("#venddate").val(),
+            vdescription: $("#vdescription").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr("action"),
+            contentType: "application/json",
+            data: JSON.stringify(formData2),
+            success: function (response) {
+                console.log("서버 응답:", response);
+                $("#vehicleForm")[0].reset();
+                $("#modal2").css("display", "none");
+                $("#successMessage").css("display", "block");
+            }
+        });
+    });
+    
+    // Modal 3 - expense
+    $("#expenseForm").submit(function (event) {
+        event.preventDefault();
+        var formData3 = {
+                eempno: $("#eempno").val(),
+                usagePlace: $("#usagePlace").val(),
+            };
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr("action"),
+            contentType: "application/json",
+            data: JSON.stringify(formData3),
+            success: function (response) {
+                console.log("서버 응답:", response);
+                $("#expenseForm")[0].reset();
+                $("#modal3").css("display", "none");
+                $("#successMessage").css("display", "block");
+            }
+        });
+    });
+    
+    // Modal 4 - reservation
+    $("#reservationForm").submit(function (event) {
+        event.preventDefault();
+        var formData4 = {
+        		rempno: $("#rempno").val(),
+        		numOfPeople: $("#numOfPeople").val(),
+        		checkInDate: $("#checkInDate").val(),
+        		checkOutDate: $("#checkOutDate").val(),
+        		details: $("#details").val()
+            };
+
+        $.ajax({
+            type: "POST",
+            url: $(this).attr("action"),
+            contentType: "application/json",
+            data: JSON.stringify(formData4),
+            success: function (response) {
+                console.log("서버 응답:", response);
+                $("#reservationForm")[0].reset();
+                $("#modal4").css("display", "none");
+                $("#successMessage").css("display", "block");
+            }
+        });
+    });
+
 });
 
-// $(document).ready(function () {
-//     // "목록보기" 버튼 클릭 시 비품 목록을 가져오는 함수 호출
-    $("#showSupplyListBtn").click(function () {
-        fetchSupplyList();
-    });
-
 </script>
-
-        
-
-    
 

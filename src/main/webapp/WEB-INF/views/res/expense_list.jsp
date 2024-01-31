@@ -5,31 +5,27 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>물품 목록</title>
+    <title>비용처리 신청 목록</title>
 </head>
 <body>
 
 <div>
-    <h2>물품 목록</h2>
+    <h2>신청 목록</h2>
     <table border="1">
         <thead>
             <tr>
-                <th>물품 ID</th>
-                <th>물품명</th>
-                <th>설명</th>
-                <th>수량</th>
+                <th>처리 번호</th>
+                <th>사용처</th>
                 <th>신청일</th>
             </tr>
         </thead>
         <tbody>
-            <c:forEach items="${supplyList}" var="dto">
-            <c:set var="supplyDto" value="${dto}" />
+            <c:forEach items="${expenseList}" var="dto">
+            <c:set var="expenseDto" value="${dto}" />
                 <tr>
-                    <td>${dto.supply_id}</td>
-                    <td>${dto.item}</td>
-                    <td>${dto.sdescription}</td>
-                    <td>${dto.quantity}</td>
-                    <td>${dto.sdate}</td>
+                    <td>${dto.expense_id}</td>
+                    <td>${dto.usagePlace}</td>
+                    <td>${dto.edate}</td>
             </c:forEach>
         </tbody>
     </table>
