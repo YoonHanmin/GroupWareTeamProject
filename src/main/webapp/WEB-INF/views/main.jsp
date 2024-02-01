@@ -82,19 +82,23 @@ z-index: 1; /* z-index 값 설정 */
 position : absolute;
 left : calc(30% - 300px);
 top : calc(50% - 300px);
-width : 600px;
+width : 300px;
 height : 300px;
 background : white;
 display:none;
-border-radius: 8px;
+
  z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
 
 }
 .popup > #messenger-out{
 font-size: 2rem; 
 float: right; 
-margin-right:5px;
+margin-right:3px;
 cursor: pointer;
+display : inline;
+/* height : 30px; */
+/* margin-bottom:30px; */
+/* padding-bottom:30px; */
 }
 
 .popup-logout{
@@ -127,10 +131,27 @@ border-radius: 5px;
     	const empno = $("input[name='empno']").val();
     	console.log(empno);
     const eventSource = new EventSource("/connect/"+empno)
-    eventSource.addEventListener('sse',(e) => {
-   	const {data: receivedConnectData} = e;
-   	console.log('connect event data : ',receivedConnectData);
+    
+    eventSource.addEventListener('NewMsg', function(e){
+        console.log(e.data);
+        const receivedConnectData = JSON.parse(e.data);
+        console.log('connect event data:', receivedConnectData);
+       if(receivedConnectData.msgFromName!=null){
+        var msgFromName = receivedConnectData.msgFromName;
+        console.log(msgFromName);
+        var spanElement = $('<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">')
+        .append('<span class="visually-hidden">New alerts</span>');
 
+      $('#Notify_btn').append(spanElement);
+      
+      var newDiv = $('<div style="height:70px; font-weight:bold; font-size:14px; text-align:center;border-bottom:1px solid #eee; background-color:white; bo">')
+      .append("<span>"+msgFromName+" 님이 메시지를 보냈습니다.</span>");
+
+    $('.popup').append(newDiv);
+      
+      
+      
+       }
     });
     
     };
@@ -244,11 +265,11 @@ border-radius: 5px;
             <ul class="profile-bar">
 <!--             	<li id="logout" style="margin-left:30px; "><i class="bi bi-box-arrow-left" style="font-size: 2rem; margin-bottom:10px;"></i></li> -->
 				<li  style="margin-left:30px; margin-right:10px; "><button id="logout" type="button" class="btn btn-primary position-relative">LOGOUT</button></li>
-            	<li id="messenger" style="margin-right:30px; height:35px;"><button type="button" class="btn btn-primary position-relative">
+            	<li id="messenger" style="margin-right:30px; height:35px;"><button id="Notify_btn"type="button" class="btn btn-primary position-relative">
   Messenger
-  <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
-    <span class="visually-hidden">New alerts</span>
-  </span>
+<!--   <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"> -->
+<!--     <span class="visually-hidden">New alerts</span> -->
+<!--   </span> -->
 </button></li>
             		
             	
@@ -328,7 +349,11 @@ border-radius: 5px;
     <!--  모달 팝업창-->
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
-
+	<div style="height:40px; font-weight:bold; font-size:20px;text-align:center; background-color:#F8BBD0; border-bottom:1px solid black;">
+	<p>새로온 메시지가 있습니다!<p>
+	</div>
+	
+	
  	</div>
  	
  

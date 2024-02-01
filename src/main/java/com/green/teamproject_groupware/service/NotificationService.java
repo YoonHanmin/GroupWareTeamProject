@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.dao.EmitterrepositoryImpl;
 import com.green.teamproject_groupware.dto.MsgDto;
 import com.green.teamproject_groupware.dto.Notification;
@@ -24,7 +25,7 @@ public class NotificationService {
 	private final EmitterrepositoryImpl emitterRepository;
 	
 	public SseEmitter subscribe(String empno,String lastEventId) {
-		String id = empno + "_"+ System.currentTimeMillis();
+		String id = empno;
 		SseEmitter emitter = emitterRepository.save(id, new SseEmitter(DEFAULT_TIMEOUT));
 		
 		// 오류시 emitter 제거
@@ -33,7 +34,7 @@ public class NotificationService {
 		emitter.onTimeout(() -> emitterRepository.deleteById(id));
 		
 		// 더미데이터 전송
-		sendToclient(emitter,id,"EventStream 생성: [userID="+id+"]");
+		sendToclient(emitter,id,"{'key':'"+id+"'}");
 		
 		if(!lastEventId.isEmpty()) {
 			Map<String,Object> events = emitterRepository.findAllEventCacheStartWithById(String.valueOf(id));
@@ -51,9 +52,10 @@ public class NotificationService {
 		Map<String,SseEmitter> sseEmitters = emitterRepository.findAllEmitterStartWithById(receiver);
 		sseEmitters.forEach(
 				(key,emitter)->{
+//					클라이언트와 연결이 끊겼을 경우에 대비해 Cache map에 데이터 저장
 					emitterRepository.saveEventCache(key, notification);
 					log.info("알림내용 ==>"+notification);
-					//데이터 전송
+					//데이터 전송 from()메소드를 통해  Json형식으로 변환한뒤 클라이언트에게 전송
 					sendToclient(emitter, key, NotificationResponse.from(notification));
 				}
 				);
@@ -61,22 +63,24 @@ public class NotificationService {
 	}
 	
 //	Notification 객체 생성 메소드
-	private Notification createNotification(String receiver,String notificationType,String msgTitle) {
+	private Notification createNotification(String receiver,String notificationType,String msgFromName) {
 		return Notification.builder()
 				.receiver(receiver)
 				.notificationType(notificationType)
-				.msgTitle(msgTitle)
-				.url("/connect/"+receiver) // 
+				.msgFromName(msgFromName)
+				.url("/receive") 
 				.isRead(false)
 				.build();
 	}
 	
 	private void sendToclient(SseEmitter emitter,String id,Object data) {
 		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+	        String jsonData = objectMapper.writeValueAsString(data);
 			emitter.send(SseEmitter.event()
 									.id(id)
-									.name("sse")
-									.data(data));
+									.name("NewMsg")
+									.data(jsonData)); //json형태로 변환하여 전송
 			 log.info("알림내용 ==> " + data);
 					
 		} catch (IOException e) {
