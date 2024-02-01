@@ -124,7 +124,7 @@ public class PBController {
 	    model.addAttribute("pageMaker", param);
 
 	    // 게시글의 id를 이용하여 댓글 목록을 가져옵니다.
-	    int pid = Integer.parseInt(param.get("pid"));
+	    int pid = Integer.parseInt(param.get("pid").trim());
 	    model.addAttribute("prlist", preplyService.prlist(pid));
 
 	    pservice.pincreaseHit(param);
