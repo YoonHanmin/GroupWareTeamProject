@@ -6,14 +6,30 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.ApprovalDao">
     <insert id="docWrite" parameterType="com.green.teamproject_groupware.dto.ApprovalDto">
-    	insert into approval (doc_empno,doc_name,doc_dname,doc_date,doc_expire,doc_confidential,first_empno,second_empno,third_empno,doc_title,doc_content) values(
-#{doc_empno},#{doc_name},#{doc_dname},sysdate,#{doc_expire},#{doc_confidential},#{first_empno},#{second_empno},#{third_empno},#{doc_title},#{doc_content})
+    	insert into approval (doc_empno,doc_name,doc_dname,doc_date,doc_expire,doc_confidential,first_empno,second_empno,third_empno,doc_title,doc_content,doc_img) values(
+#{doc_empno},#{doc_name},#{doc_dname},sysdate,#{doc_expire},#{doc_confidential},#{first_empno},#{second_empno},#{third_empno},#{doc_title},#{doc_content},#{doc_img})
     </insert>
     
     <select id="getAllDoc" resultType="com.green.teamproject_groupware.dto.ApprovalDto">
-    select * from approval where doc_empno = #{doc_empno}
+    select * from approval where doc_empno = #{doc_empno} order By doc_id desc
+    </select>
+    <select id="getMyDoc" resultType="com.green.teamproject_groupware.dto.ApprovalDto">
+    select * from approval where doc_empno = #{doc_empno} and doc_status= 0 order By doc_id desc
+    </select>
+    <select id="getMyDoc_reject" resultType="com.green.teamproject_groupware.dto.ApprovalDto">
+    select * from approval where doc_empno = #{doc_empno} and doc_status= 2 order By doc_id desc
     </select>
     
+    
+<!--     사번을 통해 이름까지 구해옴 -->
+    <select id="getDocById" resultType="com.green.teamproject_groupware.dto.ApprovalDto">
+   SELECT a.*, e1.name AS first_name, e2.name AS second_name, e3.name AS third_name
+FROM approval a
+JOIN emp e1 ON a.first_empno = e1.empno
+JOIN emp e2 ON a.second_empno = e2.empno
+JOIN emp e3 ON a.third_empno = e3.empno
+WHERE doc_id = #{doc_id}
+    </select>
     <select id="getTodoDoc" resultType="com.green.teamproject_groupware.dto.ApprovalDto" >
     SELECT *
 FROM (
@@ -31,6 +47,10 @@ FROM (
         DOC_TITLE,
         DOC_CONTENT,
         DOC_STATUS,
+        doc_img,
+        first_img,
+        second_img,
+        third_img,
         CASE
             WHEN FIRST_APPROVAL = 0 AND FIRST_EMPNO = #{empno} THEN 1
             WHEN SECOND_APPROVAL = 0 AND SECOND_EMPNO = #{empno} AND FIRST_APPROVAL = 1 THEN 1
@@ -45,4 +65,33 @@ FROM (
 ) SubQuery
 WHERE APPROVAL_STATUS = 1
     </select>
+    
+    <update id="doc_approval">
+    UPDATE approval
+SET 
+  first_approval = CASE WHEN first_empno = #{empno} THEN 1 ELSE first_approval END,
+  first_img = CASE WHEN first_empno = #{empno} THEN #{empno} ELSE first_img END,
+  second_approval = CASE WHEN second_empno = #{empno} THEN 1 ELSE second_approval END,
+  second_img = CASE WHEN second_empno = #{empno} THEN #{empno} ELSE second_img END,
+  third_approval = CASE WHEN third_empno = #{empno} THEN 1 ELSE third_approval END,
+  third_img = CASE WHEN third_empno = #{empno} THEN #{empno} ELSE third_img END,
+  doc_status = CASE WHEN third_empno = #{empno} THEN 1 ELSE doc_status END
+WHERE 
+doc_id = #{doc_id} and (  first_empno = #{empno} OR second_empno = #{empno} OR third_empno = #{empno})
+    </update>
+    
+    <update id="doc_reject">
+    UPDATE approval
+SET 
+	doc_status = 2,
+  first_approval = CASE WHEN first_empno = #{empno} THEN 2 ELSE first_approval END,
+  first_img = CASE WHEN first_empno = #{empno} THEN 'reject' ELSE first_img END,
+  second_approval = CASE WHEN second_empno = #{empno} THEN 2 ELSE second_approval END,
+   second_img = CASE WHEN second_empno = #{empno} THEN 'reject' ELSE second_img END,
+  third_approval = CASE WHEN third_empno = #{empno} THEN 2 ELSE third_approval END,
+   third_img = CASE WHEN third_empno = #{empno} THEN 'reject' ELSE third_img END
+WHERE 
+doc_id = #{doc_id} and (  first_empno = #{empno} OR second_empno = #{empno} OR third_empno = #{empno})
+    
+    </update>
 </mapper>

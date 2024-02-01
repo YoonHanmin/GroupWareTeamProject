@@ -415,6 +415,7 @@ $(document).ready(function () {
         var content = $(this).find("input[id='content']").val();
         var to_name = $(this).find("input[id='to_name']").val();
         var to_position = $(this).find("input[id='to_position']").val();
+        var to_email = $(this).find("input[id='to_email']").val();
         var to_dname = $(this).find("input[id='to_dname']").val();
         var from_profileimage = $(this).find("input[id='from_profileimage']").val();
         var from_email = $(this).find("input[id='from_email']").val();

@@ -351,7 +351,7 @@ $('.search-info').on('click',function(){
 //         element.remove();
 //     });
 		
-	var addedElement = $("<div>").text(data.name+data.position).css({"border-bottom":"1px solid black"}).append("<input type='hidden' name='"+linename+"' value='"+data.empno+"'>").hide(); // 처음에는 숨겨둡니다.
+	var addedElement = $("<div>").text(data.name+data.position).css({"border-bottom":"1px solid black"}).append("<input type='hidden' name='"+linename+"' value='"+data.empno+"'>").hide(); // 처음에는 숨겨두기
 	$(".popup-search").css({ "display": "none" });
 		
 	
@@ -462,25 +462,28 @@ $('.search-info').on('click',function(){
                 <td colspan="2">
                     <div style="display: flex; float:right;">
                         <span style="margin-right: 20px;">[결재라인]</span>
-                          <div id="line1" style="width:85px; height:85px; border: 1px solid black; background-color: white;cursor: pointer;">
+                          <div id="line1" style="width:85px; height:90px; border: 1px solid black; background-color: white;cursor: pointer;">
                           
                          		 <div  style="border-bottom:1px solid black;">${dto.getName()}
                          		 </div>
+                         		 <div>
+                         		 	<img src="./showStamp?fileName=${dto.getProfileimage()}" style='width: 60px; height: 60px; margin-left: 10px;  flex-shrink: 0; object-fit: cover;'>
+                         		 </div>
                           </div> 
                            
-                          <div id="line2" style="width:85px; height:85px; border: 1px solid black; background-color: white; cursor: pointer;">
+                          <div id="line2" style="width:85px; height:90px; border: 1px solid black; background-color: white; cursor: pointer;">
                           <i class="fa-solid fa-magnifying-glass-plus"></i>
                           		 <div style="border-bottom:1px solid black;"> 
                           		</div>
                           </div>
                             
-                          <div id="line3" style="width:85px; height:85px; border: 1px solid black; background-color: white;cursor: pointer;">
+                          <div id="line3" style="width:85px; height:90px; border: 1px solid black; background-color: white;cursor: pointer;">
                            <i class="fa-solid fa-magnifying-glass-plus"></i>
                           		 <div style="border-bottom:1px solid black;">
                           		</div>
                           </div>
                             
-                          <div id="line4"style="width:85px; height:85px; border: 1px solid black; background-color: white;cursor: pointer;">
+                          <div id="line4"style="width:85px; height:90px; border: 1px solid black; background-color: white;cursor: pointer;">
                            <i class="fa-solid fa-magnifying-glass-plus"></i>
                           		 <div style="border-bottom:1px solid black;">
                           		</div>
