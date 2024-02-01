@@ -29,12 +29,11 @@ public class MemServiceImpl implements MemService{
 		String mPw = param.get("password");
 		IMemDao dao = sqlSession.getMapper(IMemDao.class);
 		UserInfoDto dtos = dao.loginYn(param);
-		log.info("@# dtos의 password ==>"+dtos.getPassword());
+		
 		int result;
-		if(dtos ==null ||dtos.getPassword()==null) {
+		if(dtos ==null) {
 			result = 0; //존재하지않는 아이디
-		}
-		if(mPw.equals(dtos.getPassword())) {
+		}else if(mPw.equals(dtos.getPassword())) {
 			result= 1; // 로그인 성공			 
 		}else {
 			result = -1; //비밀번호 불일치
