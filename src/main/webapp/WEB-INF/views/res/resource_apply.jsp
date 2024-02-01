@@ -32,13 +32,15 @@ margin-top : 30px;
 .item ul {
 margin-top : 10px;
 }
+
 .content{
 width : 100%;
   display: flex;
       flex-wrap: wrap;
       justify-content: center;
 /*       align-items: center; */
-      height: 100vh;
+/*       height: 100vh; */
+	  height : 30%;
       margin: 10px 10px;
 	  padding : 10px;
 }
@@ -72,11 +74,11 @@ font-weight : bold;
 
 .description {
 margin-top : 30px;
-border-top : 1px soild #eee;
+border-top : 1px solid #eee;
 height : 800px;
 }
 .profile-info{
-border-bottom : 1px soild #eee;
+border-bottom : 1px solid #eee;
 
 }
 #profile-table{
@@ -94,7 +96,8 @@ margin-right : 20px;
 }
 
     .resource-box {
-      width: 150px;
+/*       width: 150px; */
+      width: 20%;
       height: 150px;
       margin: 10px;
       display: flex;
@@ -122,9 +125,9 @@ margin-right : 20px;
 }
 
 .modal-content {
-    max-width: 800px;
+    max-width: 890px;
     width: 80%; /* 모달의 너비를 조절합니다. */
-    max-height: 500px;
+    max-height: 550px;
     height: 80%; /* 모달의 높이를 조절합니다. */
     overflow-y: auto; /* 내용이 모달보다 길 경우 세로 스크롤을 표시합니다. */
     background-color: #fff;
@@ -135,10 +138,103 @@ margin-right : 20px;
 
     .modal-close {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 20px;
+        right: 20px;
         cursor: pointer;
+        font-size: 40px;
     }
+    .modal-content h2 {
+    text-align: center;
+}
+    
+    .modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.modal-content label {
+    margin-bottom: 5px;
+}
+
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.modal-content textarea {
+    resize: vertical; /* 세로 리사이즈 허용 */
+}
+
+.modal-content input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+}
+
+.modal-content input[type="submit"]:hover {
+    background-color: #45a049;
+}
+    
+    
+ .nav-container {
+ 			width : 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 10px 10px;
+	  padding : 10px;
+            margin-bottom: 20px; /* 원하는 간격을 설정하세요 */
+        }
+
+    .resource-box {
+/*       width: 150px; */
+      width: 20%;
+      height: 150px;
+      margin: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+        .nav-item {
+            width: 20%; /* 네비게이션 아이템 너비 조정 */
+            height: 50px;
+            margin: 10px;
+            display: flex;
+	        justify-content: center;
+	        align-items: center;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .list-item {
+            width: 23%; /* 필요에 따라 너비 조정 */
+            height: 150px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+        }
+
+        .list-item:hover {
+            background-color: #f0f0f0;
+        }    
+    
+    
+    
 </style>
 
  <script>
@@ -169,15 +265,15 @@ margin-right : 20px;
     <div class="info">
       <h2> 자원요청 카테고리</h2> 
     </div>
-     <div class="info">
-		<button onclick="redirectToSupplyList()">내가 신청한 비품 목록 </button>
+    
+ 
+ 
+<div class="info">
+    <div class="dropdown">
+           자원 신청하기
     </div>
-     <div class="info">
-		<button onclick="redirectToVehicleList()">내가 신청한 차량 목록 </button>
-    </div>
-     <div class="info">
-		<button onclick="redirectToExpenseList()">내가 신청한 비용처리 목록 </button>
-    </div>
+</div>
+
       
     <div class="content">
 <!-- 	  <div class="resource-box" onclick="openModal('supplies')">Supplies</div> -->
@@ -186,7 +282,17 @@ margin-right : 20px;
 	  <div class="resource-box" data-modal="modal3">Expense</div>
 	  <div class="resource-box" data-modal="modal4">Reservation</div>
      </div>        
-     
+
+<div class="nav-container">
+        <div class="nav-item" onclick="showList('suppliesList')">비품 신청 리스트</div>
+        <div class="nav-item" onclick="showList('vehicleList')">차량 신청 리스트</div>
+        <div class="nav-item" onclick="showList('expenseList')">경비 신청 리스트</div>
+        <div class="nav-item" onclick="showList('reservationList')">숙박 신청 리스트</div>
+    </div>
+    
+    <div id="listContainer" class="list-container"></div>
+
+
      <!-- Modal 1 - Supplies -->
 <div id="modal1" class="modal">
     <div class="modal-content">
@@ -268,6 +374,7 @@ margin-right : 20px;
     </div>
 </div>
 
+
  </main>
 </body>
 </html>
@@ -315,9 +422,24 @@ $(document).ready(function () {
             data: JSON.stringify(formData1),
             success: function (response) {
                 console.log("서버 응답:", response);
-                $("#suppliesForm")[0].reset();
-                $("#modal1").css("display", "none");
-                $("#successMessage").css("display", "block");
+                
+                updateList("supplyList");
+                
+             // 수정된 코드
+                if (response === "supply_write formData submitted successfully") {
+                    $("#suppliesForm")[0].reset();
+                    $("#modal1").css("display", "none");
+                    $("#successMessage").css("display", "block");
+                    
+                    alert("신청 되었습니다");
+                } else {
+                    console.error("서버 응답 오류:", response);
+                    // ...
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX 오류:", status, error);
+
             }
         });
     });
@@ -394,6 +516,100 @@ $(document).ready(function () {
     });
 
 });
+///////////////////////////////////////////////////////////////////////
+
+function showList(listType) {
+        // Ajax 호출
+        $.ajax({
+            type: 'GET',
+            url: '/getSupplyList',  // 실제로는 해당 URL을 각각의 리스트에 맞는 컨트롤러의 URL로 변경해야 합니다.
+            success: function (response) {
+                // 가져온 리스트를 해당 리스트 컨테이너에 삽입
+                $('#listContainer').html(response);
+                
+             // 가져온 리스트를 해당 리스트 컨테이너에 삽입
+                renderSupplyList(exampleData);
+            },         
+            error: function (error) {
+                console.error('Error fetching list:', error);
+            }
+        });
+    }
+
+// 예시 데이터로 Supply 리스트를 초기에 렌더링
+var exampleData = [
+    { supply_id: 1, item: '예시 물품 1', sdescription: '설명 1', quantity: 10, sdate: '2024-02-01' },
+    { supply_id: 2, item: '예시 물품 2', sdescription: '설명 2', quantity: 5, sdate: '2024-02-02' },
+    // 필요한 만큼 예시 데이터를 추가하세요
+];
+
+//물품 목록 테이블을 렌더링하는 함수
+function renderSupplyList(data) {
+    var tableHtml = '<table border="1">' +
+        '<thead>' +
+        '<tr>' +
+        '<th>신청 번호</th>' +
+        '<th>물품명</th>' +
+        '<th>설명</th>' +
+        '<th>수량</th>' +
+        '<th>신청일</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>';
+
+    // 데이터를 테이블에 추가
+    for (var i = 0; i < data.length; i++) {
+        tableHtml += '<tr>' +
+            '<td>' + data[i].supply_id + '</td>' +
+            '<td>' + data[i].item + '</td>' +
+            '<td>' + data[i].sdescription + '</td>' +
+            '<td>' + data[i].quantity + '</td>' +
+            '<td>' + data[i].sdate + '</td>' +
+            '</tr>';
+    }
+
+    tableHtml += '</tbody></table>';
+
+    // 리스트 컨테이너에 테이블을 추가
+    $('#listContainer').html(tableHtml);
+}
+
+// 물품 목록을 업데이트하는 함수
+function updateList(listType) {
+    // Ajax 호출을 통해 물품 목록을 가져옵니다
+    $.ajax({
+        type: 'GET',
+        url: '/getSupplyList',
+        success: function (response) {
+            // 업데이트된 물품 목록을 렌더링합니다
+//             renderSupplyList(response);
+            renderSupplyList(JSON.parse(response))
+        },
+        error: function (error) {
+            console.error('물품 목록을 가져오는 중 오류 발생:', error);
+        }
+    });
+}
+
+// 초기 물품 목록을 렌더링합니다
+renderSupplyList(exampleData);
+
+// 폼 제출 처리 예시 코드 (귀하의 요구에 따라 수정할 수 있습니다)
+$('#suppliesForm').submit(function (event) {
+    event.preventDefault();
+    // 여기에 폼 제출 로직을 추가합니다
+    // ...
+
+    // 성공적으로 제출된 후 물품 목록을 업데이트합니다
+    updateList("supplyList");
+});
 
 </script>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<!-- Bootstrap JS (Popper.js and Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 

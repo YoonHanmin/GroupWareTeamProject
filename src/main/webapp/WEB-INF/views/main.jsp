@@ -274,8 +274,8 @@ border-radius: 5px;
         
         <li><a href="#"><i class="bi bi-calendar-week"></i>  휴가관리</a>
             <ul>
-                <li><a href="#">휴가 신청하기</a></li>
-                <li><a href="#">휴가 신청내역</a></li>
+                <li><a href="vacationRequest">휴가 신청하기</a></li>
+                <li><a href="myVacationRequests">휴가 신청내역</a></li>
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-file-earmark-check"></i>  전자결재</a> 
@@ -290,6 +290,7 @@ border-radius: 5px;
             <ul>
                 <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
+                <li><a href="picture_list">사진게시판</a></li>
             </ul>
         </li>
       </ul>
