@@ -34,7 +34,7 @@
 	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></beans:property>
 		<beans:property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></beans:property>
-		<beans:property name="username" value="project"></beans:property>
+		<beans:property name="username" value="system"></beans:property>
 		<beans:property name="password" value="1234"></beans:property>
 	</beans:bean>	
 	
