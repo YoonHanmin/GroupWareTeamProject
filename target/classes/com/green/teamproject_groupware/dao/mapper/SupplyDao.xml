@@ -5,7 +5,7 @@
 <mapper namespace="com.green.teamproject_groupware.dao.SupplyDao">
 
     <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto">
-        select supply_id, item, sdescription, quantity, sdate from supply_TABLE
+        select supply_id, sempno, item, sdescription, quantity, sdate from supply_TABLE
         order by supply_id desc
     </select>
 

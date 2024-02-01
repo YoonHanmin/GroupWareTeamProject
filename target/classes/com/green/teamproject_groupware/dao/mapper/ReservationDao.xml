@@ -1,0 +1,29 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.green.teamproject_groupware.dao.ReservationDao">
+
+    <select id="reservation_list" resultType="com.green.teamproject_groupware.dto.ReservationDto">
+        select reservation_id, rempno, numOfPeople, checkInDate, checkOutDate, details, rdate from reservation_TABLE
+        order by reservation_id desc
+    </select>
+    
+    <insert id="reservation_write">
+    insert into reservation_TABLE(reservation_id, rempno, numOfPeople, checkInDate, checkOutDate, details)
+    values (supply_TABLE_SEQ.NEXTVAL, #{rempno}, #{numOfPeople}, #{checkInDate}, #{checkOutDate}, #{details})
+	</insert>
+
+    <select id="reservation_contentView" resultType="com.green.teamproject_groupware.dto.ReservationDto">
+        select reservation_id, rempno, numOfPeople, checkInDate, checkOutDate, details, rdate from reservation_TABLE where reservation_id=#{reservation_id}
+    </select>
+    
+    <update id="reservation_modify">
+    	update reservation_TABLE set numOfPeople=#{numOfPeople}, checkInDate=#{checkInDate}, checkOutDate=#{checkOutDate}, details=#{details} where reservation_id=#{reservation_id}
+    </update>
+    
+    <delete id="reservation_delete">
+    	delete from reservation_TABLE where reservation_id=#{reservation_id}
+    </delete>
+
+</mapper>

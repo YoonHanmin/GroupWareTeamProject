@@ -1,0 +1,31 @@
+CREATE SEQUENCE picture_board_SEQ
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE
+  NOCYCLE;
+
+CREATE TABLE picture_board(
+    pid number(4) primary key,
+    ptitle varchar2(100),
+    pname varchar2(20),
+    pcontent varchar2(300),
+    pdate date default sysdate,
+    phit number(4) default 0,
+    pempno number default 0
+);
+
+CREATE TABLE picture_reply (
+    prid NUMBER(4,0) NOT NULL,
+    pid NUMBER(4,0) NOT NULL,
+    prwriter VARCHAR2(30) NOT NULL,
+    prcontent VARCHAR2(100) NOT NULL,
+    pregdate DATE DEFAULT SYSDATE,
+    PRIMARY KEY (prid, pid),
+    FOREIGN KEY (pid) REFERENCES picture_board(pid)
+);
+
+CREATE SEQUENCE picture_reply_seq
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE
+  NOCYCLE;

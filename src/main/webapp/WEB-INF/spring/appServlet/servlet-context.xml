@@ -3,14 +3,20 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+ 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+ 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> 
 
+     
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+<!-- 	<annotation-driven /> -->
+	
+	<mvc:annotation-driven>
+    <mvc:async-support default-timeout="30000" />
+</mvc:annotation-driven>
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
@@ -34,7 +40,7 @@
 	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></beans:property>
 		<beans:property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></beans:property>
-		<beans:property name="username" value="project"></beans:property>
+		<beans:property name="username" value="system"></beans:property>
 		<beans:property name="password" value="1234"></beans:property>
 	</beans:bean>	
 	
