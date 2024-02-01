@@ -1,7 +1,5 @@
 package com.green.teamproject_groupware.controller;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +16,8 @@ public class PBReplyController {
 
     @GetMapping("/prlist")
     public String prlist(@RequestParam("pid") int pid, Model model) {
-        model.addAttribute("prlist", preplyService.prlist());
-        return "preply_list";  // 뷰 이름
+        model.addAttribute("prlist", preplyService.prlist(pid));  // pid를 인자로 전달
+        return "picture_content_view";  // 뷰 이름
     }
     
     @GetMapping("/prwrite")
@@ -29,29 +27,23 @@ public class PBReplyController {
     }
 
     @RequestMapping(value = "/prwrite", method = RequestMethod.POST)
-    public String prwrite(@RequestBody HashMap<String, String> param) {
-        // Create DTO and set values
-        PBReplyDTO dto = new PBReplyDTO();
-        dto.setPid(Integer.parseInt(param.get("pid")));
-        dto.setPrwriter(param.get("prwriter"));
-        dto.setPrcontent(param.get("prcontent"));
-
+    public String prwrite(@ModelAttribute PBReplyDTO dto) {  
         // 댓글 작성
-        preplyService.prwrite(param);
-        
+        preplyService.prwrite(dto);
+
         // 댓글 목록 페이지로 리다이렉트
         return "redirect:/preply/prlist?pid=" + dto.getPid();
     }
 
     @PutMapping("/prmodify")
-    public String prmodify(@RequestBody HashMap<String, String> param) {
-        preplyService.prmodify(param);
-        return "redirect:/preply/prlist?pid=" + param.get("pid");
+    public String prmodify(@RequestBody PBReplyDTO dto) {  // RequestBody를 통해 받은 param을 바로 dto로 사용
+        preplyService.prmodify(dto);
+        return "redirect:/preply/prlist?pid=" + dto.getPid();
     }
 
     @DeleteMapping("/prdelete")
-    public String prdelete(@RequestBody HashMap<String, String> param) {
-        preplyService.prdelete(param);
-        return "redirect:/preply/prlist?pid=" + param.get("pid");
+    public String prdelete(@RequestBody PBReplyDTO dto) {  // RequestBody를 통해 받은 param을 바로 dto로 사용
+        preplyService.prdelete(dto);
+        return "redirect:/preply/prlist?pid=" + dto.getPid();
     }
 }

@@ -31,6 +31,7 @@ import com.green.teamproject_groupware.dto.PBCriteria;
 import com.green.teamproject_groupware.dto.PBDto;
 import com.green.teamproject_groupware.dto.PBPageDTO;
 import com.green.teamproject_groupware.service.EmpService;
+import com.green.teamproject_groupware.service.PBReplyService;
 import com.green.teamproject_groupware.service.PBService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +43,9 @@ public class PBController {
 	
 	@Autowired
 	private PBService pservice;
+	
+	@Autowired
+	private PBReplyService preplyService;
 	
 	@Autowired
 	private EmpService empservice;
@@ -114,14 +118,18 @@ public class PBController {
 	
 	@RequestMapping("/picture_content_view")
 	public String picture_content_view(@RequestParam HashMap<String, String> param, Model model) {
-		
-		PBDto picturedto = pservice.pcontentView(param);
-		model.addAttribute("pcontent_view", picturedto);
-		model.addAttribute("pageMaker", param);
-		
-		pservice.pincreaseHit(param);
-		
-		return "picture_content_view";
+	    
+	    PBDto picturedto = pservice.pcontentView(param);
+	    model.addAttribute("pcontent_view", picturedto);
+	    model.addAttribute("pageMaker", param);
+
+	    // 게시글의 id를 이용하여 댓글 목록을 가져옵니다.
+	    int pid = Integer.parseInt(param.get("pid"));
+	    model.addAttribute("prlist", preplyService.prlist(pid));
+
+	    pservice.pincreaseHit(param);
+	    
+	    return "picture_content_view";
 	}
 	
 	@RequestMapping("/picture_modify")
