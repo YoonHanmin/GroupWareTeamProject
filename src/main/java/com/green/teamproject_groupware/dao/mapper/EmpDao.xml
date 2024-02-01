@@ -12,6 +12,9 @@
    <select id="getEmpByEmpno" resultType="com.green.teamproject_groupware.dto.EmpDto">
    	select empno,position,name,email,hiredate,dname,status,phone,birthday,address,profileimage from emp where empno = #{empno}
    </select>
+   <select id="getEmpByName" resultType="com.green.teamproject_groupware.dto.EmpDto">
+   	select empno,position,name,email,hiredate,dname,status,phone,birthday,address,profileimage from emp where name = #{name}
+   </select>
     <update id="changeProfile">
    update emp set profileimage =#{profileimage} where empno = #{empno}
     </update>

@@ -2,6 +2,7 @@ package com.green.teamproject_groupware.controller;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.green.teamproject_groupware.dao.VacationDao;
 import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.VacationRequestDto;
 import com.green.teamproject_groupware.service.EmpService;
@@ -37,14 +39,6 @@ public class VacationController {
     @Autowired
 	EmpService empService;
     
-//    @RequestMapping("/vacationForm")
-//    public String vacation(HttpSession session, Model model) {
-//        String empno = (String) session.getAttribute("empno");
-//        EmpDto dto = empService.getEmpByEmpno(empno);
-//        model.addAttribute("dto", dto);
-//
-//        return "vacation/vacationForm";
-//    }
 
     @RequestMapping(value="/vacationRequest")
     public String vacationRequest(HttpSession session, Model model) {
@@ -79,7 +73,7 @@ public class VacationController {
 
         // vacationdays가 null이 아닌 경우에만 변환 시도
         if (param.get("vacationdays") != null && !param.get("vacationdays").isEmpty()) {
-            vacationDTO.setVacationdays(Integer.parseInt(param.get("vacationdays")));
+            vacationDTO.setVacationdays(param.get("vacationdays"));
         }
 
         vacationDTO.setReason(param.get("reason"));
@@ -103,7 +97,7 @@ public class VacationController {
             log.error("날짜 파싱 중 오류 발생.", e);
         }
 
-        vacationDTO.setStatus("신청 중");
+        vacationDTO.setStatus("신청");
 
         service.vacationRequest(vacationDTO);
 
@@ -112,8 +106,8 @@ public class VacationController {
     }
 
 
-    @RequestMapping(value="/myVacationRequests", method=RequestMethod.POST)
-    public String showVacationHistory(HttpSession session, Model model) {
+    @RequestMapping(value="/myVacationRequests", method=RequestMethod.GET)
+    public String myVacationRequests(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");
         EmpDto dto = empService.getEmpByEmpno(empno);
         model.addAttribute("dto", dto);
@@ -123,17 +117,42 @@ public class VacationController {
         return "vacation/myVacationRequests";
     }
     
-    @RequestMapping(value = "/checkDuplicateVacation", method = RequestMethod.POST)
+//    @RequestMapping(value = "/checkDuplicateVacation", method = RequestMethod.POST)
+//    @ResponseBody
+//    public String checkDuplicateVacation(@RequestParam HashMap<String, String> param) {
+//        String empno = param.get("empno");
+//        String startdate = param.get("startdate");
+//        String enddate = param.get("enddate");
+//
+//        // 중복 여부 확인을 위한 서비스 메소드 호출
+//        boolean isDuplicate = service.checkDuplicateVacation(empno, startdate, enddate);
+//
+//        // 중복 여부에 따라 결과 반환
+//        return isDuplicate ? "duplicate" : "not_duplicate";
+//    }
+    
+    @RequestMapping(value = "/cancelVacation", method = RequestMethod.POST)
     @ResponseBody
-    public String checkDuplicateVacation(@RequestParam HashMap<String, String> param) {
-        String empno = param.get("empno");
-        String startdate = param.get("startdate");
-        String enddate = param.get("enddate");
+    public String cancelVacation(HttpSession session,Model model, @RequestParam("empid") String empid) {
+    	log.info(empid);
+        try {
+            // 취소 로직 수행: 예시로 VacationDao.cancelVacation(empid)를 호출하는 코드
+            service.cancelVacation(Integer.parseInt(empid));
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+    @RequestMapping(value="/vacationApproval", method=RequestMethod.GET)
+    public String vacationApproval(HttpSession session, Model model) {
+        String empno = (String) session.getAttribute("empno");
+        EmpDto dto = empService.getEmpByEmpno(empno);
+        model.addAttribute("dto", dto);
 
-        // 중복 여부 확인을 위한 서비스 메소드 호출
-        boolean isDuplicate = service.checkDuplicateVacation(empno, startdate, enddate);
-
-        // 중복 여부에 따라 결과 반환
-        return isDuplicate ? "duplicate" : "not_duplicate";
+        ArrayList<VacationRequestDto> list2 = service.vacationApproval(empno);
+        model.addAttribute("vacationApproval", list2);
+        
+        return "vacation/vacationApproval";
     }
 }

@@ -28,11 +28,19 @@ border-bottom: 1px solid #eee;
 
 .item a {
 font-weight : bold;
-font-size : 20px;
-margin-top : 30px;
+font-size : 25px;
+margin-top: 20px; 
+ text-decoration: none; /* 밑줄 제거 */
+color : black;
 }
+.item ul li a{
+margin-top : 20px;}
 .item ul {
-margin-top : 10px;
+/* margin-top : 10px; */
+height : 80px;
+}
+.item {
+list-style: none;
 }
 .content{
 width : 100%;

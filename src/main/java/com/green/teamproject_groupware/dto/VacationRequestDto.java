@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class VacationRequestDto {
     private int empid;
-    private Integer empno;
+    private int empno;
     private String name;
     private String position;
     private String vacationtype;
-    private int vacationdays;
+    private String vacationdays;
     private String reason;
     private Date startdate;
     private Date enddate;

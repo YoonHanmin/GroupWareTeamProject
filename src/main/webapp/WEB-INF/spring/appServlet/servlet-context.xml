@@ -24,19 +24,19 @@
 	<context:component-scan base-package="com.green.teamproject_groupware" />
 	
 	<!-- 	dataSource 객체는 데이터베이스 정보 포함 -->
-	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></beans:property>
-		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></beans:property>
-		<beans:property name="username" value="system"></beans:property>
-		<beans:property name="password" value="1234"></beans:property>
-	</beans:bean>	
-	
 <!-- 	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
 <!-- 		<beans:property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></beans:property> -->
 <!-- 		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></beans:property> -->
-<!-- 		<beans:property name="username" value="project"></beans:property> -->
+<!-- 		<beans:property name="username" value="system"></beans:property> -->
 <!-- 		<beans:property name="password" value="1234"></beans:property> -->
 <!-- 	</beans:bean>	 -->
+	
+	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></beans:property>
+		<beans:property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe"></beans:property>
+		<beans:property name="username" value="system"></beans:property>
+		<beans:property name="password" value="1234"></beans:property>
+	</beans:bean>	
 	
 <!-- 	mybatis를 사용하는 sqlSession 객체를 만들기위한 세션팩토리 객체에 dataSource와 매퍼설정 할당 -->
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -48,6 +48,6 @@
 	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg index="0" ref="sqlSessionFactory"></beans:constructor-arg>
 	</beans:bean>
-	
-	
+
+
 </beans:beans>

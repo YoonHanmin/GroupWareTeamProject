@@ -33,15 +33,22 @@ public class VacationServiceImpl implements VacationService {
         ArrayList<VacationRequestDto> list= dao.myVacationRequests(empno);
 		return list;
 	}
-	
+
 	@Override
-	public boolean checkDuplicateVacation(String empno, String startdate, String enddate) {
-	    try {
-	        VacationDao dao = sqlSession.getMapper(VacationDao.class);
-	        return !dao.checkDuplicateVacation(empno, startdate, enddate);
-	    } catch (Exception e) {
-	        log.error("중복 체크 중 오류 발생.", e);
-	        return false;
-	    }
+	public void cancelVacation(int empid) {
+        try {
+            VacationDao dao = sqlSession.getMapper(VacationDao.class);
+            dao.cancelVacation(empid);
+        } catch (Exception e) {
+            log.error("휴가 취소 중 오류 발생.", e);
+            throw new RuntimeException("휴가 취소 중 오류 발생: " + e.getMessage(), e);
+        }
+	}
+
+	@Override
+	public ArrayList<VacationRequestDto> vacationApproval(String empno) {
+    	VacationDao dao = sqlSession.getMapper(VacationDao.class);
+        ArrayList<VacationRequestDto> list2= dao.myVacationRequests(empno);
+		return list2;
 	}
 }
