@@ -1,6 +1,7 @@
 package com.green.teamproject_groupware.service;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -30,7 +31,7 @@ public class NotificationService {
 		
 		// 오류시 emitter 제거
 		emitter.onCompletion(()-> emitterRepository.deleteById(id));
-		log.info("연결종료!!!! 객체 삭제함");
+		log.info("연결종료!!!! 객체 삭제한 id==>"+id);
 		emitter.onTimeout(() -> emitterRepository.deleteById(id));
 		
 		// 더미데이터 전송
@@ -46,15 +47,15 @@ public class NotificationService {
 		return emitter;
 	}
 //	클라이언트에게 이벤트 발생시 emitter 보냄 
-	public void sendEvent(String receiver,String notificationType,String msgTitle) {
-		Notification notification = createNotification(receiver,notificationType,msgTitle);
+	public void sendEvent(String receiver,String notificationType,MsgDto msgDto) {
+		Notification notification = createNotification(receiver,notificationType,msgDto);
 		
 		Map<String,SseEmitter> sseEmitters = emitterRepository.findAllEmitterStartWithById(receiver);
 		sseEmitters.forEach(
 				(key,emitter)->{
 //					클라이언트와 연결이 끊겼을 경우에 대비해 Cache map에 데이터 저장
 					emitterRepository.saveEventCache(key, notification);
-					log.info("알림내용 ==>"+notification);
+					log.info("보낸 알림내용 ==>"+notification);
 					//데이터 전송 from()메소드를 통해  Json형식으로 변환한뒤 클라이언트에게 전송
 					sendToclient(emitter, key, NotificationResponse.from(notification));
 				}
@@ -63,11 +64,12 @@ public class NotificationService {
 	}
 	
 //	Notification 객체 생성 메소드
-	private Notification createNotification(String receiver,String notificationType,String msgFromName) {
+	private Notification createNotification(String receiver,String notificationType,MsgDto msgDto) {
 		return Notification.builder()
 				.receiver(receiver)
 				.notificationType(notificationType)
-				.msgFromName(msgFromName)
+				.msgDto(msgDto)
+				.time(new Timestamp(System.currentTimeMillis())) //알림 발송 시간을 구해서 전송
 				.url("/receive") 
 				.isRead(false)
 				.build();

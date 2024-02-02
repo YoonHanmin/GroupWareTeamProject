@@ -113,9 +113,12 @@ display:none;
 border-radius: 5px;
 }
 
-
-
+#popup_notify:hover{
+background-color : #eee;
+cursor: pointer;
 }
+
+
 
 
 
@@ -127,7 +130,10 @@ border-radius: 5px;
 <!--     document.ready 메소드는 jsp link inclide보다 빠르므로 미리 link태그 삽입해줘야 함-->
         <link rel="stylesheet" href="resources/css/main.css">
     <script>
+  
+
     window.onload = function () {
+    	
     	const empno = $("input[name='empno']").val();
     	console.log(empno);
     const eventSource = new EventSource("/connect/"+empno)
@@ -136,16 +142,22 @@ border-radius: 5px;
         console.log(e.data);
         const receivedConnectData = JSON.parse(e.data);
         console.log('connect event data:', receivedConnectData);
-       if(receivedConnectData.msgFromName!=null){
-        var msgFromName = receivedConnectData.msgFromName;
+       if(receivedConnectData.msgDto!=null){
+    	var notifyTime = receivedConnectData.time;
+    	var currentTime = new Date().getTime();
+    	var time = currentTime - notifyTime;
+    	var minute_before = Math.floor(time/(1000*60));
+    
+        var msgFromName = receivedConnectData.msgDto.from_name;
         console.log(msgFromName);
         var spanElement = $('<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">')
         .append('<span class="visually-hidden">New alerts</span>');
 
       $('#Notify_btn').append(spanElement);
       
-      var newDiv = $('<div style="height:70px; font-weight:bold; font-size:14px; text-align:center;border-bottom:1px solid #eee; background-color:white; bo">')
-      .append("<span>"+msgFromName+" 님이 메시지를 보냈습니다.</span>");
+      var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
+      .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
+      "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
 
     $('.popup').append(newDiv);
       
@@ -154,6 +166,7 @@ border-radius: 5px;
        }
     });
     
+  
     };
     
     
@@ -267,10 +280,10 @@ border-radius: 5px;
 				<li  style="margin-left:30px; margin-right:10px; "><button id="logout" type="button" class="btn btn-primary position-relative">LOGOUT</button></li>
             	<li id="messenger" style="margin-right:30px; height:35px;"><button id="Notify_btn"type="button" class="btn btn-primary position-relative">
   Messenger
+</button></li>
 <!--   <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"> -->
 <!--     <span class="visually-hidden">New alerts</span> -->
 <!--   </span> -->
-</button></li>
             		
             	
             </ul>
@@ -349,8 +362,12 @@ border-radius: 5px;
     <!--  모달 팝업창-->
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
-	<div style="height:40px; font-weight:bold; font-size:20px;text-align:center; background-color:#F8BBD0; border-bottom:1px solid black;">
-	<p>새로온 메시지가 있습니다!<p>
+	<div style="height:40px; font-weight:bold; font-size:20px; background-color:white; ">
+	<span style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
+<!-- 	<div id="popup_notify" style="height:40px;width:300px; font-weight:bold; margin-top:10px;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;"> -->
+<!--       <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div> -->
+<!--       <div style="margin-left:5px; margin-top:5px;">한소희 님이 메시지를 보냈습니다.</div><p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;5분전</p> -->
+<!--       </div> -->
 	</div>
 	
 	

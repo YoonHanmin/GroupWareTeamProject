@@ -35,13 +35,14 @@ https://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
 			<max-file-size>20971520</max-file-size>
 			<max-request-size>41943040</max-request-size>
 			<file-size-threshold>20971520</file-size-threshold>
+		</multipart-config>
+			
 			<multipart-config>
 				<location>D:\\dev\\upload</location>
 				<max-file-size>20971520</max-file-size>
 				<max-request-size>41943040</max-request-size>
 				<file-size-threshold>20971520</file-size-threshold>
 			</multipart-config>
-		</multipart-config>
 	</servlet>
 
 	<servlet-mapping>
