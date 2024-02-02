@@ -54,19 +54,20 @@ width : 100%;
   flex-direction : row;
   justify-content: space-between; /* 양쪽 끝에 배치하도록 설정 */
   }
-  .profile-bar li {
-  text-align : center;
-  list-style: none; /* 기본 리스트 스타일 제거 */
-  margin : 0;
-  padding : 5px 30px;
-  cursor: pointer;
-}
+/*   .profile-bar li { */
+/*   text-align : center; */
+/*   list-style: none; /* 기본 리스트 스타일 제거 */ */
+/*   margin : 0; */
+/*   padding : 5px 30px; */
+/*   cursor: pointer; */
+/* } */
 
-.profile-tool .profile-bar li:hover {
-  background-color: #555; /* 호버 시 배경색 */
-  color: white; /* 호버 시 텍스트 색상 */
-}
+/* .profile-tool .profile-bar li:hover { */
+/*   background-color: #555; /* 호버 시 배경색 */ */
+/*   color: white; /* 호버 시 텍스트 색상 */ */
+/* } */
 .popup_bg{
+border : 2px solid black;
 position: absolute;
 top:0;
 left:0;
@@ -81,19 +82,23 @@ z-index: 1; /* z-index 값 설정 */
 position : absolute;
 left : calc(30% - 300px);
 top : calc(50% - 300px);
-width : 600px;
+width : 300px;
 height : 300px;
 background : white;
 display:none;
-border-radius: 8px;
+
  z-index: 2; /* z-index 값 설정 (팝업은 배경 팝업보다 위에 있어야 함) */
 
 }
 .popup > #messenger-out{
 font-size: 2rem; 
 float: right; 
-margin-right:5px;
+margin-right:3px;
 cursor: pointer;
+display : inline;
+/* height : 30px; */
+/* margin-bottom:30px; */
+/* padding-bottom:30px; */
 }
 
 .popup-logout{
@@ -112,6 +117,8 @@ border-radius: 5px;
 
 }
 
+
+
 </style>
  <script src="resources/js/jquery.js"></script>
     <meta charset="UTF-8">
@@ -120,6 +127,38 @@ border-radius: 5px;
 <!--     document.ready 메소드는 jsp link inclide보다 빠르므로 미리 link태그 삽입해줘야 함-->
         <link rel="stylesheet" href="resources/css/main.css">
     <script>
+    window.onload = function () {
+    	const empno = $("input[name='empno']").val();
+    	console.log(empno);
+    const eventSource = new EventSource("/connect/"+empno)
+    
+    eventSource.addEventListener('NewMsg', function(e){
+        console.log(e.data);
+        const receivedConnectData = JSON.parse(e.data);
+        console.log('connect event data:', receivedConnectData);
+       if(receivedConnectData.msgFromName!=null){
+        var msgFromName = receivedConnectData.msgFromName;
+        console.log(msgFromName);
+        var spanElement = $('<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">')
+        .append('<span class="visually-hidden">New alerts</span>');
+
+      $('#Notify_btn').append(spanElement);
+      
+      var newDiv = $('<div style="height:70px; font-weight:bold; font-size:14px; text-align:center;border-bottom:1px solid #eee; background-color:white; bo">')
+      .append("<span>"+msgFromName+" 님이 메시지를 보냈습니다.</span>");
+
+    $('.popup').append(newDiv);
+      
+      
+      
+       }
+    });
+    
+    };
+    
+    
+    
+    
     $(document).ready(function () {
         // ... 여러분의 기존 코드 ...
 
@@ -206,6 +245,7 @@ border-radius: 5px;
 </head>
 
 <body>
+                <input type="hidden" name="empno" value="${user.getEmpno()}">
 
 
  <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
@@ -218,13 +258,20 @@ border-radius: 5px;
             <div class="user-info">
                 <p> ${user.getName()}</p>
                 <p>${user.getDname()}</p>
+               
             </div>
             </div>
-            <div class="profile-tool">
+            <div class="profile-tool" style="margin-bottom:20px;">
             <ul class="profile-bar">
-            	<li id="logout" style="margin-left:30px;"><i class="bi bi-box-arrow-left" style="font-size: 2rem;"></i></li>
-            	<li id="messenger" style="margin-right:30px;"><i class="bi bi-envelope" style="font-size: 2rem;"></i></li>
-            	
+<!--             	<li id="logout" style="margin-left:30px; "><i class="bi bi-box-arrow-left" style="font-size: 2rem; margin-bottom:10px;"></i></li> -->
+				<li  style="margin-left:30px; margin-right:10px; "><button id="logout" type="button" class="btn btn-primary position-relative">LOGOUT</button></li>
+            	<li id="messenger" style="margin-right:30px; height:35px;"><button id="Notify_btn"type="button" class="btn btn-primary position-relative">
+  Messenger
+<!--   <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"> -->
+<!--     <span class="visually-hidden">New alerts</span> -->
+<!--   </span> -->
+</button></li>
+            		
             	
             </ul>
             </div>
@@ -264,6 +311,7 @@ border-radius: 5px;
             <ul>
                 <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
+                <li><a href="picture_list">사진게시판</a></li>
             </ul>
         </li>
       </ul>
@@ -288,8 +336,11 @@ border-radius: 5px;
       
 <!--       </div> -->
       
+ 			
+ 				
+ 				
+ 				
         <div class="content">
- 
       </div>
       
       
@@ -298,7 +349,11 @@ border-radius: 5px;
     <!--  모달 팝업창-->
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
-
+	<div style="height:40px; font-weight:bold; font-size:20px;text-align:center; background-color:#F8BBD0; border-bottom:1px solid black;">
+	<p>새로온 메시지가 있습니다!<p>
+	</div>
+	
+	
  	</div>
  	
  
@@ -306,7 +361,15 @@ border-radius: 5px;
     
     
 <!--     팝업 배경 창 -->
-	<div class="popup_bg"></div> 
+	<div class="popup_bg" style="
+position: absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background: rgba(0,0,0,0.7);
+display:none;
+z-index: 1;"></div> 
     
     <div class="popup-logout">
     	<div style="text-align:center;margin-top:10px;"><b>로그아웃 하시겠습니까?</b></div>

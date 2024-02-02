@@ -96,10 +96,13 @@ public class MsgController {
 	public String searchName(HttpSession session,Model model
 			,@RequestParam("to_id")String to_id,@RequestParam("title")String title,@RequestParam("content")String content) {
 		String id = (String)session.getAttribute("empno");
+		EmpDto EmpDto = service.getEmpByEmpno(id);
+		EmpDto.getName();
 		int from_id=Integer.parseInt(id);
 		MsgDto dto = new MsgDto();
 		dto.setTo_id(Integer.parseInt(to_id));
 		dto.setFrom_id(from_id);
+		dto.setFrom_name(EmpDto.getName());
 		dto.setTitle(title);
 		dto.setContent(content);
 		String result = ""+msgService.sendMsg(dto);

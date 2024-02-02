@@ -204,8 +204,9 @@ border-radius: 3px;
         </li>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
             <ul>
-                <li><a href="#">서브메뉴1</a></li>
-                <li><a href="#">서브메뉴2</a></li>
+                <li><a href="notice_list">공지사항</a></li>
+                <li><a href="free_board_list">자유게시판</a></li>
+                <li><a href="picture_list">사진게시판</a></li>
             </ul>
         </li>
       </ul>
