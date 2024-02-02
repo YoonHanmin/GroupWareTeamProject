@@ -1,6 +1,7 @@
 package com.green.teamproject_groupware.controller;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,10 +46,33 @@ public class VacationController {
     public String vacationRequest(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");
         EmpDto dto = empService.getEmpByEmpno(empno);
-        model.addAttribute("dto",dto);
+        model.addAttribute("dto", dto);
+
+        // 휴가 데이터를 가져오는 부분 수정
+        List<VacationRequestDto> vacationEvents = service.getVacationEvents(empno);
+
+        // 서버에서 날짜를 ISO 8601 형식으로 변환하여 클라이언트로 전송
+        List<HashMap<String, String>> formattedVacationEvents = new ArrayList<>();
+        SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (VacationRequestDto event : vacationEvents) {
+            String startDateStr = iso8601Format.format(event.getStartdate());
+            String endDateStr = iso8601Format.format(event.getEnddate());
+
+            // 새로운 Map 생성 (eventmap 추가)
+            HashMap<String, String> eventMap = new HashMap<>();
+            eventMap.put("vacationtype", event.getVacationtype());
+            eventMap.put("startdate", startDateStr);
+            eventMap.put("enddate", endDateStr);
+
+            formattedVacationEvents.add(eventMap);
+        }
+
+        model.addAttribute("vacationEvents", formattedVacationEvents);
 
         return "vacation/vacationRequest";
     }
+
     
     @RequestMapping(value = "/submitVacationRequest", method = RequestMethod.POST)
     @ResponseBody
@@ -145,29 +169,6 @@ public class VacationController {
             return "error";
         }
     }
-    
-    @RequestMapping(value = "/getEventsForCalendar", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Map<String, Object>> getEventsForCalendar(HttpSession session, Model model) {
-        String empno = (String) session.getAttribute("empno");
-
-        // 휴가 신청 데이터 가져오기
-        List<VacationRequestDto> vacationRequests = service.getEventsForCalendar(empno);
-
-        // FullCalendar에서 요구하는 형식으로 데이터 매핑
-        List<Map<String, Object>> events = new ArrayList<>();
-        for (VacationRequestDto request : vacationRequests) {
-            Map<String, Object> eventMap = new HashMap<>();
-            eventMap.put("title", request.getName());
-            eventMap.put("start", request.getStartdate().toString()); // 이벤트 시작일
-            eventMap.put("end", request.getEnddate().toString()); // 이벤트 종료일
-            events.add(eventMap);
-        }
-
-        return events;
-    }
-
-    
     @RequestMapping(value="/vacationApproval", method=RequestMethod.GET)
     public String vacationApproval(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");

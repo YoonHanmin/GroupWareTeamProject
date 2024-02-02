@@ -15,14 +15,14 @@
         ORDER BY REQUESTDATE DESC
     </select>
 
-	<select id="getEventsForCalendar" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">   
-	    SELECT empno
-	      ,vacationtype "title"
-	      ,startdate "start"
-	      ,enddate "end"
+<!-- 	<select id="getEventsForCalendar" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">    -->
+	<select id="getVacationEvents" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">   
+	    SELECT vacationtype 
+	    		  ,startdate 
+	  			  ,enddate
 		FROM APPROVALTABLE
 		WHERE empno = #{empno}
-		AND status = '승인';
+		AND status = '승인'
 	</select>
 	
     <!-- 취소 관련 SQL 쿼리 추가 -->

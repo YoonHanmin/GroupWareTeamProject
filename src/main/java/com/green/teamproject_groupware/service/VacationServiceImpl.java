@@ -2,6 +2,7 @@ package com.green.teamproject_groupware.service;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -46,14 +47,14 @@ public class VacationServiceImpl implements VacationService {
         }
 	}
 
-	@Override
-    public List<VacationRequestDto> getEventsForCalendar(String empno) {
+    @Override
+    public ArrayList<VacationRequestDto> getVacationEvents(String empno) {
         try {
             VacationDao dao = sqlSession.getMapper(VacationDao.class);
-            return dao.getEventsForCalendar(empno);
+            return dao.getVacationEvents(empno);
         } catch (Exception e) {
-            log.error("달력 이벤트 가져오기 중 오류 발생.", e);
-            throw new RuntimeException("달력 이벤트 가져오기 중 오류 발생: " + e.getMessage(), e);
+            log.error("휴가 이벤트 가져오기 중 오류 발생.", e);
+            throw new RuntimeException("휴가 이벤트 가져오기 중 오류 발생: " + e.getMessage(), e);
         }
     }
 	

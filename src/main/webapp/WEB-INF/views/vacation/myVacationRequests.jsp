@@ -48,6 +48,7 @@
 .content {
     width: 100%;
     padding: 30px;
+    margin: auto;
 }
 
 .myinfo {

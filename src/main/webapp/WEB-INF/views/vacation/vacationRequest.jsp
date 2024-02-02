@@ -17,6 +17,35 @@
     <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+
+    // vacationEvents 데이터는 서버에서 가져오도록 수정
+    $.ajax({
+        url: 'vacationRequest', 
+        type: 'GET',
+        success: function (data) {
+            var vacationEvents = data;
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                initialView: 'dayGridMonth',
+                events: vacationEvents
+            });
+
+            calendar.render();
+        },
+        error: function (error) {
+            console.error('Error fetching vacation events:', error);
+        }
+    });
+});
+</script>
 <title>Insert title here</title>
 </head>
 <style>
@@ -384,28 +413,7 @@ $("input[name='enddate']").blur(function () {
 	    <div id="calendar"></div>
 	</div>
     
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            initialView: 'dayGridMonth',
-            events: {
-                url: '/getEventsForCalendar', // 서버에 맞게 URL 수정
-                method: 'GET',
-                failure: function () {
-                    alert('휴가 정보를 가져오는데 실패했습니다.');
-                }
-      	  }
-  	  });
-        calendar.render();
-    });
-    </script> 
           
  </main>
  
