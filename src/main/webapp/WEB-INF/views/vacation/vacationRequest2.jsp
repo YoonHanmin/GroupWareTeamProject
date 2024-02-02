@@ -5,18 +5,16 @@
       <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
           <link rel="stylesheet" href="resources/css/bootstrap.css">
     <script src="https://kit.fontawesome.com/82c57657fe.js" crossorigin="anonymous"></script>
+    <script src="resources/js/jquery.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
 <script type="text/javascript"></script>
-    <!-- FullCalendar 라이브러리 및 jQuery 추가 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <title>Insert title here</title>
 </head>
 <style>
@@ -43,7 +41,7 @@
 	font-weight : bold;
 	font-size : 25px;
 	margin-top: 20px; 
-	text-decoration: none; /* 밑줄 제거 */
+	 text-decoration: none; /* 밑줄 제거 */
 	color : black;
 }
 .item ul li a{
@@ -56,11 +54,8 @@
 	list-style: none;
 }
 .content {
-    width: 100%; /* 전체 너비의 80%로 설정 */
-    margin: auto; /* 가운데 정렬을 위한 margin 설정 */
+    width: 100%;
     padding: 30px;
-    border-bottom: 1px solid #eee;
-    margin-top: 20px; /* 추가된 부분 */
 }
 
 .myinfo{
@@ -159,23 +154,7 @@ margin-right : 20px;
     input[type="submit"]:hover {
         background-color: #45a049;
     }
-    
-    .calendar-container {
-        width: 95%; 
-        margin: auto; /* 가운데 정렬을 위한 margin 설정 */
-        position: relative;
-        padding-bottom: 60%; /* 너비의 80%에 대응하는 높이 설정 (1:1 비율을 위한 값) */
-        overflow: hidden;
-    }
 
-    #calendar {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-    }
-    
 </style>
  <script>
  $(document).ready(function () {
@@ -186,6 +165,7 @@ margin-right : 20px;
  });
  </script>
  
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     $(document).ready(function () {
         // 시작일 선택 시
@@ -378,37 +358,10 @@ $("input[name='enddate']").blur(function () {
                     </tbody>
                 </table>
             </form>
+        	
         </div>
         
-    <div class="calendar-container">
-	    <div id="calendar"></div>
-	</div>
-    
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
-
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            initialView: 'dayGridMonth',
-            events: {
-                url: '/getEventsForCalendar', // 서버에 맞게 URL 수정
-                method: 'GET',
-                failure: function () {
-                    alert('휴가 정보를 가져오는데 실패했습니다.');
-                }
-      	  }
-  	  });
-        calendar.render();
-    });
-    </script> 
-          
  </main>
- 
 </body>
 </html>
 

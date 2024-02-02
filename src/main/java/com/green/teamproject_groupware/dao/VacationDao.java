@@ -15,5 +15,6 @@ public interface VacationDao {
 	public void vacationRequest(VacationRequestDto vacationDTO);
 	public ArrayList<VacationRequestDto> myVacationRequests(String empno);
 	public void cancelVacation(int empid);
+	public List<VacationRequestDto> getEventsForCalendar(String empno);
 	public ArrayList<VacationRequestDto> vacationApproval(String empno);
 }

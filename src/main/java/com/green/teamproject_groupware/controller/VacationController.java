@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -144,6 +145,29 @@ public class VacationController {
             return "error";
         }
     }
+    
+    @RequestMapping(value = "/getEventsForCalendar", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Map<String, Object>> getEventsForCalendar(HttpSession session, Model model) {
+        String empno = (String) session.getAttribute("empno");
+
+        // 휴가 신청 데이터 가져오기
+        List<VacationRequestDto> vacationRequests = service.getEventsForCalendar(empno);
+
+        // FullCalendar에서 요구하는 형식으로 데이터 매핑
+        List<Map<String, Object>> events = new ArrayList<>();
+        for (VacationRequestDto request : vacationRequests) {
+            Map<String, Object> eventMap = new HashMap<>();
+            eventMap.put("title", request.getName());
+            eventMap.put("start", request.getStartdate().toString()); // 이벤트 시작일
+            eventMap.put("end", request.getEnddate().toString()); // 이벤트 종료일
+            events.add(eventMap);
+        }
+
+        return events;
+    }
+
+    
     @RequestMapping(value="/vacationApproval", method=RequestMethod.GET)
     public String vacationApproval(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");

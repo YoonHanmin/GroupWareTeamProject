@@ -56,11 +56,9 @@
 	list-style: none;
 }
 .content {
-    width: 100%; /* 전체 너비의 80%로 설정 */
-    margin: auto; /* 가운데 정렬을 위한 margin 설정 */
+    width: 100%;
     padding: 30px;
-    border-bottom: 1px solid #eee;
-    margin-top: 20px; /* 추가된 부분 */
+	border-bottom: 1px solid #eee;
 }
 
 .myinfo{
@@ -159,23 +157,7 @@ margin-right : 20px;
     input[type="submit"]:hover {
         background-color: #45a049;
     }
-    
-    .calendar-container {
-        width: 95%; 
-        margin: auto; /* 가운데 정렬을 위한 margin 설정 */
-        position: relative;
-        padding-bottom: 60%; /* 너비의 80%에 대응하는 높이 설정 (1:1 비율을 위한 값) */
-        overflow: hidden;
-    }
 
-    #calendar {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-    }
-    
 </style>
  <script>
  $(document).ready(function () {
@@ -380,31 +362,22 @@ $("input[name='enddate']").blur(function () {
             </form>
         </div>
         
-    <div class="calendar-container">
-	    <div id="calendar"></div>
-	</div>
+    <div id="calendar"></div>
     
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
 
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            initialView: 'dayGridMonth',
-            events: {
-                url: '/getEventsForCalendar', // 서버에 맞게 URL 수정
-                method: 'GET',
-                failure: function () {
-                    alert('휴가 정보를 가져오는데 실패했습니다.');
-                }
-      	  }
-  	  });
-        calendar.render();
-    });
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                initialView: 'dayGridMonth' // 초기에 월간 달력으로 설정
+            });
+            calendar.render();
+        });
     </script> 
           
  </main>
