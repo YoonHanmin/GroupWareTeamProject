@@ -11,4 +11,5 @@ public interface MsgService {
 	public int sendMsg(MsgDto dto);
 	public ArrayList<MsgDto> getMsgByEmpno(HashMap<String, String> param);
 	public int uphit(int msgid);
+	public ArrayList<MsgDto> getNotifyMsgByEmpno(String empno);
 }
