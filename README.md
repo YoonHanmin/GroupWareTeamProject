@@ -8,8 +8,10 @@
 <img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/ee50ac5c-2cea-49bc-8cbe-b7e246a56c60" style="width:500px; height:300px;">
  
  <br>
-HTML, CSS, JAVASCRIPT, JAVA, OARCLE 등 언어들을 활용하여 Spring Framework 의 MVC 패턴 기법을 적용한 인사프로그램을 웹사이트로 구현 <br>
-사용자 친화적인 UI 와 기본에 충실한 그룹웨어로 조직 구성원들이 의사 소통, 업무 전달, 정보 공유 및 의사 결정들의 업무 활동을 원활하게 수행하고 지원.
+ - Spring legacy FrameWork의 MVC 패턴을 이용하여 사내 그룹웨어 시스템 구현   <br>
+ - JQuery를 통해 페이지 전환을 최소화하여 사용자 편의성을 높인 UI 디자인 <br> 
+ - 사내 임직원들의 전자결재, 메일, 각종 업무관련 신청등 업무 커뮤니케이션을 위한 다양한 기능 지원하는 그룹웨어 시스템
+
 <br>
 
 ## 🧾기술 STACK 🧾
