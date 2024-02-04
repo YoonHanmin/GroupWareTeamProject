@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -44,7 +45,8 @@ public class MemController {
 	
     @Autowired
     SqlSession sqlSession; 
-	
+    
+   
 	@RequestMapping("/main")
 	public String main(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
@@ -120,6 +122,7 @@ public class MemController {
 	    UserInfoDto userInfoDto = new UserInfoDto();
 	    userInfoDto.setEmpno(param.get("empno"));
 	    userInfoDto.setName(param.get("name"));
+
 	    userInfoDto.setPassword(param.get("password"));
 	    userInfoDto.setEmail(param.get("email"));
 	    userInfoDto.setTel(param.get("tel"));

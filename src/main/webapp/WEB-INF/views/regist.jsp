@@ -77,7 +77,6 @@
 	    <input type="password" class="form-control" id="password" placeholder="8자리" aria-label="Password" aria-describedby="basic-addon1">
 	    <span class="input-group-text" id="basic-addon1">비밀번호 확인</span>
 	    <input type="password" class="form-control" id="password-confirm"  aria-label="Confirm Password" aria-describedby="basic-addon1">
-<%-- 	    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />  --%>
 	    <span id="password-check-result"></span>
     </div>
 
