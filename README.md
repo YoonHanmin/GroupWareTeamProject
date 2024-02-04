@@ -22,6 +22,8 @@ HTML, CSS, JAVASCRIPT, JAVA, OARCLE 등 언어들을 활용하여 Spring Framewo
 
 🧾기술 STACK 🧾
 <br><br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/a54c16c0-7626-418b-8e90-fef672b78852" style="width:400px; height:300px;">
+<br><br>
 🖥️ Front-End <br><br>
 <img src="https://img.shields.io/badge/HTML5-00599C?style=flat&logo=HTML5&logoColor=white"/>
 <img src="https://img.shields.io/badge/CSS-A8B9CC?style=flat&logo=C&logoColor=white"/>
