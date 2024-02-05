@@ -5,32 +5,59 @@
     <mapper namespace="com.green.teamproject_groupware.dao.VehicleDao">
 
     <select id="vehicle_list" resultType="com.green.teamproject_groupware.dto.VehicleDto">
-        select vehicle_id, vstartdate, venddate, vdescription, vdate from vehicle_TABLE
-        order by vehicle_id desc
+        select vehicle_id
+        	 , empno
+        	 , vstartdate
+        	 , venddate
+        	 , vdescription
+        	 , vdate
+        	 , vehicle_status 
+        	 , modify_dtm as modifyDtm
+      	  from vehicle_TABLE
+         where 1=1
+           and empno = #{empno}
+         order by vehicle_id desc
     </select>
 
     
 <!--     <insert id="vehicle_write"> -->
-<!--     insert into vehicle_TABLE(vehicle_id, vempno, vstartdate, venddate, vdescription) -->
-<!--     values (vehicle_TABLE.NEXTVAL, #{vempno}, #{vstartdate}, #{venddate}, #{vdescription}) -->
+<!--     insert into vehicle_TABLE(vehicle_id, empno, vstartdate, venddate, vdescription) -->
+<!--     values (vehicle_TABLE.NEXTVAL, #{empno}, #{vstartdate}, #{venddate}, #{vdescription}) -->
 <!-- 	</insert> -->
 	
 	<insert id="vehicle_write">
-    insert into vehicle_TABLE(vehicle_id, vempno, vstartdate, venddate, vdescription)
-    values (vehicle_TABLE_SEQ.NEXTVAL, #{vempno}, #{vstartdate}, #{venddate}, #{vdescription})
+    insert into vehicle_TABLE(vehicle_id, empno, vstartdate, venddate, vdescription)
+    values (vehicle_TABLE_SEQ.NEXTVAL, #{empno}, #{vstartdate}, #{venddate}, #{vdescription})
 </insert>
 	
 
     <select id="vehicle_contentView" resultType="com.green.teamproject_groupware.dto.VehicleDto">
-        select vehicle_id, vempno, vstartdate, venddate, vdescription, vdate from vehicle_TABLE where vehicle_id=#{vehicle_id}
+        select vehicle_id, empno, vstartdate, venddate, vdescription, vdate from vehicle_TABLE where vehicle_id=#{vehicle_id}
     </select>
     
     <update id="vehicle_modify">
     	update vehicle_TABLE set vstartdate=#{vstartdate}, venddate=#{venddate}, vdescription=#{vdescription} where vehicle_id=#{vehicle_id}
     </update>
     
-    <delete id="vehicle_delete">
-    	delete from vehicle_TABLE where vehicle_id=#{vehicle_id}
-    </delete>
+    <update id="vehicle_delete">
+    	update from vehicle_TABLE
+    	    set delYn='Y'
+    	    		, modify_dtm = sysdate
+    	 where vehicle_id=#{vehicle_id}
+    </update>
+    
+    <update id="vehicleApprovalUpdate">
+    	update vehicle_TABLE 
+    	   set vehicle_status='1'
+    	   	, modify_dtm = sysdate
+    	 where vehicle_id=#{vehicle_id}
+    </update>
+    
+    <update id="vehicleRejectUpdate">
+    	update vehicle_TABLE 
+    	   set vehicle_status='2'
+    	   	, modify_dtm = sysdate
+    	 where vehicle_id=#{vehicle_id}
+    </update>
 
 </mapper>

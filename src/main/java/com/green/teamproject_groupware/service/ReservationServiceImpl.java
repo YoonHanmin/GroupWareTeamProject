@@ -22,12 +22,12 @@ public class ReservationServiceImpl implements ReservationService{
 	private SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<ReservationDto> reservation_list() {
+	public ArrayList<ReservationDto> reservation_list(String empno) {
 		log.info("@# ReservationServiceImpl.reservation_list() start");
 		
 		ReservationDao dao = sqlSession.getMapper(ReservationDao.class);
 		
-		ArrayList<ReservationDto> reservationList  = dao.reservation_list();
+		ArrayList<ReservationDto> reservationList  = dao.reservation_list(empno);
 		
 		log.info("@# ReservationServiceImpl.reservation_list() end");
 		return reservationList ;
@@ -73,13 +73,30 @@ public class ReservationServiceImpl implements ReservationService{
 	}
 
 	@Override
-	public void reservation_delete(HashMap<String, String> param) {
+	public void reservation_delete(String reservation_id) {
 		log.info("@# ReservationServiceImpl.delete() start");
 		
 		ReservationDao dao = sqlSession.getMapper(ReservationDao.class);
-		dao.reservation_delete(param);
-		
-		log.info("@# ReservationServiceImpl.delete() end");
+		dao.reservation_delete(reservation_id);
 	}
+
+	@Override
+	public void reservationApprovalUpdate(String reservation_id) {
+		log.info("@# SupplyServiceImpl.supplyApprovalUpdate() start");
+		
+		ReservationDao dao = sqlSession.getMapper(ReservationDao.class);
+		dao.reservationApprovalUpdate(reservation_id);
+		
+	}
+
+	@Override
+	public void reservationRejectUpdate(String reservation_id) {
+		log.info("@# SupplyServiceImpl.supplyRejectUpdate() start");
+		
+		ReservationDao dao = sqlSession.getMapper(ReservationDao.class);
+		dao.reservationRejectUpdate(reservation_id);
+		
+	}
+
 
 }

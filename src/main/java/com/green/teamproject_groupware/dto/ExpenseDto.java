@@ -11,7 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ExpenseDto {
 	private int expense_id;
-    private String eempno;
+    private String empno;
     private String usagePlace;
     private Timestamp edate;
+    private int expense_status;
+    private String delYn;
+    private Timestamp modifyDtm;
 }

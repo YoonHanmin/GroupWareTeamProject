@@ -7,8 +7,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.green.teamproject_groupware.dao.IMemDao;
-import com.green.teamproject_groupware.dao.NoticeDao;
 import com.green.teamproject_groupware.dao.SupplyDao;
 import com.green.teamproject_groupware.dto.SupplyDto;
 
@@ -22,11 +20,11 @@ public class SupplyServiceImpl implements SupplyService{
 	private SqlSession sqlSession;
 
 	@Override
-	public ArrayList<SupplyDto> supply_list() {
+	public ArrayList<SupplyDto> supply_list(String empno) {
 		log.info("@# SupplyServiceImpl.supply_list() start");
 		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
 		
-		ArrayList<SupplyDto> supplyList  = dao.supply_list();
+		ArrayList<SupplyDto> supplyList  = dao.supply_list(empno);
 		
 		return supplyList ;
 	}
@@ -41,23 +39,23 @@ public class SupplyServiceImpl implements SupplyService{
 		return dto;
 	}
 
-	@Override
-	public void supply_modify(HashMap<String, String> param) {
-		log.info("@# SupplyServiceImpl.modify() start");
-		
-		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
-		dao.supply_modify(param);
-		
-		
-	}
-	@Override
-	public void supply_delete(HashMap<String, String> param) {
-		log.info("@# SupplyServiceImpl.delete() start");
-		
-		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
-		dao.supply_delete(param);
-		
-	}
+//	@Override
+//	public void supply_modify(HashMap<String, String> param) {
+//		log.info("@# SupplyServiceImpl.modify() start");
+//		
+//		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
+//		dao.supply_modify(param);
+//		
+//		
+//	}
+//	@Override
+//	public void supply_delete(String supply_id) {
+//		log.info("@# SupplyServiceImpl.delete() start");
+//		
+//		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
+//		dao.supply_delete(param);
+//		
+//	}
 
 	@Override
 	public void supply_write(SupplyDto formData1) {
@@ -75,5 +73,32 @@ public class SupplyServiceImpl implements SupplyService{
 
 		
 		log.info("@# SupplyDto.write() end");		
-	}	
+	}
+
+	@Override
+	public void supply_delete(String supply_id) {
+		log.info("@# SupplyServiceImpl.delete() start");
+		
+		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
+		dao.supply_delete(supply_id);
+	}
+	
+	@Override
+	public void supplyApprovalUpdate(String supply_id) {
+		log.info("@# SupplyServiceImpl.supplyApprovalUpdate() start");
+		
+		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
+		dao.supplyApprovalUpdate(supply_id);
+		
+	}
+
+	@Override
+	public void supplyRejectUpdate(String supply_id) {
+		log.info("@# SupplyServiceImpl.supplyRejectUpdate() start");
+		
+		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
+		dao.supplyRejectUpdate(supply_id);
+		
+	}
+
 }

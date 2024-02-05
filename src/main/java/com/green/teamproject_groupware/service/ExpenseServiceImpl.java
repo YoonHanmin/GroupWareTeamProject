@@ -13,7 +13,9 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.green.teamproject_groupware.dao.ExpenseDao;
+import com.green.teamproject_groupware.dao.SupplyDao;
 import com.green.teamproject_groupware.dto.ExpenseDto;
+import com.green.teamproject_groupware.dto.SupplyDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,11 +26,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Autowired
 	private SqlSession sqlSession;
 
+
 	@Override
-	public ArrayList<ExpenseDto> expense_list() {
+	public ArrayList<ExpenseDto> expense_list(String empno) {
 		log.info("@# ExpenseServiceImpl.expense_list() start");
 		ExpenseDao dao = sqlSession.getMapper(ExpenseDao.class);
-		ArrayList<ExpenseDto> expenseList = dao.expense_list();
+		ArrayList<ExpenseDto> expenseList = dao.expense_list(empno);
 		
 		
 		log.info("@# ExpenseServiceImpl.expense_list() end");
@@ -65,22 +68,36 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public void expense_modify(HashMap<String, String> param) {
-		log.info("@# ExpenseServiceImpl.expense_modify() start");
+	public void expense_delete(String expense_id) {
+		log.info("@# ExpenseServiceImpl.delete() start");
 		
 		ExpenseDao dao = sqlSession.getMapper(ExpenseDao.class);
-		dao.expense_modify(param);
-		
-		log.info("@# ExpenseServiceImpl.expense_modify() end");
+		dao.expense_delete(expense_id);
 	}
 
 	@Override
-	public void expense_delete(HashMap<String, String> param) {
-		log.info("@# ExpenseServiceImpl.expense_delete() start");
+	public void expenseApprovalUpdate(String expense_id) {
+		log.info("@# ExpenseServiceImpl.expenseApprovalUpdate() start");
 		
 		ExpenseDao dao = sqlSession.getMapper(ExpenseDao.class);
-		dao.expense_delete(param);
+		dao.expenseApprovalUpdate(expense_id);
 		
-		log.info("@# ExpenseServiceImpl.expense_delete() end");
 	}
+
+	@Override
+	public void expenseRejectUpdate(String expense_id) {
+		log.info("@# ExpenseServiceImpl.expenseRejectUpdate() start");
+		
+		ExpenseDao dao = sqlSession.getMapper(ExpenseDao.class);
+		dao.expenseRejectUpdate(expense_id);
+		
+	}
+
+	@Override
+	public void expense_modify(HashMap<String, String> param) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

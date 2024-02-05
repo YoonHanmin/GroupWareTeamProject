@@ -193,8 +193,8 @@ border-radius: 3px;
         </li>
         <li><a href="#"><i class="bi bi-boxes"></i> 자원요청</a>
             <ul>
-                <li><a href="resource">자원 신청</a></li>
-                <li><a href="#">서브메뉴2</a></li>
+                <li><a href="resource_apply">신청하기</a></li>
+                <li><a href="resource_approval">자원요청 목록</a></li>
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>

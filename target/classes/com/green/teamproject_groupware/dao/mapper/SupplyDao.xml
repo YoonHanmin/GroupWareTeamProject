@@ -4,27 +4,53 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.SupplyDao">
 
-    <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto">
-        select supply_id, sempno, item, sdescription, quantity, sdate from supply_TABLE
+    <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto" parameterType="String">
+        select supply_id
+             , empno
+             , item
+             , sdescription
+             , quantity
+             , sdate
+             , supply_status
+             , modify_dtm as modifyDtm
+          from supply_TABLE
+         where 1=1
+<!--           <if test='insaYn == "N"'> -->
+        AND empno = #{empno}
+<!--     </if> -->
+           and delYn = 'n'
         order by supply_id desc
     </select>
 
     
     <insert id="supply_write">
-    insert into supply_TABLE(supply_id, sempno, item, quantity, sdescription)
-    values (supply_TABLE_SEQ.NEXTVAL, #{sempno, jdbcType=VARCHAR}, #{item, jdbcType=VARCHAR}, #{quantity, jdbcType=INTEGER}, #{sdescription, jdbcType=VARCHAR})
+    insert into supply_TABLE(supply_id, empno, item, quantity, sdescription)
+    values (supply_TABLE_SEQ.NEXTVAL, #{empno}, #{item}, #{quantity}, #{sdescription})
 	</insert>
 
-    <select id="supply_contentView" resultType="com.green.teamproject_groupware.dto.SupplyDto">
-        select supply_id, sname, item, quantity, sdescription, sdate, sempno from supply_TABLE where supply_id=#{supply_id}
-    </select>
-    
-    <update id="supply_modify">
-    	update supply_TABLE set item=#{item}, quantity=#{quantity}, sdescription=#{sdescription} where supply_id=#{supply_id}
+<!--     <select id="supply_contentView" resultType="com.green.teamproject_groupware.dto.SupplyDto"> -->
+<!--         select supply_id, sname, item, quantity, sdescription, sdate, empno from supply_TABLE where supply_id=#{supply_id} -->
+<!--     </select> -->
+
+    <update id="supply_delete">
+    	update supply_TABLE 
+    	   set delYn='Y'
+    	     , modify_dtm = sysdate
+    	 where supply_id=#{supply_id}
     </update>
     
-    <delete id="supply_delete">
-    	delete from supply_TABLE where supply_id=#{supply_id}
-    </delete>
+    <update id="supplyApprovalUpdate">
+    	update supply_TABLE 
+    	   set SUPPLY_STATUS='1'
+    	     , modify_dtm = sysdate
+    	 where supply_id=#{supply_id}
+    </update>
+    
+    <update id="supplyRejectUpdate">
+    	update supply_TABLE 
+    	   set SUPPLY_STATUS='2'
+    	     , modify_dtm = sysdate
+    	 where supply_id=#{supply_id}
+    </update>
 
 </mapper>
