@@ -13,11 +13,14 @@ import lombok.NoArgsConstructor;
 public class ReservationDto {
 
 	private int reservation_id;
-	private int rempno;
+	private int empno;
 	private int numOfPeople;
 	private Date checkInDate;
 	private Date checkOutDate;
 	private String details;
 	private Timestamp rdate;
+	private int reservation_status;
+	private String delYn;
+	private Timestamp modifyDtm;
 }
 

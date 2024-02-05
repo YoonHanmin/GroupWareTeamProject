@@ -5,14 +5,22 @@
 <mapper namespace="com.green.teamproject_groupware.dao.ExpenseDao">
 
     <select id="expense_list" resultType="com.green.teamproject_groupware.dto.ExpenseDto">
-        select expense_id, usagePlace, edate from expense_TABLE
-        order by expense_id desc
+        select expense_id
+             , empno
+             , usagePlace
+             , edate
+             , expense_status 
+              , modify_dtm as modifyDtm
+          from expense_TABLE
+         where 1=1
+           and empno = #{empno}
+           and delYn = 'N'
+      order by expense_id desc
     </select>
-
-    
+   
     <insert id="expense_write">
-    insert into expense_TABLE(expense_id, eempno, usagePlace)
-    values (expense_TABLE_SEQ.NEXTVAL, #{eempno}, #{usagePlace})
+    insert into expense_TABLE(expense_id, empno, usagePlace)
+    values (expense_TABLE_SEQ.NEXTVAL, #{empno}, #{usagePlace})
 	</insert>
 
     <select id="expense_contentView" resultType="com.green.teamproject_groupware.dto.ExpenseDto">
@@ -23,8 +31,25 @@
     	update expense_TABLE set usagePlace=#{usagePlace} where expense_id=#{expense_id}
     </update>
     
-    <delete id="expense_delete">
-    	delete from expense_TABLE where expense_id=#{expense_id}
-    </delete>
+    <update id="expense_delete">
+    	update from expense_TABLE
+    	set delYn='Y'
+    	     , modify_dtm = sysdate
+    	 where expense_id=#{expense_id}
+    </update>
+
+    <update id="expenseApprovalUpdate">
+    	update expense_TABLE 
+    	   set expense_status='1'
+    	    , modify_dtm = sysdate
+    	 where expense_id=#{expense_id}
+    </update>
+    
+    <update id="expenseRejectUpdate">
+    	update expense_TABLE 
+    	   set expense_status='2'
+    	    , modify_dtm = sysdate
+    	 where expense_id=#{expense_id}
+    </update>
 
 </mapper>

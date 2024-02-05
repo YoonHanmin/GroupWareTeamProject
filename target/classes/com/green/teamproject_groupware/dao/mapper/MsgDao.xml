@@ -85,7 +85,33 @@ where m.to_id = #{empno} and m.from_id = #{searchEmpno}
 ORDER BY 
     M.MSGID DESC
    </select>
+   <select id="getNotifyMsgByEmpno" resultType="com.green.teamproject_groupware.dto.MsgDto">
+   SELECT 
+    M.MSGID,M.to_id,M.from_id,M.title,M.content,m.time,m.hit,
+    TO_EMP.NAME AS TO_NAME,
+    TO_EMP.POSITION AS TO_POSITION,
+    TO_EMP.DNAME AS TO_DNAME,
+    TO_EMP.PROFILEIMAGE as To_PROFILEIMAGE,
+    TO_EMP.EMAIL AS TO_EMAIL,
+    FROM_EMP.NAME AS FROM_NAME,
+    FROM_EMP.POSITION AS FROM_POSITION,
+    FROM_EMP.DNAME AS FROM_DNAME,
+    from_emp.profileimage AS FROM_PROFILEIMAGE,
+    FROM_EMP.EMAIL AS FROM_EMAIL,
+    FROM_EMP.PHONE as FROM_PHONE,
+    FROM_EMP.STATUS AS FROM_STATUS,
+    FROM_EMP.HIREDATE AS FROM_HIREDATE
+FROM 
+    MSG M
+JOIN 
+    EMP TO_EMP ON M.TO_ID = TO_EMP.EMPNO
+JOIN 
+    EMP FROM_EMP ON M.FROM_ID = FROM_EMP.EMPNO
+where m.to_id = #{empno} and M.hit = 0
+ORDER BY 
+    M.MSGID DESC
    
+   </select>
    <update id="uphit">
    update msg set hit = 1 where msgid= #{msgid}
    </update>

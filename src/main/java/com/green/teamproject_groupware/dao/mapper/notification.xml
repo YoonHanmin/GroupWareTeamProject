@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.green.teamproject_groupware.dao.NotificationDao">
+   <select id="getNotification" resultType="com.green.teamproject_groupware.dto.NotificationDto">
+   	select * from notification where empno = #{empno}
+   </select> 
+   <delete id="deleteNotification">
+   delete from notification where msg_id = #{msgid}
+   </delete>
+   <insert id="addNotification" parameterType="com.green.teamproject_groupware.dto.NotificationDto">
+   insert into notification ( notify_type,notify_receiver,notify_sender,notify_time,msg_id,empno) values(#{notify_type},#{notify_receiver},#{notify_sender},#{notify_time},#{msg_id},#{empno})
+   </insert>
+</mapper>

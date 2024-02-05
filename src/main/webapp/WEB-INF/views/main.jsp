@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  
+  <script src="https://kit.fontawesome.com/82c57657fe.js" crossorigin="anonymous"></script>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+     <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!--      hiredate 날짜 포맷 형식 변경 -->
+      <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <style>
  @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Noto+Sans+KR&display=swap');
     body {
@@ -11,16 +17,16 @@
   margin: 0; 
   }
 /*  메인 레이아웃 양식 */
-  .header{
-height : 80px;
+.header{
+height : 70px;
 border-bottom: 1px solid #eee;
+background-color : #363945;
 display : flex;
+
 }
 
-.info{
-height : 100px;
-border-bottom: 1px solid #eee;
-}
+
+
 
 .item a {
 font-weight : bold;
@@ -40,7 +46,24 @@ list-style: none;
 }
 .content{
 width : 100%;
+height : 100%;
+}
+.info{
+height : 50px;
 
+}
+.notice_img{
+width : 600px;
+
+height : 300px;
+margin-left : 50px;
+}
+.notice_img_header{
+width : 600px;
+
+border-top : 2px solid #363945;
+
+margin-left : 50px;
 }
   
 /*   메인 레이아웃 양식 끝 */
@@ -83,7 +106,7 @@ position : absolute;
 left : calc(30% - 300px);
 top : calc(50% - 300px);
 width : 300px;
-height : 300px;
+/* height : 300px; */
 background : white;
 display:none;
 
@@ -150,16 +173,19 @@ cursor: pointer;
     
         var msgFromName = receivedConnectData.msgDto.from_name;
         console.log(msgFromName);
-        var spanElement = $('<span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">')
-        .append('<span class="visually-hidden">New alerts</span>');
+        var notify_num = ${notifyList.size()};
+        notify_num = notify_num+1;
+        console.log(notify_num);
+//         var spanElement = $(' <span id=notify_num class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">')
+//         .text(notify_num+1);
 
-      $('#Notify_btn').append(spanElement);
+      $('#notify_num').text(notify_num);
       
       var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
       .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
       "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
 
-    $('.popup').append(newDiv);
+    $("#new_notify").after(newDiv);
       
       
       
@@ -277,13 +303,27 @@ cursor: pointer;
             <div class="profile-tool" style="margin-bottom:20px;">
             <ul class="profile-bar">
 <!--             	<li id="logout" style="margin-left:30px; "><i class="bi bi-box-arrow-left" style="font-size: 2rem; margin-bottom:10px;"></i></li> -->
-				<li  style="margin-left:30px; margin-right:10px; "><button id="logout" type="button" class="btn btn-primary position-relative">LOGOUT</button></li>
-            	<li id="messenger" style="margin-right:30px; height:35px;"><button id="Notify_btn"type="button" class="btn btn-primary position-relative">
-  Messenger
-</button></li>
-<!--   <span class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle"> -->
-<!--     <span class="visually-hidden">New alerts</span> -->
-<!--   </span> -->
+
+<!-- 				<li  style="margin-left:30px; margin-right:10px; "><button id="logout" type="button" class="btn btn-primary position-relative">LOGOUT</button></li> -->
+<!--             	<li id="messenger" style="margin-right:30px; height:35px;"><button id="Notify_btn"type="button" class="btn btn-primary position-relative"> -->
+<!--   Messenger -->
+<!-- </button></li> -->
+				<li id="logout" style="height:30px;cursor:pointer; margin-left:20px;">
+				<button type="button" class="btn btn-primary position-relative" style="background-color:#363945;border:1px solid #363945"> 로그아웃 </button></li>
+            	
+            	<li id="messenger" style="height:30px;margin-right:30px; height:35px;cursor:pointer; "><button type="button" class="btn btn-primary position-relative" style="background-color:#363945;border:1px solid #363945">
+      새소식
+      <c:choose>
+    <c:when test="${notifyList.size() > 0}">
+        <span id="notify_num" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            ${notifyList.size()}
+        </span>
+    </c:when>
+</c:choose>
+      
+      
+    </button></li>
+
             		
             	
             </ul>
@@ -318,8 +358,12 @@ cursor: pointer;
                 <li><a href="approval_write">전자결재 작성</a></li>
             </ul>
         </li>
-        <li><a href="resource_apply"><i class="bi bi-boxes"></i> 자원요청</a>
+        <li><a href="#"><i class="bi bi-file-earmark-check"></i>  자원요청</a> 
+        <ul>
+        	<li><a href="resource_apply"><i class="bi bi-boxes"></i> 신청하기</a>
+       	 	<li><a href="resource_approval"><i class="bi bi-boxes"></i> 자원요청 목록</a>
         </li>
+        </ul>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
             <ul>
                 <li><a href="notice_list">공지사항</a></li>
@@ -333,27 +377,63 @@ cursor: pointer;
     <!--  메인 -->
     
     <main>
-    <div class="header">
-      	<ul class="nav nav-underline">
-  <li class="item">
-    <a class="people" aria-current="page" href="#" style="color:black;"><i class="bi bi-people-fill" style="color:black;"></i>내 사원정보</a>
-  </li>
-  <li class="item">
-    <a class="company" href="#" style="color:black;"><i class="bi bi-list-ul" style="color:black;"></i>비밀번호 변경</a>
-  </li>
-</ul>      	
+  <div class="header">
+<!--       	<ul class="nav nav-underline"> -->
+<!--   <li class="item"> -->
+<!--     <a class="people" aria-current="page" href="#" style="color:#FFFAFA;"><i class="bi bi-people-fill" style="color:#FFFAFA;"></i>내 사원정보</a> -->
+<!--   </li> -->
+<!--   <li class="item"> -->
+<!--     <a class="company" href="#" style="color:#FFFAFA;"><i class="bi bi-list-ul" style="color:#FFFAFA;"></i>비밀번호 변경</a> -->
+<!--   </li> -->
+<!-- </ul>      	 -->
       </div>
       
       
-<!--       <div class="info"> -->
+      <div class="info">
       
-<!--       </div> -->
+     
+      
+      </div>
       
  			
  				
  				
  				
         <div class="content">
+         <div class="notice_img_header">
+      	<h3>2월의 소식</h3>
+      </div>
+        <div class="notice_img">
+        
+        <div class="swiper">
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+    <div class="swiper-slide">
+    <img src="resources/images/notice_img.jpg" style="width:600px; height:300px;">
+    </div>
+    <div class="swiper-slide">
+     <img src="resources/images/notice_img2.JPG" style="width:600px; height:300px;">
+    </div>
+    <div class="swiper-slide">
+    <img src="resources/images/notice_img3.JPG" style="width:600px; height:300px;">
+    </div>
+  </div>
+  <!-- If we need pagination -->
+  <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+
+  <!-- If we need scrollbar -->
+  <div class="swiper-scrollbar"></div>
+</div>
+        
+       
+        </div>
+        
+        
       </div>
       
       
@@ -363,11 +443,27 @@ cursor: pointer;
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
 	<div style="height:40px; font-weight:bold; font-size:20px; background-color:white; ">
-	<span style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
-<!-- 	<div id="popup_notify" style="height:40px;width:300px; font-weight:bold; margin-top:10px;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;"> -->
-<!--       <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div> -->
-<!--       <div style="margin-left:5px; margin-top:5px;">한소희 님이 메시지를 보냈습니다.</div><p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;5분전</p> -->
-<!--       </div> -->
+	<span id="new_notify" style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
+	
+	<c:choose>
+	<c:when test="${not empty notifyList }">
+	<c:forEach items="${notifyList}" var="notifyList">
+	<div id="popup_notify" style="height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+      <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div>
+      <div style="margin-left:5px; margin-top:5px;">${notifyList.getNotify_sender()} 님이 메시지를 보냈습니다.</div><p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notifyList.getMinute()}</p>
+      </div>
+	
+	</c:forEach>
+	</c:when>
+	<c:otherwise>
+	 <div id="popup_notify" style="height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+      <div  style="margin-left:5px; margin-top:5px;"></div>
+      <div style="margin-left:5px; margin-top:5px;">새로운 소식이 없습니다.</div>
+      </div>
+	</c:otherwise>
+	</c:choose>
+      
+      
 	</div>
 	
 	
@@ -395,10 +491,40 @@ z-index: 1;"></div>
     	<button id="cancle">취소</button>
     	</div>
     </div>
-    
+<script>
+    const swiper = new Swiper('.swiper', {
+      // Optional parameters
+      direction: 'horizontal',
+      loop: true,
+
+      // If we need pagination
+      pagination: {
+        el: '.swiper-pagination',
+      },
+
+      // Navigation arrows
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+
+      // And if we need scrollbar
+      scrollbar: {
+        el: '.swiper-scrollbar',
+      },
+      
+      autoplay : {  // 자동 슬라이드 설정 , 비 활성화 시 false
+
+    	  delay : 3000,   // 시간 설정
+
+    	  disableOnInteraction : false,  // false로 설정하면 스와이프 후 자동 재생이 비활성화 되지 않음
+
+    	}
+      
+    });
+
+</script>    
     
 </body>
-<script>
-   
-</script>
+
 </html>

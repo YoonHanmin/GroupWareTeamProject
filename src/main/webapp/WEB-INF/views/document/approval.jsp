@@ -19,7 +19,7 @@
 .header{
 height : 70px;
 border-bottom: 1px solid #eee;
-background-color : 363945;
+background-color : #363945;
 display : flex;
 
 }
