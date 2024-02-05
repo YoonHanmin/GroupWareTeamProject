@@ -10,7 +10,7 @@
 
      
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	 <context:component-scan base-package="com.green.teamproject_groupware" />
 	<!-- Enables the Spring MVC @Controller programming model -->
 <!-- 	<annotation-driven /> -->
 	
@@ -20,14 +20,14 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.green.teamproject_groupware" />
+	
 	
 	<!-- 	dataSource 객체는 데이터베이스 정보 포함 -->
 <!-- 	<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->

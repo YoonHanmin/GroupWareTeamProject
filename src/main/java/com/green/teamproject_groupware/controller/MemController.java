@@ -1,5 +1,6 @@
 package com.green.teamproject_groupware.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +28,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.teamproject_groupware.dao.IMemDao;
+import com.green.teamproject_groupware.dao.NotificationDao;
 import com.green.teamproject_groupware.dto.EmpDto;
+import com.green.teamproject_groupware.dto.MsgDto;
+import com.green.teamproject_groupware.dto.NotificationDto;
 import com.green.teamproject_groupware.dto.UserInfoDto;
 import com.green.teamproject_groupware.service.MemService;
+import com.green.teamproject_groupware.service.MsgService;
+import com.green.teamproject_groupware.service.NotifyService;
 import com.green.teamproject_groupware.controller.MemController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +47,12 @@ public class MemController {
 	MemService service;
 	
 	@Autowired
+	NotifyService notifyService;
+	
+	@Autowired
+	MsgService msgService;
+	
+	@Autowired
 	private JavaMailSender mailSender;
 	
     @Autowired
@@ -50,6 +62,48 @@ public class MemController {
 	@RequestMapping("/main")
 	public String main(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
+		
+		
+		ArrayList<MsgDto> msgList = msgService.getNotifyMsgByEmpno(empno);
+		 ArrayList<NotificationDto> notifyList = new ArrayList<NotificationDto>();
+		for (int i = 0; i < msgList.size(); i++) {
+			NotificationDto dto = new NotificationDto();
+			dto.setEmpno(empno);
+			dto.setMsg_id(msgList.get(i).getMsgid());			
+			dto.setNotify_receiver(msgList.get(i).getTo_name());
+			dto.setNotify_sender(msgList.get(i).getFrom_name());
+			dto.setNotify_time(msgList.get(i).getTime());
+			dto.setNotify_type("MSG");	
+			
+			long currentTimeMillis = System.currentTimeMillis();
+	        long timestampMillis = msgList.get(i).getTime().getTime();
+	        long differenceMillis = currentTimeMillis - timestampMillis;
+
+	        // 밀리초를 분으로 변환
+	        long minutes = differenceMillis / (60 * 1000);
+	        String minute;
+	        if (minutes < 1) {
+	            minute = "방금 전";
+	        } else if (minutes < 60) {
+	            minute = minutes + "분 전";
+	        } else if(minutes>60 && minutes<120) {
+	        	minute = "1시간 전";
+	        }else if(minutes>120 && minutes<180) {
+	        	minute = "2시간 전";
+	        }else if(minutes>180 && minutes<240) {
+	        	minute = "3시간 전";
+	        }else {
+	        	minute = "오래전";
+	        }
+	      
+	        dto.setMinute(minute);
+	       
+	        		notifyList.add(dto);
+			notifyService.addNotification(dto);
+			
+		}
+	
+		model.addAttribute("notifyList", notifyList);
 		
 		if(empno !=null) {
 		EmpDto user = service.getUserByEmpno(Integer.parseInt(empno));
