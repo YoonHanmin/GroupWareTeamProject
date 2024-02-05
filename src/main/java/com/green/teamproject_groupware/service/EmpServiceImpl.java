@@ -12,7 +12,7 @@ import com.green.teamproject_groupware.dto.EmpDto;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Service
+@Service("EmpService")
 @Slf4j
 public class EmpServiceImpl implements EmpService {
 	

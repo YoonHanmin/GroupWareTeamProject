@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.green.teamproject_groupware.dao.MsgDao;
+import com.green.teamproject_groupware.dao.NotificationDao;
 import com.green.teamproject_groupware.dto.MsgDto;
+import com.green.teamproject_groupware.dto.NotificationDto;
 
 @Service
 public class MsgServiceImpl implements MsgService {
@@ -16,6 +18,8 @@ public class MsgServiceImpl implements MsgService {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@Autowired
+	private NotificationService notificationService;
 	
 	@Override
 	public ArrayList<MsgDto> getReceiveMsg(String empno) {
@@ -35,6 +39,9 @@ public class MsgServiceImpl implements MsgService {
 	@Override
 	public int sendMsg(MsgDto dto) {
 		MsgDao dao = sqlSession.getMapper(MsgDao.class);
+//		메세지 작성시 해당 메세지의 수신자에게 send 알림 전송
+		
+		notificationService.sendEvent(String.valueOf(dto.getTo_id()), "NewMsg", dto);
 		return dao.sendMsg(dto);
 		
 	}
@@ -49,7 +56,14 @@ public class MsgServiceImpl implements MsgService {
 	@Override
 	public int uphit(int msgid) {
 		MsgDao dao = sqlSession.getMapper(MsgDao.class);
+		NotificationDao notifyDao = sqlSession.getMapper(NotificationDao.class);
+		notifyDao.deleteNotification(msgid);
 		return dao.uphit(msgid);
 	}
-	
+	@Override
+	public ArrayList<MsgDto> getNotifyMsgByEmpno(String empno) {
+		MsgDao dao = sqlSession.getMapper(MsgDao.class);
+		ArrayList<MsgDto> NotifyList = dao.getNotifyMsgByEmpno(empno);
+		return NotifyList;
+	}
 }

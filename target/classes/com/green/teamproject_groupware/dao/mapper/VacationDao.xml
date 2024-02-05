@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.green.teamproject_groupware.dao.VacationDao">
+    <insert id="vacationRequest" parameterType="com.green.teamproject_groupware.dto.VacationRequestDto">
+        INSERT INTO APPROVALTABLE (EMPNO, NAME, POSITION, VACATIONTYPE, VACATIONDAYS, REASON, STARTDATE, ENDDATE, STATUS, REQUESTDATE)
+        VALUES (#{empno}, #{name}, #{position}, #{vacationtype}, #{vacationdays}, #{reason}, #{startdate}, #{enddate}, #{status}, CURRENT_TIMESTAMP)
+    </insert>
+
+    <select id="myVacationRequests" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">
+        SELECT * FROM APPROVALTABLE WHERE EMPNO = #{empno}
+        ORDER BY REQUESTDATE DESC
+    </select>
+
+<!-- 	<select id="checkDuplicateVacation" resultType="boolean"> -->
+<!-- 	    SELECT COUNT(*) FROM APPROVALTABLE -->
+<!-- 	    WHERE EMPNO = #{empno} -->
+<!-- 	    AND ((STARTDATE &lt;= #{startdate} AND ENDDATE &gt;= #{startdate}) -->
+<!-- 	    OR (STARTDATE &lt;= #{enddate} AND ENDDATE &gt;= #{enddate}) -->
+<!-- 	    OR (STARTDATE &gt;= #{startdate} AND ENDDATE &lt;= #{enddate})) -->
+<!-- 	</select> -->
+	
+    <!-- 취소 관련 SQL 쿼리 추가 -->
+    <update id="cancelVacation">
+        UPDATE APPROVALTABLE
+        SET STATUS = '취소'
+        WHERE EMPID = #{empid}
+    </update>
+
+</mapper>

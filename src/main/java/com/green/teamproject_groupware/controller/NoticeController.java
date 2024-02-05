@@ -31,15 +31,15 @@ public class NoticeController {
 	@Autowired
 	private EmpService empservice;
 	
-	@RequestMapping("/notice_list_old")
-	public String nlist(Model model) {
-		log.info("@# list");
-		
-		ArrayList<NoticeDto> notice_list = nservice.notice_list();
-		model.addAttribute("notice_list", notice_list);
-				
-		return "notice_list";
-	}
+//	@RequestMapping("/notice_list_old")
+//	public String nlist(Model model) {
+//		log.info("@# list");
+//		
+//		ArrayList<NoticeDto> notice_list = nservice.notice_list();
+//		model.addAttribute("notice_list", notice_list);
+//				
+//		return "notice_list";
+//	}
 	
 	@RequestMapping("/notice_list")
 	public String nlist(HttpSession session,NoticeCriteria ncri, Model model) {
@@ -70,24 +70,28 @@ public class NoticeController {
 	}	
 	
 	@RequestMapping("/notice_write_view")
-	public String notice_write_view() {
+	public String notice_write_view(HttpSession session,Model model) {
 		log.info("@# notice_write_view");
-		
-		return "notice_write_view";
+		String empno = (String) session.getAttribute("empno");
+		EmpDto dto = empservice.getEmpByEmpno(empno);
+		model.addAttribute("dto", dto);
+		return "community/notice_write_view";
 	}
 	
 	@RequestMapping("/notice_content_view")
-	public String notice_content_view(@RequestParam HashMap<String, String> param, Model model) {
+	public String notice_content_view(HttpSession session,@RequestParam HashMap<String, String> param, Model model) {
 		log.info("@# notice_content_view");
-		
-		NoticeDto dto = nservice.ncontentView(param);
-		model.addAttribute("ncontentView", dto);
+		String empno = (String) session.getAttribute("empno");
+		EmpDto dto = empservice.getEmpByEmpno(empno);
+		model.addAttribute("dto", dto);
+		NoticeDto noticeDto = nservice.ncontentView(param);
+		model.addAttribute("ncontentView", noticeDto);
 		model.addAttribute("pageMaker", param);
 		
 		nservice.nincreaseHit(param);
-		log.info("@# notice_content_view>>>>>>>>>>>>>>>>>>"+dto.getNcontent());
+		log.info("@# notice_content_view>>>>>>>>>>>>>>>>>>"+noticeDto.getNcontent());
 		
-		return "notice_content_view";
+		return "community/notice_content_view";
 	}
 	
 	@RequestMapping("/nmodify")
@@ -102,7 +106,7 @@ public class NoticeController {
 		rttr.addAttribute("npageNum", ncri.getNpageNum());
 		rttr.addAttribute("namount", ncri.getNamount());
 		
-		return "redirect:notice_list";
+		return "redirect:community/noticeboard";
 	}
 	
 	@RequestMapping("/ndelete")
@@ -113,6 +117,6 @@ public class NoticeController {
 		rttr.addAttribute("npageNum", ncri.getNpageNum());
 		rttr.addAttribute("namount", ncri.getNamount());
 		
-		return "redirect:notice_list";
+		return "redirect:community/noticeboard";
 	}
 }

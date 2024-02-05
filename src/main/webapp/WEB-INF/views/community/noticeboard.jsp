@@ -202,6 +202,18 @@ body {
         color: white;
         cursor: pointer;
     }
+    
+    .content table th {
+    background-color : #eee;
+    text-align : center;
+    color : black;
+    }
+     .content table td{
+        text-align : center;
+     }
+     .content table a{
+     text-decoration: none;
+     }
 </style>
 
 
@@ -233,31 +245,31 @@ body {
       
       <div class="info">
       
+<h1>공지사항</h1>
       </div>
       
         <div class="content">
-        <table width="500" border="1">
+        <table width="400" border="1">
 
-<h1 align="center">공지 목록</h1>
 <div class="write-button">
     <a href="notice_write_view">공지 작성</a>
 </div>
 		<tr>
-			<td width="80">공지번호</td>
-			<td width="100">작성자</td>
-			<td width="400px">제목</td>
-			<td width="200px">날짜</td>
-			<td width="100">조회수</td>
+			<th width="50px">공지번호</th>
+			<th width="50px">작성자</th>
+			<th width="150px">제목</th>
+			<th width="80px">날짜</th>
+			<th width="50px">조회수</th>
 		</tr>
-		<c:forEach items="${notice_list}" var="dto">
+		<c:forEach items="${notice_list}" var="noticeDto">
 			<tr>
-				<td>${dto.nid}</td>
-				<td>${dto.nname}</td>
-				<td>
-					<a class="move_link" href="${dto.nid}">${dto.ntitle}</a>
+				<td width="50px">${noticeDto.nid}</td>
+				<td width="50px">${noticeDto.nname}</td>
+				<td width="150px">
+					<a class="move_link" href="${noticeDto.nid}">${noticeDto.ntitle}</a>
 				</td>
-				<td>${dto.ndate}</td>
-				<td>${dto.nhit}</td>
+				<td width="80px"><fmt:formatDate value="${noticeDto.ndate}" pattern="yyyy-MM-dd" /></td>
+				<td width="50px">${noticeDto.nhit}</td>
 			</tr>
 		</c:forEach>
 	</table>
