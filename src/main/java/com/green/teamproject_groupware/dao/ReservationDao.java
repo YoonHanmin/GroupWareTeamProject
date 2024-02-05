@@ -6,9 +6,12 @@ import java.util.HashMap;
 import com.green.teamproject_groupware.dto.ReservationDto;
 
 public interface ReservationDao {
-	public ArrayList<ReservationDto> reservation_list();
+	public ArrayList<ReservationDto> reservation_list(String empno);
 	 public void reservation_write(ReservationDto formData4);
 	public ReservationDto reservation_contentView(HashMap<String, String> param);
 	public void reservation_modify(HashMap<String, String> param);
-	public void reservation_delete(HashMap<String, String> param);
+	public void reservation_delete(String reservation_id);
+	
+	public void reservationRejectUpdate(String reservation_id);
+	public void reservationApprovalUpdate(String reservation_id);
 }

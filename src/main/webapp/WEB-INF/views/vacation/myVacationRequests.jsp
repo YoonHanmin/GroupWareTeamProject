@@ -48,6 +48,7 @@
 .content {
     width: 100%;
     padding: 30px;
+    margin: auto;
 }
 
 .myinfo {
@@ -171,8 +172,8 @@
       <table id="vacation-table">
         <thead>
           <tr>
-            <th>휴가 번호</th>
-            <th>사원번호</th>
+            <th>휴가 코드</th>
+            <th>사원 번호</th>
             <th>이름</th>
             <th>직급</th>
             <th>휴가 종류</th>
@@ -188,7 +189,7 @@
         <tbody>
           <c:forEach var="request" items="${myVacationRequests}">
             <tr>
-              <td class="empid_${request.empid}">${request.empid}</td>
+              <td class="empid_${request.empid}">2024VC_${request.empid}</td>
               <td>${request.empno}</td>
               <td>${request.name}</td>
               <td>${request.position}</td>

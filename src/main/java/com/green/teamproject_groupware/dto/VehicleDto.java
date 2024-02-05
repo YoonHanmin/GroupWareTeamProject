@@ -12,9 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class VehicleDto {
 	private int vehicle_id;
-	private int vempno;
+	private int empno;
 	private Date vstartdate;
     private Date venddate;
 	private String vdescription;
 	private Timestamp vdate;
+	private int vehicle_status;
+	private String delYn;
+	private Timestamp modifyDtm;
 }

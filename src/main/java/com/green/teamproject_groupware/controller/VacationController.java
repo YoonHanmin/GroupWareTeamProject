@@ -1,11 +1,13 @@
 package com.green.teamproject_groupware.controller;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.dao.VacationDao;
 import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.VacationRequestDto;
@@ -40,14 +44,65 @@ public class VacationController {
 	EmpService empService;
     
 
-    @RequestMapping(value="/vacationRequest")
+    @RequestMapping(value="/vacationRequest", method=RequestMethod.GET)
     public String vacationRequest(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");
         EmpDto dto = empService.getEmpByEmpno(empno);
-        model.addAttribute("dto",dto);
+        model.addAttribute("dto", dto);
+
+        // 휴가 데이터를 가져오는 부분
+        ArrayList<VacationRequestDto> vacationEvents = service.getVacationEvents(empno);
+        log.info(vacationEvents.get(0).getVacationtype());
+        System.out.println("vacationEvents: " + vacationEvents);
+        
+
+//        // 서버에서 날짜를 ISO 8601 형식으로 변환하여 클라이언트로 전송
+//        List<HashMap<String, String>> formattedVacationEvents = new ArrayList<>();
+//        SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd");
+//
+//        HashMap<String, String> eventMap;
+//        for (VacationRequestDto event : vacationEvents) {
+//        	System.out.println("event: " + event);
+//            String startDateStr = null;
+//            if (event.getStartdate() != null) {
+//                startDateStr = iso8601Format.format(event.getStartdate());
+//            }
+//            String endDateStr = null;
+//            if (event.getEnddate() != null) {
+//                endDateStr = iso8601Format.format(event.getEnddate());
+//            }
+//
+//            // 예외 처리 추가
+//            if (startDateStr != null && endDateStr != null) {
+//                eventMap = new HashMap<>();
+//                System.out.println("Event: " + eventMap);
+//                eventMap.put("vacationtype", event.getVacationtype());
+//                eventMap.put("startdate", startDateStr);
+//                eventMap.put("enddate", endDateStr);
+//
+//                formattedVacationEvents.add(eventMap);
+//            } else {
+//                // 예외 처리 로직 추가 (예: 로그 출력 또는 다른 처리)
+//                System.out.println("Invalid date: startDateStr=" + startDateStr + ", endDateStr=" + endDateStr);
+//            }
+//        }
+//        model.addAttribute("vacationEvents", formattedVacationEvents);
+//        model.addAttribute("vacationEvents", vacationEvents);
+        // Java 객체를 JSON 문자열로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        String vacationEventsJson = null;
+        try {
+            vacationEventsJson = objectMapper.writeValueAsString(vacationEvents);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        // 모델에 JSON 데이터 추가
+        model.addAttribute("vacationEventsJson", vacationEventsJson);
 
         return "vacation/vacationRequest";
     }
+
     
     @RequestMapping(value = "/submitVacationRequest", method = RequestMethod.POST)
     @ResponseBody

@@ -440,8 +440,12 @@ cursor: pointer;
                 <li><a href="approval_write">전자결재 작성</a></li>
             </ul>
         </li>
-        <li><a href="resource_apply"><i class="bi bi-boxes"></i> 자원요청</a>
+        <li><a href="#"><i class="bi bi-file-earmark-check"></i>  자원요청</a> 
+        <ul>
+        	<li><a href="resource_apply"><i class="bi bi-boxes"></i> 신청하기</a>
+       	 	<li><a href="resource_approval"><i class="bi bi-boxes"></i> 자원요청 목록</a>
         </li>
+        </ul>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
             <ul>
                 <li><a href="notice_list">공지사항</a></li>

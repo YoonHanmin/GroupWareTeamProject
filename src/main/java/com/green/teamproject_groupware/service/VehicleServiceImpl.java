@@ -20,11 +20,11 @@ public class VehicleServiceImpl implements VehicleService{
 	private SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<VehicleDto> vehicle_list() {
+	public ArrayList<VehicleDto> vehicle_list(String empno) {
 		log.info("@# VehicleServiceImpl.vehicle_list() start");
 		VehicleDao dao = sqlSession.getMapper(VehicleDao.class);
 		
-		ArrayList<VehicleDto> vehicleList = dao.vehicle_list();
+		ArrayList<VehicleDto> vehicleList = dao.vehicle_list(empno);
 		
 		return vehicleList;
 	}
@@ -68,13 +68,27 @@ public class VehicleServiceImpl implements VehicleService{
 	}
 
 	@Override
-	public void vehicle_delete(HashMap<String, String> param) {
+	public void vehicle_delete(String vehicle_id) {
 		log.info("@# VehicleServiceImpl.delete() start");
 		
 		VehicleDao dao = sqlSession.getMapper(VehicleDao.class);
-		dao.vehicle_delete(param);
+		dao.vehicle_delete(vehicle_id);
+}
+
+	@Override
+	public void vehicleApprovalUpdate(String vehicle_id) {
+		log.info("@# VehicleServiceImpl.vehicleApprovalUpdate() start");
 		
-		log.info("@# VehicleServiceImpl.delete() start");
-	}
+		VehicleDao dao = sqlSession.getMapper(VehicleDao.class);
+		dao.vehicleApprovalUpdate(vehicle_id);
+}
+
+	@Override
+	public void vehicleRejectUpdate(String vehicle_id) {
+		log.info("@# VehicleServiceImpl.vehicleRejectUpdate() start");
+		
+		VehicleDao dao = sqlSession.getMapper(VehicleDao.class);
+		dao.vehicleRejectUpdate(vehicle_id);
+}
 
 }
