@@ -2,6 +2,7 @@ package com.green.teamproject_groupware.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +51,5 @@ public class EmpServiceImpl implements EmpService {
 		EmpDto dto = dao.getEmpByName(name);
 		return dto;
 	}
+
 }

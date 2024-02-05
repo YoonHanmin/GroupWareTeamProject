@@ -213,13 +213,13 @@ cursor: pointer;
             	
             	<li id="messenger" style="height:30px;margin-right:30px; height:35px;cursor:pointer; "><button type="button" class="btn btn-primary position-relative" style="background-color:#363945;border:1px solid #363945">
       새소식
-<!--       <c:choose> -->
+      <c:choose>
     <c:when test="${notifyList.size() > 0}">
-<!--         <span id="notify_num" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> -->
+        <span id="notify_num" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             ${notifyList.size()}
-<!--         </span> -->
-<!--     </c:when> -->
-<!-- </c:choose> -->
+        </span>
+    </c:when>
+</c:choose>
       
       
     </button></li>
@@ -237,6 +237,14 @@ cursor: pointer;
                 <li><a href="people">회사 정보</a></li>
             </ul>
         </li>
+        
+        
+        
+        
+        
+        
+
+        
         <li ><a href="receive"><i class="bi bi-envelope"></i> 메신저</a>
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
@@ -270,6 +278,19 @@ cursor: pointer;
                 <li><a href="picture_list">사진게시판</a></li>
             </ul>
         </li>
+        
+<!-- 출근 버튼 -->
+<li>
+    <a href="#" onclick="markAttendance('in')" style="color: white; background-color: #007bff; padding: 8px 16px; display: inline-block; text-decoration: none; border-radius: 5px;">출근</a>
+</li>
+<!-- 퇴근 버튼 -->
+<li>
+    <a href="#" onclick="markAttendance('out')" style="color: white; background-color: #dc3545; padding: 8px 16px; display: inline-block; text-decoration: none; border-radius: 5px;">퇴근</a>
+</li>
+        
+        
+        
+        
       </ul>
     </nav>
      <!--  모달 팝업창-->

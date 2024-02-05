@@ -141,11 +141,18 @@ background-color : #eee;
 cursor: pointer;
 }
 
-
-
-
-
 </style>
+<!-- Bootstrap CSS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
  <script src="resources/js/jquery.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -199,8 +206,56 @@ cursor: pointer;
     
     
     $(document).ready(function () {
-        // ... 여러분의 기존 코드 ...
 
+    	
+    	// 사원 검색 토글바 클릭 시 검색 창 표시/숨김
+        $('#employeeSearchToggle').click(function () {
+          $('#employeeSearchContainer').toggle();
+        });
+
+        // 검색 버튼 클릭 시 동작
+        $('#searchEmployeeBtn').click(function () {
+          // 선택된 검색 조건과 검색어 가져오기
+          var searchCondition = $('#searchCondition').val();
+          var searchKeyword = $('#employeeSearchInput').val();
+
+          // 검색 조건과 검색어가 유효한 경우에만 검색 수행
+          if (searchCondition && searchKeyword) {
+            // 여기에 실제 검색 동작을 구현하세요
+            console.log('검색 조건:', searchCondition);
+            console.log('검색어:', searchKeyword);
+
+            // 검색 창 숨김
+            $('#employeeSearchContainer').hide();
+
+            // 검색 결과를 서버로 요청하고 받은 데이터를 처리하는 함수 호출
+            searchEmployees(searchCondition, searchKeyword);
+          }
+        });
+
+        // 실제 검색을 처리하는 함수
+        function searchEmployees(condition, keyword) {
+          // 서버로 Ajax 요청을 보내 검색 결과를 받아옴
+          $.ajax({
+            type: 'POST',  // 또는 'GET' 등 요청 방식 설정
+            url: '/your_server_endpoint',  // 실제 서버 URL로 변경
+            data: { condition: condition, keyword: keyword },  // 검색 조건과 검색어 전송
+            success: function (data) {
+              // 서버에서 받은 데이터(data)를 가지고 화면에 결과를 표시하는 로직을 추가
+              console.log('검색 결과:', data);
+            },
+            error: function (error) {
+              console.error('검색 오류:', error);
+            }
+          });
+        }
+    	
+    	
+    	
+    	
+    	
+    	
+    
         // "서브메뉴1"을 클릭했을 때의 이벤트 리스너를 추가합니다
         $('li:contains("서브메뉴1")').click(function (event) {
             event.stopPropagation(); // 클릭 이벤트가 상위 li까지 전파되지 않도록 합니다
@@ -208,7 +263,6 @@ cursor: pointer;
             $(this).children('ul').slideToggle();
         });
 
-        // ... 여러분의 기존 코드 ...
     });
     
     $(document).ready(function () {
@@ -250,9 +304,6 @@ cursor: pointer;
     
     
     }); // end of ready(function)
-	
-
-    
     
     function openPop(){
     	var width = 400;
@@ -338,6 +389,51 @@ cursor: pointer;
                 <li><a href="people">회사 정보</a></li>
             </ul>
         </li>
+        
+        
+        
+        
+        
+        
+        
+<!-- 토글바에 사원 검색 창 추가 -->
+<li id="employeeSearchToggle">
+  <a href="#"><i class="bi bi-person-circle"></i> 사원 검색</a>
+</li>
+
+<!-- 검색 창 영역 -->
+<form method="get" id="searchForm">
+<div id="employeeSearchContainer" style="display: none;">
+  <!-- 검색 조건 선택 -->
+  <label for="searchCondition">검색 조건:</label>
+  <select id="searchCondition" name="searchCondition">
+    <option value="dname">부서명</option>
+    <option value="empno">사원번호</option>
+    <option value="name">이름</option>
+  </select>
+  <br>
+  <!-- 검색어 입력 폼 -->
+  <label for="employeeSearchInput">검색어:</label>
+  <input type="text" id="employeeSearchInput" name="employeeSearchInput">
+  <br>
+
+  <!-- 검색 버튼 -->
+  <button type="button" class="btn btn-primary" id="searchEmployeeBtn">검색</button>
+</div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
         <li ><a href="receive"><i class="bi bi-envelope"></i> 메신저</a>
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
