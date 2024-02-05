@@ -25,4 +25,5 @@
 	
 <!-- 	json 변환 객체 -->
 	 <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper" />
+	 
 </beans>

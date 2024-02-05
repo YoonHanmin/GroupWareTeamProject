@@ -1,5 +1,7 @@
 package com.green.teamproject_groupware.service;
 
+import java.sql.Timestamp;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.dto.MsgDto;
@@ -13,7 +15,8 @@ import lombok.Getter;
 public class NotificationResponse {
 	private String receiver;
     private String notificationType;
-    private String msgFromName;
+    private MsgDto msgDto;
+    private Timestamp time;
     private String url;
     private boolean isRead;
 
@@ -24,8 +27,9 @@ public class NotificationResponse {
 					NotificationResponse.builder()
 			        .receiver(notification.getReceiver())
 			        .notificationType(notification.getNotificationType())
-			        .msgFromName(notification.getMsgFromName())
+			        .msgDto(notification.getMsgDto())
 			        .url(notification.getUrl())
+			        .time(notification.getTime())
 			        .isRead(notification.getIsRead())
 			        .build();
 		

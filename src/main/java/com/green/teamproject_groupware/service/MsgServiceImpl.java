@@ -38,7 +38,7 @@ public class MsgServiceImpl implements MsgService {
 	public int sendMsg(MsgDto dto) {
 		MsgDao dao = sqlSession.getMapper(MsgDao.class);
 //		메세지 작성시 해당 메세지의 수신자에게 send 알림 전송
-		notificationService.sendEvent(String.valueOf(dto.getTo_id()), "NewMsg", dto.getFrom_name());
+		notificationService.sendEvent(String.valueOf(dto.getTo_id()), "NewMsg", dto);
 		return dao.sendMsg(dto);
 		
 	}
