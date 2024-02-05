@@ -155,45 +155,45 @@ cursor: pointer;
     <script>
   
 
-    window.onload = function () {
+//     window.onload = function () {
     	
-    	const empno = $("input[name='empno']").val();
-    	console.log(empno);
-    const eventSource = new EventSource("/connect/"+empno)
+//     	const empno = $("input[name='empno']").val();
+//     	console.log(empno);
+//     const eventSource = new EventSource("/connect/"+empno)
     
-    eventSource.addEventListener('NewMsg', function(e){
-        console.log(e.data);
-        const receivedConnectData = JSON.parse(e.data);
-        console.log('connect event data:', receivedConnectData);
-       if(receivedConnectData.msgDto!=null){
-    	var notifyTime = receivedConnectData.time;
-    	var currentTime = new Date().getTime();
-    	var time = currentTime - notifyTime;
-    	var minute_before = Math.floor(time/(1000*60));
+//     eventSource.addEventListener('NewMsg', function(e){
+//         console.log(e.data);
+//         const receivedConnectData = JSON.parse(e.data);
+//         console.log('connect event data:', receivedConnectData);
+//        if(receivedConnectData.msgDto!=null){
+//     	var notifyTime = receivedConnectData.time;
+//     	var currentTime = new Date().getTime();
+//     	var time = currentTime - notifyTime;
+//     	var minute_before = Math.floor(time/(1000*60));
     
-        var msgFromName = receivedConnectData.msgDto.from_name;
-        console.log(msgFromName);
-        var notify_num = ${notifyList.size()};
-        notify_num = notify_num+1;
-        console.log(notify_num);
-//         var spanElement = $(' <span id=notify_num class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">')
-//         .text(notify_num+1);
+//         var msgFromName = receivedConnectData.msgDto.from_name;
+//         console.log(msgFromName);
+//         var notify_num = ${notifyList.size()};
+//         notify_num = notify_num+1;
+//         console.log(notify_num);
+// //         var spanElement = $(' <span id=notify_num class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">')
+// //         .text(notify_num+1);
 
-      $('#notify_num').text(notify_num);
+//       $('#notify_num').text(notify_num);
       
-      var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
-      .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
-      "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
+//       var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
+//       .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
+//       "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
 
-    $("#new_notify").after(newDiv);
+//     $("#new_notify").after(newDiv);
       
       
       
-       }
-    });
+//        }
+//     });
     
   
-    };
+//     };
     
     
     

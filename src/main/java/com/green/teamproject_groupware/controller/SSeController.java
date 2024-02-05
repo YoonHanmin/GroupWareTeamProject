@@ -25,7 +25,7 @@ public class SSeController {
 	private final NotificationService notificationService;
 	
 	
-	@GetMapping(value = "/connect/{empno}",produces = "text/event-stream")
+	@GetMapping(value = "/connect/{empno}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public SseEmitter connect(@PathVariable String empno,
 			@RequestHeader(value="Last-Event-ID",required = false,defaultValue = "")String lastEventId){
 	

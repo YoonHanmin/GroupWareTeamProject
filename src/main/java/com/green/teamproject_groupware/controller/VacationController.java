@@ -192,13 +192,14 @@ public class VacationController {
     	log.info(empid);
         try {
             // 취소 로직 수행: 예시로 VacationDao.cancelVacation(empid)를 호출하는 코드
-            service.cancelVacation(Integer.parseInt(empid));
+        	service.cancelVacation(Integer.parseInt(empid));
             return "success";
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
         }
     }
+    
     @RequestMapping(value="/vacationApproval", method=RequestMethod.GET)
     public String vacationApproval(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");
