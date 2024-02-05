@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,13 +29,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.teamproject_groupware.dao.IMemDao;
 import com.green.teamproject_groupware.dao.NotificationDao;
+import com.green.teamproject_groupware.dto.ApprovalDto;
 import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.MsgDto;
+import com.green.teamproject_groupware.dto.NoticeDto;
 import com.green.teamproject_groupware.dto.NotificationDto;
 import com.green.teamproject_groupware.dto.UserInfoDto;
+import com.green.teamproject_groupware.dto.VacationRequestDto;
+import com.green.teamproject_groupware.service.ApprovalService;
 import com.green.teamproject_groupware.service.MemService;
 import com.green.teamproject_groupware.service.MsgService;
+import com.green.teamproject_groupware.service.NoticeService;
 import com.green.teamproject_groupware.service.NotifyService;
+import com.green.teamproject_groupware.service.VacationService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.controller.MemController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -43,27 +52,73 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemController {
 	@Autowired
-	MemService service;
-	
+	MemService service;	
 	@Autowired
-	NotifyService notifyService;
-	
+	NotifyService notifyService;	
 	@Autowired
 	MsgService msgService;
-	
 	@Autowired
 	private JavaMailSender mailSender;
-	
     @Autowired
     SqlSession sqlSession; 
-	
+    @Autowired
+    NoticeService noticeService;
+    @Autowired
+    ApprovalService appservice;
+    @Autowired
+    VacationService vacationService;
+    
 	@RequestMapping("/main")
 	public String main(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
+		notifyService.deleteAllNotification();
+		 ArrayList<NotificationDto> notifyList = new ArrayList<NotificationDto>();
+		ArrayList<NoticeDto> noticeList = noticeService.notice_list();
+		ArrayList<ApprovalDto> todoList = appservice.getTodoDoc(empno);
+		model.addAttribute("todoList", todoList);
+		ArrayList<ApprovalDto> ingList = appservice.getMyDoc(empno);
+		model.addAttribute("ingList",ingList);
 		
+		//		메인_전자결재 알림 전송
+		for (int i = 0; i < todoList.size(); i++) {
+			NotificationDto dto = new NotificationDto();
+			dto.setEmpno(empno);
+			dto.setMsg_id(todoList.get(i).getDoc_id());			
+			dto.setNotify_receiver(""+empno);
+			dto.setNotify_sender(""+empno);
+			dto.setNotify_time(todoList.get(i).getDoc_date());
+			dto.setNotify_type("APPROVAL");	
+			  notifyService.addNotification(dto);
+			long currentTimeMillis = System.currentTimeMillis();
+	        long timestampMillis = todoList.get(i).getDoc_date().getTime();
+	        long differenceMillis = currentTimeMillis - timestampMillis;
+
+	        // 밀리초를 분으로 변환
+	        long minutes = differenceMillis / (60 * 1000);
+	        String minute;
+	        if (minutes < 1) {
+	            minute = "방금 전";
+	        } else if (minutes < 60) {
+	            minute = minutes + "분 전";
+	        } else if(minutes>60 && minutes<120) {
+	        	minute = "1시간 전";
+	        }else if(minutes>120 && minutes<180) {
+	        	minute = "2시간 전";
+	        }else if(minutes>180 && minutes<240) {
+	        	minute = "3시간 전";
+	        }else {
+        	minute = "오래전";
+	        }
+	      
+	      
+	        dto.setMinute(minute);
+			notifyList.add(dto);
+			
+		}
+//		메인_알림
 		
 		ArrayList<MsgDto> msgList = msgService.getNotifyMsgByEmpno(empno);
-		 ArrayList<NotificationDto> notifyList = new ArrayList<NotificationDto>();
+		
 		for (int i = 0; i < msgList.size(); i++) {
 			NotificationDto dto = new NotificationDto();
 			dto.setEmpno(empno);
@@ -100,8 +155,25 @@ public class MemController {
 			notifyService.addNotification(dto);
 			
 		}
-	
+		log.info("notifyList===>>"+notifyList);
 		model.addAttribute("notifyList", notifyList);
+		model.addAttribute("noticeList", noticeList);
+		// 휴가 데이터를 가져오는 부분
+        ArrayList<VacationRequestDto> vacationEvents = vacationService.getVacationEvents(empno);
+        // Java 객체를 JSON 문자열로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        String vacationEventsJson = null;
+        try {
+            vacationEventsJson = objectMapper.writeValueAsString(vacationEvents);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        // 모델에 JSON 데이터 추가
+        model.addAttribute("vacationEventsJson", vacationEventsJson);
+		
+		
+		
 		
 		if(empno !=null) {
 		EmpDto user = service.getUserByEmpno(Integer.parseInt(empno));
@@ -174,6 +246,7 @@ public class MemController {
 	    UserInfoDto userInfoDto = new UserInfoDto();
 	    userInfoDto.setEmpno(param.get("empno"));
 	    userInfoDto.setName(param.get("name"));
+
 	    userInfoDto.setPassword(param.get("password"));
 	    userInfoDto.setEmail(param.get("email"));
 	    userInfoDto.setTel(param.get("tel"));

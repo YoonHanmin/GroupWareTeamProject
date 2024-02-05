@@ -14,6 +14,7 @@
         select empno,name,dname,profileimage from emp where empno=#{empno}
     </select>
     
+   
     <insert id="write" parameterType="hashmap">
     	insert into mvc_member values(#{mem_uid},#{mem_pwd},#{mem_name})
     </insert>

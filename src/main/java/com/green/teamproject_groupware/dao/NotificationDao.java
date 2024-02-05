@@ -8,5 +8,5 @@ public interface NotificationDao {
 	public ArrayList<NotificationDto>getNotification(String empno);
 	public int deleteNotification(int msgid);
 	public void addNotification(NotificationDto notifyDto);
-	
+	public void deleteAllNotification();
 }

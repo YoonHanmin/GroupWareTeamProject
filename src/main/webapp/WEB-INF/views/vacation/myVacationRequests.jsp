@@ -48,6 +48,7 @@
 .content {
     width: 100%;
     padding: 30px;
+    margin: auto;
 }
 
 .myinfo {
@@ -127,8 +128,8 @@
   $(document).ready(function () {
     $("#vacation-table").on("click", "#cancel", function () {
       var emp_id = $(this).closest('tr').find('td[class^="empid_"]').text();
-      console.log(emp_id);
-
+     
+		
       // 여기서 emp_id를 컨트롤러로 전송하는 로직 추가
       $.ajax({
         type: "POST",
@@ -171,8 +172,8 @@
       <table id="vacation-table">
         <thead>
           <tr>
-            <th>휴가 번호</th>
-            <th>사원번호</th>
+            <th>휴가 코드</th>
+            <th>사원 번호</th>
             <th>이름</th>
             <th>직급</th>
             <th>휴가 종류</th>

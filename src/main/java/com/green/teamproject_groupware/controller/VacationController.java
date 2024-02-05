@@ -1,11 +1,13 @@
 package com.green.teamproject_groupware.controller;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.dao.VacationDao;
 import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.VacationRequestDto;
@@ -40,14 +44,29 @@ public class VacationController {
 	EmpService empService;
     
 
-    @RequestMapping(value="/vacationRequest")
+    @RequestMapping(value="/vacationRequest", method=RequestMethod.GET)
     public String vacationRequest(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");
         EmpDto dto = empService.getEmpByEmpno(empno);
-        model.addAttribute("dto",dto);
+        model.addAttribute("dto", dto);
+
+        // 휴가 데이터를 가져오는 부분
+        ArrayList<VacationRequestDto> vacationEvents = service.getVacationEvents(empno);
+        // Java 객체를 JSON 문자열로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        String vacationEventsJson = null;
+        try {
+            vacationEventsJson = objectMapper.writeValueAsString(vacationEvents);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        // 모델에 JSON 데이터 추가
+        model.addAttribute("vacationEventsJson", vacationEventsJson);
 
         return "vacation/vacationRequest";
     }
+
     
     @RequestMapping(value = "/submitVacationRequest", method = RequestMethod.POST)
     @ResponseBody
