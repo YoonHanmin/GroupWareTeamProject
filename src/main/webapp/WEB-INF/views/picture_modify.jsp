@@ -30,7 +30,7 @@
 				<tr>
 					<th scope="row">작성자</th>
 					<td><input type="text" class="form-control" name="pname"
-						value="${pcontent_view.pname}"></td>
+						value="${pcontent_view.pname}" readonly="readonly"></td>
 				</tr>
 				<tr>
 					<th scope="row">제목</th>
