@@ -35,11 +35,15 @@ import com.green.teamproject_groupware.dto.MsgDto;
 import com.green.teamproject_groupware.dto.NoticeDto;
 import com.green.teamproject_groupware.dto.NotificationDto;
 import com.green.teamproject_groupware.dto.UserInfoDto;
+import com.green.teamproject_groupware.dto.VacationRequestDto;
 import com.green.teamproject_groupware.service.ApprovalService;
 import com.green.teamproject_groupware.service.MemService;
 import com.green.teamproject_groupware.service.MsgService;
 import com.green.teamproject_groupware.service.NoticeService;
 import com.green.teamproject_groupware.service.NotifyService;
+import com.green.teamproject_groupware.service.VacationService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.controller.MemController;
 
 import lombok.extern.slf4j.Slf4j;
@@ -61,6 +65,8 @@ public class MemController {
     NoticeService noticeService;
     @Autowired
     ApprovalService appservice;
+    @Autowired
+    VacationService vacationService;
     
 	@RequestMapping("/main")
 	public String main(HttpSession session,Model model) {
@@ -152,6 +158,22 @@ public class MemController {
 		log.info("notifyList===>>"+notifyList);
 		model.addAttribute("notifyList", notifyList);
 		model.addAttribute("noticeList", noticeList);
+		// 휴가 데이터를 가져오는 부분
+        ArrayList<VacationRequestDto> vacationEvents = vacationService.getVacationEvents(empno);
+        // Java 객체를 JSON 문자열로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        String vacationEventsJson = null;
+        try {
+            vacationEventsJson = objectMapper.writeValueAsString(vacationEvents);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        // 모델에 JSON 데이터 추가
+        model.addAttribute("vacationEventsJson", vacationEventsJson);
+		
+		
+		
 		
 		if(empno !=null) {
 		EmpDto user = service.getUserByEmpno(Integer.parseInt(empno));

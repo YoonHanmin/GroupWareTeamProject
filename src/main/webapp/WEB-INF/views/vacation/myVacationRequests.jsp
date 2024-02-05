@@ -128,8 +128,8 @@
   $(document).ready(function () {
     $("#vacation-table").on("click", "#cancel", function () {
       var emp_id = $(this).closest('tr').find('td[class^="empid_"]').text();
-      console.log(emp_id);
-
+     
+		
       // 여기서 emp_id를 컨트롤러로 전송하는 로직 추가
       $.ajax({
         type: "POST",
@@ -189,7 +189,7 @@
         <tbody>
           <c:forEach var="request" items="${myVacationRequests}">
             <tr>
-              <td class="empid_${request.empid}">2024VC_${request.empid}</td>
+              <td class="empid_${request.empid}">${request.empid}</td>
               <td>${request.empno}</td>
               <td>${request.name}</td>
               <td>${request.position}</td>

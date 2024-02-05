@@ -1,12 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  <script src="https://kit.fontawesome.com/82c57657fe.js" crossorigin="anonymous"></script>
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
      <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!--      hiredate 날짜 포맷 형식 변경 -->
       <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
+  <script src="https://kit.fontawesome.com/82c57657fe.js" crossorigin="anonymous"></script>
+<!-- FullCalendar 라이브러리 및 jQuery 추가 -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.css" />
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.js"></script>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('calendar');
+
+		var vacationEventsJson = '${vacationEventsJson}';
+		var vacationEventsArray = JSON.parse(vacationEventsJson);
+		console.log(vacationEventsArray);
+
+		var eventsArray = [];
+		console.log(eventsArray);
+
+		for (var i = 0; i < vacationEventsArray.length; i++) {
+			var eventData = vacationEventsArray[i];
+			console.log('title:', eventData.vacationtype); // 확인을 위한 로그 추가
+			eventsArray.push({
+				title : eventData.vacationtype,
+				start : eventData.startdate,
+				end : eventData.enddate+1
+			});
+		}
+
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			headerToolbar : {
+				left : 'prev,next today',
+				center : 'title',
+				right : 'dayGridMonth,timeGridWeek,timeGridDay'
+			},
+			initialView : 'dayGridMonth',
+			
+			events : eventsArray,
+	        eventContent: function (info) {
+	            var title = info.event.title.replace('12a', ''); // "12a" 삭제
+	            var titleElement = document.createElement('div');
+	            titleElement.classList.add('fc-title');
+	            titleElement.textContent = title;
+	            return { domNodes: [titleElement] };
+	        },
+			eventDisplay: 'block' // 이벤트를 블록 형태로 표시
+	    });
+		calendar.render();
+	});
+</script>
 <head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
@@ -88,8 +137,12 @@ margin-left : 10px;
 .main_notice{
 width : 500px;
 height : 300px;
-
-
+}
+.mycalendar{
+margin-bottom : 30px;
+border-bottom : 2px solid black;
+font-size : 28px;
+font-weight : bold;
 }
 .main_approval{
 width : 400px;
@@ -133,9 +186,10 @@ text-decoration: none;
 width : 600px;
 margin-left : 50px;
 height : 400px;
-background-color: gray;
+margin-bottom : 200px;
 /* margin-bottom : 300px; */
 }  
+
 /*   메인 레이아웃 양식 끝 */
   
   .profile-tool{
@@ -637,6 +691,12 @@ cursor: pointer;
         	
         	
         <div class="main_calendar">
+        	<div class="calendar-container">
+        	<div class="mycalendar">
+        	내 일정
+			</div>
+			<div id="calendar" style="width:600px; height:400px;"></div>
+		</div>
         
         
         </div>
