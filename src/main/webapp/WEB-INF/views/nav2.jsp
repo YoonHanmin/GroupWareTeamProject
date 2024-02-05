@@ -195,7 +195,7 @@ cursor: pointer;
 </script>
  <input type="hidden" name="empno" value="${dto.getEmpno()}">
     <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
-    <nav>
+    <nav class="nav2">
     <div class="profile">
 <!--     	<button style="float:left;">로그아웃</button> -->
         <div class="profile-img">
@@ -213,14 +213,7 @@ cursor: pointer;
             	
             	<li id="messenger" style="height:30px;margin-right:30px; height:35px;cursor:pointer; "><button type="button" class="btn btn-primary position-relative" style="background-color:#363945;border:1px solid #363945">
       새소식
-<!--       <c:choose> -->
-    <c:when test="${notifyList.size() > 0}">
-<!--         <span id="notify_num" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> -->
-            ${notifyList.size()}
-<!--         </span> -->
-<!--     </c:when> -->
-<!-- </c:choose> -->
-      
+
       
     </button></li>
             	

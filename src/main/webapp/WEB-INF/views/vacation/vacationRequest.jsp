@@ -4,6 +4,8 @@
 <!--      hiredate 날짜 포맷 형식 변경 -->
       <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
           <link rel="stylesheet" href="resources/css/bootstrap.css">
+          <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
     <script src="https://kit.fontawesome.com/82c57657fe.js" crossorigin="anonymous"></script>
     <script src="resources/js/jquery.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -361,7 +363,39 @@ $("input[name='enddate']").blur(function () {
         	
         </div>
         
+        <div id="calendar" style="width : 1000px;height : 400px; margin-left:300px;">
+       
+        
+        
+        </div>
+        
+        
+        
  </main>
 </body>
+ <script>
+ document.addEventListener('DOMContentLoaded', function() {
+	
+	 
+     var calendarEl = document.getElementById('calendar');
+     var calendar = new FullCalendar.Calendar(calendarEl, {
+         initialView: 'dayGridMonth',
+         events : [
+                     {
+                     title: '연차'
+                     start: '2024-02-05'
+                     },
+                     
+                     {  title: '설 명절',
+						start: '2024-02-09',
+                     end: '2022-02-14'
+                     }
+                 ]
+         });
+     calendar.render();
+   });
+
+ </script>
+  
 </html>
 

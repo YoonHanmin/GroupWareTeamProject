@@ -6,7 +6,7 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.NotificationDao">
    <select id="getNotification" resultType="com.green.teamproject_groupware.dto.NotificationDto">
-   	select * from notification where empno = #{empno}
+   	select * from notification where empno = #{empno} order by notify_time desc
    </select> 
    <delete id="deleteNotification">
    delete from notification where msg_id = #{msgid}
@@ -14,4 +14,7 @@
    <insert id="addNotification" parameterType="com.green.teamproject_groupware.dto.NotificationDto">
    insert into notification ( notify_type,notify_receiver,notify_sender,notify_time,msg_id,empno) values(#{notify_type},#{notify_receiver},#{notify_sender},#{notify_time},#{msg_id},#{empno})
    </insert>
+    <delete id="deleteAllNotification">
+   delete from notification 
+   </delete>
 </mapper>

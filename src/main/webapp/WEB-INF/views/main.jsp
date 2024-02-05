@@ -21,7 +21,6 @@
 height : 70px;
 border-bottom: 1px solid #eee;
 background-color : #363945;
-display : flex;
 
 }
 
@@ -47,10 +46,17 @@ list-style: none;
 .content{
 width : 100%;
 height : 100%;
+display : flex;
+flex-direction: row;
+flex-wrap: wrap;
 }
 .info{
 height : 50px;
 
+}
+.main_img{
+width : 700px;
+height : 400px;
 }
 .notice_img{
 width : 600px;
@@ -65,7 +71,71 @@ border-top : 2px solid #363945;
 
 margin-left : 50px;
 }
-  
+.notice_img_header span{
+display : inline;
+font-size : 28px;
+font-weight : bold;
+
+}
+.notice_board_title a{
+text-decoration: none;
+font-weight : bold;
+}
+.notice_board_title{
+margin-bottom : 3px;
+margin-left : 10px;
+}
+.main_notice{
+width : 500px;
+height : 300px;
+
+
+}
+.main_approval{
+width : 400px;
+}
+.main_approval_board{
+width : 400px;
+height : 300px;
+border : 2px solid #eee;
+}
+.main_todo_board{
+display : block;
+}
+
+.main_ing_board{
+display : none;
+}
+
+.main_notice_board{
+width : 400px;
+height : 300px;
+border : 2px solid #eee;
+}
+.main_notice_header span{
+display : inline;
+font-size : 28px;
+
+}
+.main_notice_header{
+margin-bottom:20px;
+}
+.main_approval_header span{
+display : inline;
+font-size : 28px;
+
+}
+.main_approval_header a{
+
+text-decoration: none;
+}
+.main_calendar{
+width : 600px;
+margin-left : 50px;
+height : 400px;
+background-color: gray;
+/* margin-bottom : 300px; */
+}  
 /*   메인 레이아웃 양식 끝 */
   
   .profile-tool{
@@ -77,18 +147,7 @@ margin-left : 50px;
   flex-direction : row;
   justify-content: space-between; /* 양쪽 끝에 배치하도록 설정 */
   }
-/*   .profile-bar li { */
-/*   text-align : center; */
-/*   list-style: none; /* 기본 리스트 스타일 제거 */ */
-/*   margin : 0; */
-/*   padding : 5px 30px; */
-/*   cursor: pointer; */
-/* } */
 
-/* .profile-tool .profile-bar li:hover { */
-/*   background-color: #555; /* 호버 시 배경색 */ */
-/*   color: white; /* 호버 시 텍스트 색상 */ */
-/* } */
 .popup_bg{
 border : 2px solid black;
 position: absolute;
@@ -136,12 +195,13 @@ display:none;
 border-radius: 5px;
 }
 
-#popup_notify:hover{
+.popup_notify:hover{
 background-color : #eee;
 cursor: pointer;
 }
 
 
+}
 
 
 
@@ -199,7 +259,7 @@ cursor: pointer;
     
     
     $(document).ready(function () {
-        // ... 여러분의 기존 코드 ...
+        
 
         // "서브메뉴1"을 클릭했을 때의 이벤트 리스너를 추가합니다
         $('li:contains("서브메뉴1")').click(function (event) {
@@ -207,8 +267,22 @@ cursor: pointer;
             // 클릭한 li의 하위 ul의 가시성을 토글합니다
             $(this).children('ul').slideToggle();
         });
-
-        // ... 여러분의 기존 코드 ...
+	
+        
+        $("#app_todo").on("click",function(){
+        	$(".main_todo_board").css({"display":"block"});
+        	$(".main_ing_board").css({ "display": "none" });
+        	
+        });
+        $("#app_ing").on("click",function(){
+        	$(".main_ing_board").css({ "display": "block" });
+        	$(".main_todo_board").css({"display":"none"});
+        	
+        });
+        
+        	
+        
+       
     });
     
     $(document).ready(function () {
@@ -248,6 +322,14 @@ cursor: pointer;
     	$(".popup").css({ "display": "none" });
     });
     
+    $("#popup_notify_approval").on("click",function(){
+    	location.href="approval";
+    	
+    });
+    $("#popup_notify_msg").on("click",function(){
+    	location.href="receive";
+    	
+    });
     
     }); // end of ready(function)
 	
@@ -288,7 +370,7 @@ cursor: pointer;
 
 
  <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
-    <nav>
+    <nav class="nav2">
     <div class="profile">
 <!--     	<button style="float:left;">로그아웃</button> -->
         <div class="profile-img">
@@ -374,14 +456,80 @@ cursor: pointer;
     
     <main>
   <div class="header">
-<!--       	<ul class="nav nav-underline"> -->
-<!--   <li class="item"> -->
-<!--     <a class="people" aria-current="page" href="#" style="color:#FFFAFA;"><i class="bi bi-people-fill" style="color:#FFFAFA;"></i>내 사원정보</a> -->
-<!--   </li> -->
-<!--   <li class="item"> -->
-<!--     <a class="company" href="#" style="color:#FFFAFA;"><i class="bi bi-list-ul" style="color:#FFFAFA;"></i>비밀번호 변경</a> -->
-<!--   </li> -->
-<!-- </ul>      	 -->
+
+ <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="color: white">메인</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           
+            <li class="nav-item">
+              <a class="nav-link" href="#" style="color: white">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                style="color: white"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#" style="color: white"
+                    >Action</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" style="color: white"
+                    >Another action</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#" style="color: white"
+                    >Something else here</a
+                  >
+                </li>
+              </ul>
+            </li>
+           
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              style="color: white"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+
+
       </div>
       
       
@@ -396,8 +544,11 @@ cursor: pointer;
  				
  				
         <div class="content">
+        <div class="main_img">
          <div class="notice_img_header">
-      	<h3>2월의 소식</h3>
+         <span style="margin-top:5px; margin-left:10px;">
+         <img src="resources/images/news.png" style="width:60px; height:60px; display:inline;">
+      2월의 소식</span>
       </div>
         <div class="notice_img">
         
@@ -428,7 +579,63 @@ cursor: pointer;
         
        
         </div>
+        </div> <!-- end of main_img -->
         
+        <div class="main_notice">
+        	<div class="main_notice_board">
+        	<div class="main_notice_header" style="border-bottom:1px solid black">
+        	<span style="margin-top:5px; margin-left:10px;">
+        	<img src="resources/images/notice.png" style="width:40px; height:40px; display:inline;">
+        	<a href="/notice_list" style="text-decoration: none; color:black; font-weight:bold">&nbsp;&nbsp;공지사항</a></span>
+        	</div>
+        	<c:forEach items="${noticeList}" var="noticeList">
+        		<div class="notice_board_title" style="border-bottom:1px solid #eee; margin-bottom:5px;">
+        			<a href="notice_content_view?nid=${noticeList.getNid()}">${noticeList.getNtitle()}</a>
+        		</div>
+        	</c:forEach>
+        	
+        </div>
+        
+        	</div>
+        	 <div class="main_approval">
+        	<div class="main_approval_board">
+        	<div class="main_approval_header" style="border-bottom:1px solid black">
+        		<span style="margin-top:5px; margin-left:10px;">
+        		<img src="resources/images/document_icon.png" style="width:30px; height:30px; display:inline;">
+        		<b>&nbsp;&nbsp;나의 결재현황</b></span>
+        	</div>
+        	<div class="main_approval_tab">
+        		<ul class="nav nav-underline">
+  <li class="nav-item" style="cursor:pointer;">
+    <a class="nav-link active" id="app_todo">결재요청 문서</a>
+  </li>
+  <li class="nav-item" style="cursor:pointer;">
+    <a class="nav-link" id="app_ing">결재중인 문서</a>
+  </li>
+</ul>
+        	</div>
+        	<div class="main_todo_board">
+        		<c:forEach items="${todoList}" var="todoList">
+        		<div style="border-bottom:1px solid #eee; margin-bottom:5px; ">
+        			&nbsp;&nbsp;<b>${todoList.getDoc_title()}</b>
+        		</div>
+        		</c:forEach>
+        	</div>
+        	<div class="main_ing_board">
+        		<c:forEach items="${ingList}" var="ingList">
+        		<div style="border-bottom:1px solid #eee; margin-bottom:5px;">
+        		&nbsp;&nbsp;<b>${ingList.getDoc_title()}</b>
+        		</div>
+        		</c:forEach>
+        	</div>
+        </div>
+        	</div>
+        	
+        	
+        <div class="main_calendar">
+        
+        
+        </div>
         
       </div>
       
@@ -442,22 +649,33 @@ cursor: pointer;
 	<span id="new_notify" style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
 	
 	<c:choose>
-	<c:when test="${not empty notifyList }">
-	<c:forEach items="${notifyList}" var="notifyList">
-	<div id="popup_notify" style="height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
-      <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div>
-      <div style="margin-left:5px; margin-top:5px;">${notifyList.getNotify_sender()} 님이 메시지를 보냈습니다.</div><p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notifyList.getMinute()}</p>
-      </div>
-	
-	</c:forEach>
-	</c:when>
-	<c:otherwise>
-	 <div id="popup_notify" style="height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
-      <div  style="margin-left:5px; margin-top:5px;"></div>
-      <div style="margin-left:5px; margin-top:5px;">새로운 소식이 없습니다.</div>
-      </div>
-	</c:otherwise>
-	</c:choose>
+    <c:when test="${not empty notifyList }">
+        <c:forEach items="${notifyList}" var="notify">
+            <c:choose>
+                <c:when test="${notify.notify_type eq 'APPROVAL' }">
+                    <div id="popup_notify_approval" class="popup_notify" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                        <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/todo.png' style="width:25px; height:25px;margin-right:5px;"></div>
+                        <div style="margin-left:5px; margin-top:5px;">결재할 문서가 도착했어요!</div>
+                        <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                    </div>
+                </c:when>
+                <c:when test="${notify.notify_type eq 'MSG' }">
+                    <div id="popup_notify_msg" class="popup_notify" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                        <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div>
+                        <div style="margin-left:5px; margin-top:5px;">${notify.notify_sender}님이 메시지를 보냈습니다!</div>
+                        <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                    </div>
+                </c:when>
+            </c:choose>
+        </c:forEach>
+    </c:when>
+    <c:otherwise>
+        <div id="popup_notify" style="height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+            <div  style="margin-left:5px; margin-top:5px;"></div>
+            <div style="margin-left:5px; margin-top:5px;">새로운 소식이 없습니다.</div>
+        </div>
+    </c:otherwise>
+</c:choose>
       
       
 	</div>

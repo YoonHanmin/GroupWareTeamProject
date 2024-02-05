@@ -16,6 +16,7 @@ public class NotificationDto {
 	private String notify_sender;
 	private Timestamp notify_time;
 	private int msg_id;
+	private int doc_id;
 	private String empno;
 	private String minute;
 	
