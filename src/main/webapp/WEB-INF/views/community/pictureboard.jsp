@@ -23,13 +23,11 @@ body {
 	line-height: 1.6;
 }
 
-.header, .info {
-	padding: 20px;
-	border-bottom: 1px solid #eee;
-}
 
 .container {
 	padding: 30px;
+	width:100%;
+	height: 600px;
 }
 
 .item a {
@@ -48,16 +46,12 @@ body {
 	flex-wrap: wrap;
 }
 
-.card {
-	width: 100%;
-	height: 30%;
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
+
 
 .card-img-top {
 	width: 100%;
-	height: 50%;
+	height: 100px;
+	object-fit : cover;
 }
 
 .card-title {
@@ -159,38 +153,110 @@ a:hover {
 			});
 </script>
 <body>
+
 	<jsp:include page="../nav2.jsp" />
 
 	<main>
 		<div class="header">
-			<ul class="nav nav-underline">
-				<li class="item"><a class="people" aria-current="page"
-					href="myinfo" style="color: black;"><i
-						class="bi bi-people-fill" style="color: black;"></i>내 사원정보</a></li>
-				<li class="item"><a class="company" href="changePW"
-					style="color: black;"><i class="bi bi-list-ul"
-						style="color: black;"></i>비밀번호 변경</a></li>
-			</ul>
-		</div>
 
+ <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%; height:70px;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="main" style="color: white;margin-left:50px;">메인</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           
+            <li class="nav-item" style="margin-left:50px;">
+              <a class="nav-link" href="myinfo" style="color: white">마이페이지</a>
+            </li>
+            <li class="nav-item dropdown" style="margin-left:50px;">
+              <a
+                class="nav-link dropdown-toggle"
+                style="color: white"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                font-size="1.25rem"
+              >
+                내 업무
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="approval" style="color: black"
+                    >전자결재</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="receive" style="color: black"
+                    >메신저</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="vacationRequest" style="color: black"
+                    >자원요청</a
+                  >
+                </li>
+              </ul>
+            </li>
+           
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="사원명"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              style="color: white"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+
+
+      </div>
+		<div class="info">
+			<div>
+				<h3><b>행사앨범</b></h3>
+			</div>
+		</div>
 		<div class="container">
-			<div class="row">
+			<div class="row row-cols-5">
 				<c:forEach items="${picture_list}" var="picturedto">
 					<c:set var="imageType"
 						value="${fn:endsWith(picturedto.filename, '.jpg') ? 'image/jpeg' : 'image/png'}" />
-					<div class="col-sm-4">
-						<div class="card">
+					<div class="col">
+						<div class="card" style="width: 200px;">
 							<a class="move_link" href="picture_content_view?pid=${picturedto.pid}"> <img
 								class="card-img-top"
 								src="data:${imageType};base64,${Base64.encodeBase64String(picturedto.imagebyte)}"
-								alt="Picture" style="width: 100%; height: auto;">
+								alt="Picture" style="width:100%; height:100px;">
 							</a>
 							<div class="card-body">
-								<h5 class="card-title">
+								<h6 class="card-title">
 									<a class="move_link"
-										href="picture_content_view?pid=${picturedto.pid}">${picturedto.ptitle}</a>
-								</h5>
-								<p class="card-text">날짜: ${picturedto.pdate}, 조회수:
+										href="picture_content_view?pid=${picturedto.pid}" style="text-decoration: none;">${picturedto.ptitle}</a>
+								</h6>
+								<p class="card-text">날짜: <fmt:formatDate value="${picturedto.pdate}" pattern="yy-MM-dd" />, 조회수:
 									${picturedto.phit}</p>
 								<p class="card-text">글쓴이: ${picturedto.pname}</p>
 							</div>

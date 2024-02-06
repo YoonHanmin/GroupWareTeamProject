@@ -266,9 +266,11 @@ $(document).ready(function () {
 </head>
 <style>
 .header{
-height : 80px;
+height : 70px;
 border-bottom: 1px solid #eee;
-display : flex;
+background-color : 363945;
+
+
 }
 
 .info{
@@ -642,14 +644,81 @@ cursor: pointer;
  
  <main>
  	<div class="header">
-      	<ul class="nav nav-underline">
-  <li class="item">
-    <a class="receive-list" aria-current="page" href="receive" ><i class="bi bi-envelope-open"></i>  받은 메시지</a>
-  </li>
-  <li class="item">
-    <a class="send-list" href="send" style="color:#black;"><i class="bi bi-envelope-check" style="color:#black;"></i>  보낸 메시지</a>
-  </li>
-</ul>      	
+
+ <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%; height:70px;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="main" style="color: white;margin-left:50px;">메인</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           
+            <li class="nav-item" style="margin-left:50px;">
+              <a class="nav-link" href="myinfo" style="color: white">마이페이지</a>
+            </li>
+            <li class="nav-item dropdown" style="margin-left:50px;">
+              <a
+                class="nav-link dropdown-toggle"
+                style="color: white"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                font-size="1.25rem"
+              >
+                내 업무
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="approval" style="color: black"
+                    >전자결재</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="receive" style="color: black"
+                    >메신저</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="vacationRequest" style="color: black"
+                    >자원요청</a
+                  >
+                </li>
+              </ul>
+            </li>
+           
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="사원명"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              style="color: white"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+
+
       </div>
       
       <div class="info">

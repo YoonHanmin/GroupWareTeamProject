@@ -74,8 +74,6 @@ background-color : #363945;
 }
 
 
-
-
 .item a {
 font-weight : bold;
 font-size : 25px;
@@ -255,9 +253,20 @@ cursor: pointer;
 }
 
 
+.album{
+width: 600px;
+height:400px;
+border: 1px solid #eee;
+margin-left : 50px;
 }
-
-
+.album-container{
+border-bottom : 2px solid black;
+}
+.album-container span {
+display : inline;
+font-size : 28px;
+font-weight : bold;
+}
 
 </style>
  <script src="resources/js/jquery.js"></script>
@@ -702,6 +711,70 @@ cursor: pointer;
         
         </div>
         
+        <div class="album">
+        	<div class="album-container">
+       		<span>행사 앨범</span>
+        	</div>
+        	<div style=" margin-top:30px; margin-left:30px;">
+        	<div class="swiper-container" style="width:500px; overflow: hidden;">
+                    <div class="swiper-wrapper" style="width:200px; height:300px;">
+                        <div class="swiper-slide" style="width:200px; height:300px;">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album1.jpg" style="width:200px; height:200px;" alt="slide 1">
+                            </div>
+                    	<div style="text-align:center; margin-top:20px;"><b>행복한 직장만들기 강연 <br>2024-01-28 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album2.jpg" style="width:200px; height:200px;"alt="slide 2">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>A프로젝트 시연행사 <br>2024-01-25 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album3.jpg"style="width:200px; height:200px;" alt="slide 3">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>2024 1월 워크샵 행사 <br>2024-01-03 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album4.jpg"style="width:200px; height:200px;" alt="slide 4">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>2024 1월 워크샵 행사 <br>2024-01-03 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album5.jpg"style="width:200px; height:200px;" alt="slide 5">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>해외 프로젝트 연수 <br>2023-12-22 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album6.jpg" style="width:200px; height:200px;"alt="slide 6">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>사이언스데이 부스행사 <br>2023-12-15 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album7.png"style="width:200px; height:200px;" alt="slide 7">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>아이들과 함께하는 행사 <br>2023-12-10 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album8.jpg"style="width:200px; height:200px;" alt="slide 8">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>2023 SW 박람회 참가 <br>2023-11-24 </b></div>
+                        </div>
+                        <!-- Add Pagination -->
+                    </div>
+                    <!--div class="swiper-pagination"></div-->
+                </div>
+
+        	
+        	</div>
+        </div>
+        
       </div>
       
       
@@ -802,6 +875,30 @@ z-index: 1;"></div>
       
     });
 
+    var swiper2 = new Swiper( '.swiper-container', {
+        //pagination: '.swiper-pagination',
+        //paginationClickable: true,
+        autoplay:3000,
+        speed : 1000,
+        effect: 'coverflow',
+        loop: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflow: {
+            rotate: 0,
+            stretch: 100,
+            depth: 150,
+            modifier: 1.5,
+            slideShadows : true,
+
+        }
+    } );
+
+
+
+    
+    
+    
 </script>    
     
 </body>
