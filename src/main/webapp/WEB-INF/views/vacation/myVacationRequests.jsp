@@ -49,8 +49,6 @@
     width: 100%;
     padding: 30px;
     margin: auto;
-    margin-left:150px; 
-    height:500px;"
 }
 
 .myinfo {
@@ -112,7 +110,7 @@
   background-color: #eee;
 }
 
-.cancel {
+#cancel {
   color: white;
   background-color: grey;
   border: none;
@@ -128,12 +126,10 @@
 </style>
 <script>
   $(document).ready(function () {
-    $("#vacation-table").on("click", ".cancel", function () {
-    	console.log("Cancel button clicked"); // 확인용 로그
-//       var emp_id = $(this).closest('tr').find('td[class^="empid"]').text();
-      var emp_id = $(this).closest('tr').find('td.empid').text();
-      console.log(emp_id);
-
+    $("#vacation-table").on("click", "#cancel", function () {
+      var emp_id = $(this).closest('tr').find('td[class^="empid_"]').text();
+     
+		
       // 여기서 emp_id를 컨트롤러로 전송하는 로직 추가
       $.ajax({
         type: "POST",
@@ -168,11 +164,11 @@
 </ul>      	
       </div>
       
-      <div class="info">
-      	<span>휴가 신청 내역</span>
-      </div>
-
-    <div class="content" >
+	<div class="info">
+		<span>휴가신청내역</span>
+	</div>
+  
+    <div class="content">
       <table id="vacation-table">
         <thead>
           <tr>
@@ -193,8 +189,7 @@
         <tbody>
           <c:forEach var="request" items="${myVacationRequests}">
             <tr>
-<%--               <td class="empid_${request.empid}">2024VC_${request.empid}</td> --%>
-              <td class="empid">2024VC_${request.empid}</td>
+              <td class="empid_${request.empid}">${request.empid}</td>
               <td>${request.empno}</td>
               <td>${request.name}</td>
               <td>${request.position}</td>
@@ -206,7 +201,7 @@
               <td>${request.status}</td>
               <td><fmt:formatDate value="${request.requestdate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
               <td>
-                <button type="button" class="cancel">취소</button>
+                <button type="button" id="cancel">취소</button>
               </td>
             </tr>
           </c:forEach>

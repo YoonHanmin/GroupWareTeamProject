@@ -233,21 +233,21 @@ cursor: pointer;
 	
 	
 	<div class="info">
-		<span>처리 현황</span>
+		<span>휴가신청 현황</span>
 	</div>
   
 	<div class="content">
 		<div class="app-header">
 			<div class="doc-todo">
-				<span style="color:#0D47A1;">확인할 문서</span>
+				<span style="color:#0D47A1;">미승인 휴가</span>
 				<p style="font-size:70px; font-weight:bold;">${todoCnt}</p>
 			</div>
 			<div class="doc-ing">
-				<span style="color:363945">승인한 문서</span>
+				<span style="color:363945">승인 완료</span>
 				<p style="font-size:70px; font-weight:bold;">${ingCnt}</p>
 			</div>
 			<div class="doc-end" style="color:#e53935;">
-				<span>반려한 문서</span>
+				<span>휴가 반려</span>
 				<p style="font-size:70px; font-weight:bold;">${rejectCnt}</p>
 		</div>
 	</div>

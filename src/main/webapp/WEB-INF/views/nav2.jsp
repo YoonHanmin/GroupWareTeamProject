@@ -24,7 +24,18 @@
   flex-direction : row;
   justify-content: space-between; /* 양쪽 끝에 배치하도록 설정 */
   }
+/*   .profile-bar li { */
+/*   text-align : center; */
+/*   list-style: none; /* 기본 리스트 스타일 제거 */ */
+/*   margin : 0; */
+/*   padding : 5px 30px; */
+/*   cursor: pointer; */
+/* } */
 
+/* .profile-tool .profile-bar li:hover { */
+/*   background-color: #555; /* 호버 시 배경색 */ */
+/*   color: white; /* 호버 시 텍스트 색상 */ */
+/* } */
 .popup_bg{
 border : 2px solid black;
 position: absolute;
@@ -184,7 +195,7 @@ cursor: pointer;
 </script>
  <input type="hidden" name="empno" value="${dto.getEmpno()}">
     <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
-    <nav>
+    <nav class="nav2">
     <div class="profile">
 <!--     	<button style="float:left;">로그아웃</button> -->
         <div class="profile-img">
@@ -202,14 +213,7 @@ cursor: pointer;
             	
             	<li id="messenger" style="height:30px;margin-right:30px; height:35px;cursor:pointer; "><button type="button" class="btn btn-primary position-relative" style="background-color:#363945;border:1px solid #363945">
       새소식
-      <c:choose>
-    <c:when test="${notifyList.size() > 0}">
-        <span id="notify_num" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            ${notifyList.size()}
-        </span>
-    </c:when>
-</c:choose>
-      
+
       
     </button></li>
             	
@@ -248,8 +252,8 @@ cursor: pointer;
         </li>
         <li><a href="#"><i class="bi bi-boxes"></i> 자원요청</a>
             <ul>
-                <li><a href="resource_apply">신청하기</a></li>
-                <li><a href="resource_approval">자원요청 목록</a></li>
+                <li><a href="resource">자원 신청</a></li>
+                <li><a href="#">서브메뉴2</a></li>
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
@@ -266,7 +270,11 @@ cursor: pointer;
  <i class="bi bi-x" id="messenger-out"></i>
 	<div style="height:40px; font-weight:bold; font-size:20px; background-color:white; ">
 	<span style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
-</div>
+<!-- 	<div id="popup_notify" style="height:40px;width:300px; font-weight:bold; margin-top:10px;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;"> -->
+<!--       <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div> -->
+<!--       <div style="margin-left:5px; margin-top:5px;">한소희 님이 메시지를 보냈습니다.</div><p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;5분전</p> -->
+<!--       </div> -->
+	</div>
 	
 	
  	</div>

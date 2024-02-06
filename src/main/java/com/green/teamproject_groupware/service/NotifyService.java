@@ -28,4 +28,10 @@ public class NotifyService {
 		NotificationDao dao = sqlSession.getMapper(NotificationDao.class);
 		dao.addNotification(notifyDto);
 	}
+	
+	public void deleteAllNotification() {
+		NotificationDao dao = sqlSession.getMapper(NotificationDao.class);
+		dao.deleteAllNotification();
+	}
+	
 }

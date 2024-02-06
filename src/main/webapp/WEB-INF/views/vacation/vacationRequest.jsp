@@ -3,15 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--      hiredate 날짜 포맷 형식 변경 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<link rel="stylesheet" href="resources/css/bootstrap.css">
-<script src="https://kit.fontawesome.com/82c57657fe.js"
-	crossorigin="anonymous"></script>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="resources/css/bootstrap.css">
+<script src="https://kit.fontawesome.com/82c57657fe.js"crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript"></script>
@@ -414,10 +411,6 @@ input[type="submit"]:hover {
 					style="color: #FFFAFA;"><i class="bi bi-airplane-engines"
 						style="color: #FFFAFA;"></i>휴가 신청 내역</a></li>
 			</ul>
-		</div>
-
-		<div class="info">
-			<span>휴가 신청</span>
 		</div>
 
 		<div class="content">
