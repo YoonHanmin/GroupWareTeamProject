@@ -13,7 +13,16 @@
 		from
 		picture_reply
 		where pid = #{pid}
+		ORDER BY PREGDATE
 	</select>
+	
+	<!-- 대댓글 목록 쿼리 -->
+    <select id="rprlist" parameterType="map" resultType="com.green.teamproject_groupware.dto.PBReply2DTO">
+        SELECT rprid, parentPrid, pid, rprwriter, rprcontent, rpregDate
+        FROM picture_reply2
+        WHERE pid = #{pid} AND parentPrid = #{parentPrid}
+        ORDER BY RPREGDATE
+    </select>
 
 	<!-- 댓글 작성 -->
 	<insert id="prwrite"
@@ -26,14 +35,14 @@
 	</insert>
 
 	<!-- 댓글 수정 -->
-	<update id="prmodify"
-		parameterType="com.green.teamproject_groupware.dto.PBReplyDTO">
-		update picture_reply set
-		prwriter = #{prwriter},
-		prcontent = #{prcontent}
-		where prid = #{prid}
-		and pid = #{pid}
-	</update>
+<!-- 	<update id="prmodify" -->
+<!-- 		parameterType="com.green.teamproject_groupware.dto.PBReplyDTO"> -->
+<!-- 		update picture_reply set -->
+<!-- 		prwriter = #{prwriter}, -->
+<!-- 		prcontent = #{prcontent} -->
+<!-- 		where prid = #{prid} -->
+<!-- 		and pid = #{pid} -->
+<!-- 	</update> -->
 
 	<!-- 댓글 삭제 -->
 	<delete id="prdelete"

@@ -1,6 +1,7 @@
 package com.green.teamproject_groupware.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,4 +16,5 @@ public class PBReplyDTO {
 	private String prwriter;
 	private String prcontent;
 	private Timestamp pregdate;
+	private List<PBReply2DTO> rprlist;  // 대댓글 목록 속성
 }

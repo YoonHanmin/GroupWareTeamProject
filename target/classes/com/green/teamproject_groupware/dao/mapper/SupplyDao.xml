@@ -4,7 +4,7 @@
 
 <mapper namespace="com.green.teamproject_groupware.dao.SupplyDao">
 
-    <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto" parameterType="String">
+    <select id="supply_list" resultType="com.green.teamproject_groupware.dto.SupplyDto">
         select supply_id
              , empno
              , item
