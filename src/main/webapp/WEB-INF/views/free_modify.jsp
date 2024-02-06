@@ -34,7 +34,7 @@
 	<div class="content">
 		<div class="container mt-5">
 			<h2 class="mb-4">글 내용 보기</h2>
-			<form method="post" action="modify" enctype="application/x-www-form-urlencoded">
+			<form method="post" action="modify" enctype="multipart/form-data">
 				<input type="hidden" name="pageNum" value="${pageMaker.pageNum}">
 				<input type="hidden" name="amount" value="${pageMaker.amount}">
 				<input type="hidden" name="bid" value="${pageMaker.bid}">
@@ -59,7 +59,7 @@
 					</tr>
 					<tr>
 						<th scope="row">내용</th>
-						<td><textarea class="form-control" name="content">${content_view.bcontent}</textarea>
+						<td><textarea class="form-control" name="bcontent">${content_view.bcontent}</textarea>
 						</td>
 					</tr>
 					<tr>

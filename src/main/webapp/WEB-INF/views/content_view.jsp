@@ -45,7 +45,7 @@
 </style>
 
 <script>
-	function showRprForm(formId) {
+	function showRrForm(formId) {
 		var form = document.getElementById(formId);
 		if (form.style.display === "none") {
 			form.style.display = "block";
@@ -149,7 +149,7 @@
 
 
 			<!-- 대댓글 작성 -->
-			<form id="rprForm${status.index}" style="display: none; width: 700px"
+			<form id="rrForm${status.index}" style="display: none; width: 700px"
 				action="${pageContext.request.contextPath}/rrwrite" method="post"
 				class="mt-3">
 				<div class="form-group">
