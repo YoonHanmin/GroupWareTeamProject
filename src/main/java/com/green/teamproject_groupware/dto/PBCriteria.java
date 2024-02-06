@@ -18,7 +18,7 @@ public class PBCriteria {
 	
 	public PBCriteria() {
 //		기본 1페이지에 10개씩 걸리게 조건 부여
-		this(1,10);  //1~10  2:11~, 3:21~, 4:31~ 이런 식으로
+		this(1,6);  //1~10  2:11~, 3:21~, 4:31~ 이런 식으로
 				
 	}
 	public PBCriteria(int ppageNum, int pamount) {
