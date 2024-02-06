@@ -271,10 +271,19 @@ cursor: pointer;
 
     window.onload = function () {
     	
+    
+    
+  
+    };
+    
+    
+    
+    
+    $(document).ready(function () {
+        
     	const empno = $("input[name='empno']").val();
     	console.log(empno);
     const eventSource = new EventSource("/connect/"+empno)
-    
     eventSource.addEventListener('NewMsg', function(e){
         console.log(e.data);
         const receivedConnectData = JSON.parse(e.data);
@@ -305,15 +314,6 @@ cursor: pointer;
       
        }
     });
-    
-  
-    };
-    
-    
-    
-    
-    $(document).ready(function () {
-        
 
         // "서브메뉴1"을 클릭했을 때의 이벤트 리스너를 추가합니다
         $('li:contains("서브메뉴1")').click(function (event) {
@@ -515,9 +515,9 @@ cursor: pointer;
     <main>
   <div class="header">
 
- <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%;">
+ <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%; height:70px;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#" style="color: white">메인</a>
+        <a class="navbar-brand" href="main" style="color: white;margin-left:50px;">메인</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -532,10 +532,10 @@ cursor: pointer;
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
            
-            <li class="nav-item">
-              <a class="nav-link" href="#" style="color: white">Link</a>
+            <li class="nav-item" style="margin-left:50px;">
+              <a class="nav-link" href="myinfo" style="color: white">마이페이지</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" style="margin-left:50px;">
               <a
                 class="nav-link dropdown-toggle"
                 style="color: white"
@@ -543,24 +543,25 @@ cursor: pointer;
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                font-size="1.25rem"
               >
-                Dropdown
+                내 업무
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" href="#" style="color: white"
-                    >Action</a
+                  <a class="dropdown-item" href="approval" style="color: black"
+                    >전자결재</a
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#" style="color: white"
-                    >Another action</a
+                  <a class="dropdown-item" href="receive" style="color: black"
+                    >메신저</a
                   >
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#" style="color: white"
-                    >Something else here</a
+                  <a class="dropdown-item" href="vacationRequest" style="color: black"
+                    >자원요청</a
                   >
                 </li>
               </ul>
@@ -571,7 +572,7 @@ cursor: pointer;
             <input
               class="form-control me-2"
               type="search"
-              placeholder="Search"
+              placeholder="사원명"
               aria-label="Search"
             />
             <button

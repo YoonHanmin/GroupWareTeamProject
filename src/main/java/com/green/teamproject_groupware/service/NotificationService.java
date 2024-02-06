@@ -51,6 +51,7 @@ public class NotificationService {
 		Notification notification = createNotification(receiver,notificationType,msgDto);
 		
 		Map<String,SseEmitter> sseEmitters = emitterRepository.findAllEmitterStartWithById(receiver);
+		log.info("찾은 emitter :"+sseEmitters);
 		sseEmitters.forEach(
 				(key,emitter)->{
 //					클라이언트와 연결이 끊겼을 경우에 대비해 Cache map에 데이터 저장
@@ -83,7 +84,7 @@ public class NotificationService {
 									.id(id)
 									.name("NewMsg")
 									.data(jsonData)); //json형태로 변환하여 전송
-			 log.info("알림내용 ==> " + data);
+			 log.info("연결됨!! ==> " + data);
 					
 		} catch (IOException e) {
 			emitterRepository.deleteById(id);

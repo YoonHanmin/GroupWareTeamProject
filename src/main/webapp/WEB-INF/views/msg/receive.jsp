@@ -379,15 +379,16 @@ height : 80px;
       font-style: italic;
     }
 #new-msg{
-border : 1px solid #84c1ff;
-border-radius: 6px;
-color : black;
-background-color: #84c1ff;
-margin-top : 30px;
-font-weight : bold;
-height:80px ;
-width: 120px;
-cursor: pointer;
+/* border : 1px solid #84c1ff; */
+/* border-radius: 6px; */
+/* color : black; */
+/* background-color: #84c1ff; */
+/* font-weight : bold; */
+/* height:40px ; */
+/* width: 100px; */
+/* cursor: pointer; */
+/* margin-top : 10px; */
+/* margin-left : 30px; */
 
 }
 .msg-view{
@@ -658,11 +659,18 @@ cursor: pointer;
       			<span id="msg-search-btn"><i class="bi bi-search"></i></span>
       			</form>
       			</div>
-      			<ul class="msg-menu">
-      				<li>
-      				<span id="new-msg"><i class="fa-sharp fa-regular fa-paper-plane">작성하기</i></span></li>
+      			<div class="msg-menu">
       				
-      			</ul>
+      				<div id="new-msg">
+      					<div style="margin-top:10px;font-family: 'Noto Sans KR', sans-serif;">
+      					<button type="button" class="btn btn-primary position-relative" style="background-color:#363945;border:1px solid #363945;  margin-left:50px;">
+      					<i class="fa-sharp fa-regular fa-paper-plane">
+      					 <span>작성하기</span></i> </button>
+
+      					</div>
+      				</div>
+      				
+      			</div>
       </div>
       
       <div class="msg-box">
