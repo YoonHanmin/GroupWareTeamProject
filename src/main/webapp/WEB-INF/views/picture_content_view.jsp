@@ -4,13 +4,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
- <script src="resources/js/jquery.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>글 내용 보기</title>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
+.content {
+	margin-left: 300px;
+}
+
+.card { 
+	width: 700px;
+}
+
 .reply-icon {
 	position: relative;
 	margin-left: 40px; /* 기존의 두 배로 변경 */
@@ -43,36 +53,49 @@
 			form.style.display = "none";
 		}
 	}
+
+	$(document).ready(
+			function() {
+				var profile = "${dto.getProfileimage()}";
+				console.log("프로필사진명은 ==>" + profile);
+				$("#profile-image").html(
+						"<img src='./display?fileName=" + profile + "'>");
+
+			});
 </script>
 </head>
 <body>
-	<div class="container mt-5">
-		<h2 class="mb-4">글 내용 보기</h2>
-		<form>
-			<input type="hidden" name="ppageNum" value="${pageMaker.ppageNum}">
-			<input type="hidden" name="pamount" value="${pageMaker.pamount}">
-			<input type="hidden" id="pid" name="pid" value="${pageMaker.pid}">
-			<!-- pid를 id로도 추가 -->
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">${pcontent_view.ptitle}</h5>
-					<h6 class="card-subtitle mb-2 text-muted">작성자:
-						${pcontent_view.pname}</h6>
-					<img class="card-img-top"
-						src="${pageContext.request.contextPath}/display2?fileName=${pcontent_view.filename}" style="width:300px; height:300px;"
-						alt="Card image cap">
-					<p class="card-text">${pcontent_view.pcontent}</p>
+	<jsp:include page="nav2.jsp" />
+
+	<div class="content">
+		<div class="container mt-5">
+			<h2 class="mb-4">글 내용 보기</h2>
+			<form>
+				<input type="hidden" name="ppageNum" value="${pageMaker.ppageNum}">
+				<input type="hidden" name="pamount" value="${pageMaker.pamount}">
+				<input type="hidden" id="pid" name="pid" value="${pageMaker.pid}">
+				<!-- pid를 id로도 추가 -->
+				<div class="card" style="width: 700px">
+					<div class="card-body">
+						<h5 class="card-title">${pcontent_view.ptitle}</h5>
+						<h6 class="card-subtitle mb-2 text-muted">작성자:
+							${pcontent_view.pname}</h6>
+						<img class="card-img-top"
+							src="${pageContext.request.contextPath}/display2?fileName=${pcontent_view.filename}"
+							style="width: 500px; height: 500px;" alt="Card image cap">
+						<p class="card-text">${pcontent_view.pcontent}</p>
+					</div>
+					<div class="card-footer text-muted">번호: ${pcontent_view.pid}
+						/ 조회수: ${pcontent_view.phit}</div>
 				</div>
-				<div class="card-footer text-muted">번호: ${pcontent_view.pid} /
-					조회수: ${pcontent_view.phit}</div>
-			</div>
-			<div class="mt-3">
-				<input type="submit" value="수정하기"
-					formaction="picture_modify?ppageNum=${pageMaker.ppageNum}&pamount=${pageMaker.pamount}&pid=${pageMaker.pid}"
-					class="btn btn-primary"> <input type="submit" value="목록보기"
-					formaction="picture_list" class="btn btn-secondary">
-			</div>
-		</form>
+				<div class="mt-3">
+					<input type="submit" value="수정하기"
+						formaction="picture_modify?ppageNum=${pageMaker.ppageNum}&pamount=${pageMaker.pamount}&pid=${pageMaker.pid}"
+						class="btn btn-primary"> <input type="submit" value="목록보기"
+						formaction="picture_list" class="btn btn-secondary">
+				</div>
+			</form>
+		</div>
 
 		<!-- 댓글 기능 -->
 
@@ -130,7 +153,7 @@
 
 
 			<!-- 대댓글 작성 -->
-			<form id="rprForm${status.index}" style="display: none;"
+			<form id="rprForm${status.index}" style="display: none; width: 700px"
 				action="${pageContext.request.contextPath}/rprwrite" method="post"
 				class="mt-3">
 				<div class="form-group">
@@ -174,10 +197,5 @@
 		</div>
 		<!-- 댓글 기능 끝 -->
 	</div>
-
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		
 </body>
 </html>
-
