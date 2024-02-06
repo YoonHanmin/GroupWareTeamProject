@@ -258,7 +258,7 @@ a:hover {
 								</h6>
 								<p class="card-text">날짜: <fmt:formatDate value="${picturedto.pdate}" pattern="yy-MM-dd" />, 조회수:
 									${picturedto.phit}</p>
-								<p class="card-text">글쓴이: ${picturedto.pname}</p>
+								<p class="card-text">작성자: ${picturedto.pname}</p>
 							</div>
 						</div>
 					</div>

@@ -23,7 +23,7 @@ background-color : #363945;
 	margin-left: 300px;
 }
 
-.card { 
+.card {
 	width: 700px;
 }
 
