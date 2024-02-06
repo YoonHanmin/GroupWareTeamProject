@@ -484,7 +484,7 @@ cursor: pointer;
         
         <li><a href="#"><i class="bi bi-calendar-week"></i>  휴가관리</a>
             <ul>
-                <li><a href="vacationRequest">휴가 신청하기</a></li>
+                <li><a href="vacationRequest">휴가 신청</a></li>
                 <li><a href="myVacationRequests">휴가 신청내역</a></li>
             </ul>
         </li>
@@ -497,7 +497,6 @@ cursor: pointer;
         <li><a href="#"><i class="bi bi-file-earmark-check"></i>  자원요청</a> 
         <ul>
         	<li><a href="resource_apply"><i class="bi bi-boxes"></i> 신청하기</a>
-       	 	<li><a href="resource_approval"><i class="bi bi-boxes"></i> 자원요청 목록</a>
         </li>
         </ul>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
@@ -505,6 +504,12 @@ cursor: pointer;
                 <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
                 <li><a href="picture_list">사진게시판</a></li>
+            </ul>
+        </li>
+        <li><a href="#"><i class="bi bi-people-fill"></i> 인사관리자</a>
+            <ul>
+                <li><a href="resource_approval">자원요청 현황</a></li>
+                <li><a href="vacationApproval">휴가승인 현황</a></li>
             </ul>
         </li>
       </ul>

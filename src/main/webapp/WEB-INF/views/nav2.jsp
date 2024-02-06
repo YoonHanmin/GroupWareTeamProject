@@ -253,7 +253,7 @@ cursor: pointer;
         <li><a href="#"><i class="bi bi-boxes"></i> 자원요청</a>
             <ul>
                 <li><a href="resource">자원 신청</a></li>
-                <li><a href="resource_approval">자원요청 목록</a></li>
+                
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
@@ -261,6 +261,12 @@ cursor: pointer;
                <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
                 <li><a href="picture_list">사진게시판</a></li>
+            </ul>
+        </li>
+        <li><a href="#"><i class="bi bi-people-fill"></i> 인사관리자</a>
+            <ul>
+                <li><a href="resource_approval">자원요청 현황</a></li>
+                <li><a href="vacationApproval">휴가승인 현황</a></li>
             </ul>
         </li>
       </ul>

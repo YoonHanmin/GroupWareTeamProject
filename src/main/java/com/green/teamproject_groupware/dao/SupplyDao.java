@@ -16,5 +16,6 @@ public interface SupplyDao {
 	public void supply_delete(String supply_id);
 	public void supplyApprovalUpdate(String supply_id);
 	public void supplyRejectUpdate(String supply_id);
-	
+	public void vacationApprovalUpdate(String resourceIdAsString);
+	public void vacationRejectUpdate(String resourceIdAsString);
 }

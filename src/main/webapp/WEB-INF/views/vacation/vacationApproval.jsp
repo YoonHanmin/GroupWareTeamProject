@@ -221,19 +221,19 @@ cursor: pointer;
   
  <main>
 	<div class="header">
-		<ul class="nav nav-underline">
-			<li class="item">
-				<a class="people" aria-current="page" href="#" style="color:black;"><i class="bi bi-people-fill" style="color:black;"></i>내 사원정보</a>
-			</li>
-			<li class="item">
-				<a class="company" href="#" style="color:black;"><i class="bi bi-list-ul" style="color:black;"></i>비밀번호 변경</a>
-			</li>
-		</ul>      	
-	</div>
+<!-- 		<ul class="nav nav-underline"> -->
+<!-- 			<li class="item"> -->
+<!-- 				<a class="people" aria-current="page" href="#" style="color:black;"><i class="bi bi-people-fill" style="color:black;"></i>내 사원정보</a> -->
+<!-- 			</li> -->
+<!-- 			<li class="item"> -->
+<!-- 				<a class="company" href="#" style="color:black;"><i class="bi bi-list-ul" style="color:black;"></i>비밀번호 변경</a> -->
+<!-- 			</li> -->
+<!-- 		</ul>      	 -->
+<!-- 	</div> -->
 	
 	
-	<div class="info">
-		<span>휴가신청 현황</span>
+<!-- 	<div class="info"> -->
+		<h2>휴가신청 현황</h2>
 	</div>
   
 	<div class="content">
@@ -253,12 +253,12 @@ cursor: pointer;
 	</div>
        
 	<div class="app-list">
-		<span>휴가신청내역</span>
+<!-- 		<span>휴가신청내역</span> -->
 	</div>
         	
 	<div class="AllList">
+<!-- 		<h2>휴가 신청 내역</h2> -->
 		
-		<h2>비품 신청 목록</h2>
 			<table>
         <thead>
           <tr>
@@ -271,37 +271,41 @@ cursor: pointer;
             <th>휴가 사유</th>
             <th>휴가 시작일</th>
             <th>휴가 종료일</th>
-            <th>신청 상태</th>
             <th>신청 일자</th>
-            <th>취소</th>
+            <th>수정 일자</th>
+            <th>처리 상태</th>
           </tr>
         </thead>
 				<tbody>
-					<c:forEach items="${vacationList}" var="vacation">
-		                <tr class="vacation-row" data-vacation-id="${vacation.vacation_id}">
-		                    <td class="vacation_id">${vacation.vacation_id}</td>
+					<c:forEach items="${vacationApproval}" var="vacation">
+		                <tr class="vacation-row" data-empid="${vacation.empid}">
+		                    <td class="emp_id">${vacation.empid}</td>
 		                    <td>${vacation.empno}</td>
-		                    <td>${vacation.item}</td>
-		                    <td>${vacation.quantity}</td>
-		                    <td>${vacation.sdescription}</td>
-		                    <td>${vacation.sdate}</td>
-		                    <td>${vacation.modifyDtm}</td>
+		                    <td>${vacation.name}</td>
+		                    <td>${vacation.position}</td>
+		                    <td>${vacation.vacationtype}</td>
+		                    <td>${vacation.vacationdays}</td>
+		                    <td>${vacation.reason}</td>
+                            <td>${vacation.startdate}</td>
+  			                <td>${vacation.enddate}</td>
+				            <td>${vacation.requestdate}</td>
+				            <td><fmt:formatDate value="${vacation.modifydate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 		                    <td>
 			                    <c:choose>
-			                        <c:when test="${vacation.vacation_status == 0}">처리 중</c:when>
-			                        <c:when test="${vacation.vacation_status == 1}">승인</c:when>
-			                        <c:when test="${vacation.vacation_status == 2}">거부</c:when>
-			                        <c:otherwise>오류</c:otherwise>
+			                        <c:when test="${vacation.status == '신청'}">신청</c:when>
+			                        <c:when test="${vacation.status == '승인'}">승인</c:when>
+			                        <c:when test="${vacation.status == '반려'}">반려</c:when>
+			                        <c:otherwise>취소</c:otherwise>
 			                    </c:choose>
                				 </td>
                				 <td>
-               				 	<c:if test="${vacation.vacation_status == 0}">
-               				 		<button class='approval-btn' data-supply-id="${vacation.vacation_status}">승인</button>
+               				 	<c:if test="${vacation.status == '신청'}">
+               				 		<button class='approval-btn' data-empid="${vacation.status}">승인</button>
                				 	</c:if>
                				 </td>
                				 <td>
-               				 	<c:if test="${vacation.vacation_status == 0}">
-               				 		<button class='reject-btn' data-supply-id="${vacation.vacation_status}">반려</button>
+               				 	<c:if test="${vacation.status == '신청'}">
+               				 		<button class='reject-btn' data-empid="${vacation.status}">반려</button>
                				 	</c:if>
                				 </td>
 		                </tr>
@@ -318,7 +322,6 @@ cursor: pointer;
 <script>
 
 $(document).ready(function () {
-
 	// 인사팀 접근여부 체크 로직
 	var insaYnTxt = '${insaYn}';	
 	if (insaYnTxt == 'N'){
@@ -328,81 +331,51 @@ $(document).ready(function () {
 	
 	
 	$(".approval-btn").on("click", function (e) {
-	    var resourceId = "";
-	    var resourceFlag = "";
-	    var targetUrl = "/approvalUpdate";
-
-	    if ($(this).data("vacation-id")) {
-	    	resourceId = $(this).data("vacation-id");
-	    	resourceFlag = "vacation";
-	    }
+	    var emp_id = $(this).closest('tr').find('.emp_id').text();
+	    console.log(emp_id);
 	    
 	    var isConfirmed = confirm("승인하시겠습니까?");
 
 	    if (isConfirmed) {
-// 	    	var deleteButton = $(this); 
-	    	
 	        $.ajax({
 	            type: "POST",
-	            url: targetUrl,
+	            url: "vacationApprovalUpdate",
 	            contentType: "application/json",
-	            data: JSON.stringify({ resourceId: resourceId, resourceFlag: resourceFlag }),
+	            data: JSON.stringify({ empid: emp_id }),
 	            success: function (response) {
-	                console.log(resourceFlag + " 승인 성공: ", response);
-	                
-	                // Refresh the page
-                    location.reload();
-
-// 	                deleteButton.closest("tr").remove();
- 
+	                console.log(" 승인 성공: ", response);
+	                location.reload();
 	                alert("승인되었습니다");
-	            },
+	            }, // end of success: function (response) {
 	            error: function (xhr, status, error) {
-	                console.error(resourceFlag + " 승인 실패: ", status, error);
-	            }
-	        });
-	    }
-	});
-	
-	
-	$(".reject-btn").on("click", function () {
-		var resourceId = "";
-	    var resourceFlag = "";
-	    var targetUrl = "/rejectUpdate";
+	                console.error(" 승인 실패: ", status, " 에러: ", error);
+	            } // end of error: function (xhr, status, error) {
+	        }); // end of $.ajax({
+	    } // end of if (isConfirmed) {
+	}); // end of $(".approval-btn").on("click", function (e) {
 
-	    if ($(this).data("vacation-id")) {
-	    	resourceId = $(this).data("vacation-id");
-	    	resourceFlag = "vacation";
-	    }
+	$(".reject-btn").on("click", function () {
+	    var emp_id = $(this).closest('tr').find('.emp_id').text();
+	    console.log(emp_id);
 
 	    var isConfirmed = confirm("반려 하시겠습니까?");
 
 	    if (isConfirmed) {
-// 	    	var deleteButton = $(this); 
-	    	
 	        $.ajax({
 	            type: "POST",
-	            url: targetUrl,
+	            url: "vacationRejectUpdate",
 	            contentType: "application/json",
-	            data: JSON.stringify({ resourceId: resourceId, resourceFlag: resourceFlag }),
+	            data: JSON.stringify({ empid: emp_id }),
 	            success: function (response) {
-	                console.log(resourceFlag + " 반려 성공: ", response);
-	                
-	                // Refresh the page
-                    location.reload();
-
-// 	                deleteButton.closest("tr").remove();
- 
+	                console.log(" 반려 성공: ", response);
+	                location.reload();
 	                alert("반려되었습니다");
 	            },
 	            error: function (xhr, status, error) {
-	                console.error(resourceFlag + " 반려 실패: ", status, error);
+	                console.error(" 반려 실패: ", status, " 에러: ", error);
 	            }
 	        });
 	    }
-	});
-	
-	
-});
-
+	}); // end of $(".reject-btn").on("click", function () {
+}); // end of $(document).ready(function () {
 </script>
