@@ -1,8 +1,10 @@
-<!-- picture_list.jsp -->
+<%@ page import="org.apache.commons.codec.binary.Base64" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
+ <script src="resources/js/jquery.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -97,22 +99,28 @@
 			<td width="80">글번호</td>
 			<td width="100">작성자</td>
 			<td width="400px">제목</td>
+			<td width="300px">이미지</td>
 			<td width="200px">날짜</td>
 			<td width="100">조회수</td>
 		</tr>
 		<c:forEach items="${picture_list}" var="picturedto">
+		 <c:set var="imageType" value="${fn:endsWith(picturedto.filename, '.jpg') ? 'image/jpeg' : 'image/png'}" />
+    
 			<tr>
 				<td>${picturedto.pid}</td>
 				<td>${picturedto.pname}</td>
 				<td>
 					<a class="move_link" href="picture_content_view?pid=${picturedto.pid}">${picturedto.ptitle}</a>
 				</td>
+				<td>
+				 <img src="data:${imageType};base64,${Base64.encodeBase64String(picture.imagebyte)}" alt="Picture" style="width:300px; height:300px;">
+				</td>
 				<td>${picturedto.pdate}</td>
 				<td>${picturedto.phit}</td>
 			</tr>
 		</c:forEach>
 		<tr>
-			<td colspan="5">
+			<td colspan="6">
 				<a href="picture_write_view">글작성</a>
 			</td>
 		</tr>
@@ -160,7 +168,7 @@
 </body>
 </html>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script>
 	var actionForm = $("#actionForm");
 	
@@ -209,8 +217,7 @@
 	});
 </script>
 
-<!-- 부트스트랩 JS 및 Popper.js CDN 추가 -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 

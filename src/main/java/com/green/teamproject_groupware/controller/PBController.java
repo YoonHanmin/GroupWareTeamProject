@@ -314,11 +314,6 @@ public class PBController {
 				+ "&pid=" + dto.getPid();
 	}
 
-//    @PutMapping("/prmodify")
-//    public ResponseEntity<String> prmodify(@RequestBody PBReplyDTO dto) {  // RequestBody를 통해 받은 param을 바로 dto로 사용
-//        preplyService.prmodify(dto);
-//        return ResponseEntity.ok("댓글이 수정되었습니다.");
-//    }
 
 	@RequestMapping("/prdelete")
 	public String prelete(@ModelAttribute PBReplyDTO dto, @ModelAttribute("pcri") PBCriteria pcri,

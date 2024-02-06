@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="org.apache.commons.codec.binary.Base64" %>
+        <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!--      hiredate 날짜 포맷 형식 변경 -->
       <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -205,15 +207,22 @@ margin-right : 20px;
 			<td width="80">글번호</td>
 			<td width="100">작성자</td>
 			<td width="400px">제목</td>
+			<td width="300px">이미지</td>
 			<td width="200px">날짜</td>
 			<td width="100">조회수</td>
 		</tr>
 		<c:forEach items="${picture_list}" var="picturedto">
+		 <c:set var="imageType" value="${fn:endsWith(picturedto.filename, '.jpg') ? 'image/jpeg' : 'image/png'}" />
+    
 			<tr>
 				<td>${picturedto.pid}</td>
 				<td>${picturedto.pname}</td>
 				<td>
-					<a class="move_link" href="${picturedto.pid}">${picturedto.ptitle}</a>
+					<a class="move_link" href="picture_content_view?pid=${picturedto.pid}">${picturedto.ptitle}</a>
+				</td>
+				<td>
+				 <img src="data:${imageType};base64,${Base64.encodeBase64String(picturedto.imagebyte)}" alt="Picture" style="width:100px; height:100px;">
+				
 				</td>
 				<td>${picturedto.pdate}</td>
 				<td>${picturedto.phit}</td>

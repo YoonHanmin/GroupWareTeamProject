@@ -10,7 +10,7 @@
 <!-- FullCalendar 라이브러리 및 jQuery 추가 -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.css" />
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.js"></script>

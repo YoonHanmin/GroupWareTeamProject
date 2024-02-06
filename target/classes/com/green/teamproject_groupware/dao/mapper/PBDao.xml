@@ -56,8 +56,8 @@
 	<select id="plistWithPaging"
 		resultType="com.green.teamproject_groupware.dto.PBDto">
 <![CDATA[
-			SELECT pid, pname, ptitle, pcontent, pdate, phit 
-			  FROM (SELECT rownum rn, pid, pname, ptitle, pcontent, pdate, phit 
+			SELECT pid, pname, ptitle, pcontent, pdate, phit ,uploadpath
+			  FROM (SELECT rownum rn, pid, pname, ptitle, pcontent, pdate, phit ,uploadpath
 					  FROM picture_board
 					 WHERE 
 					  ]]>

@@ -4,14 +4,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
+ <script src="resources/js/jquery.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>글 내용 보기</title>
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
 .reply-icon {
 	position: relative;
@@ -61,7 +59,7 @@
 					<h6 class="card-subtitle mb-2 text-muted">작성자:
 						${pcontent_view.pname}</h6>
 					<img class="card-img-top"
-						src="${pageContext.request.contextPath}/display2?fileName=${pcontent_view.filename}"
+						src="${pageContext.request.contextPath}/display2?fileName=${pcontent_view.filename}" style="width:300px; height:300px;"
 						alt="Card image cap">
 					<p class="card-text">${pcontent_view.pcontent}</p>
 				</div>
@@ -177,10 +175,9 @@
 		<!-- 댓글 기능 끝 -->
 	</div>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		
 </body>
 </html>
 
