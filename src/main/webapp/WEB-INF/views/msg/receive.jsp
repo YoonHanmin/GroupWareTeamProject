@@ -14,13 +14,6 @@ $(document).ready(function () {
 			// 화면 최상단으로 이동    	
     	 $("html, body").scrollTop(0);
 			
-			
-			
-			
-			
-			
-			
-			
     		$(".msg-view").css({"display":"flex"});
         // 클릭된 td에 대한 정보 추출
         var msgid = $(this).find("input[id='msgid']").val();
@@ -46,7 +39,7 @@ $(document).ready(function () {
              }
     			 });
     	 
-    	 console.log("이건왜 hit ==> "+hit);
+    	
         var from_id = $(this).find("input[id='from_id']").val();
         var title = $(this).find("input[id='title']").val();
         var content = $(this).find("input[id='content']").val();
@@ -95,7 +88,31 @@ $(document).ready(function () {
     	$(".popup_bg").css({"display":"none"});
     	$(".popup-empinfo").css({ "display": "none" });
     });  
-	
+    
+   
+    
+    var addedElements_reply = []; 
+    $("#reply").off("click").on("click",function(){
+    	
+    	addedElements_reply = [];
+    	var addedElement_reply = $("<span>").text(from_name+"        "+from_position).append("<i id='delete-add' class='bi bi-x' ></i><input type='hidden' id='send_empno' value='"+from_id+"'>").addClass("added-element")
+    	$(".to-add").before(addedElement_reply);	
+    	$("#send_title").val("[회신]"+title);
+    	$("#send_content").val("원 메시지 : \n"+content+"\n");
+    	addedElements_reply.push(addedElement_reply);
+    	$(".popup_bg").css({"display":"block"});
+    	$(".popup-send").css({ "display": "block" });
+    	
+    });
+    
+ $("#popup-send-out").on('click',function(){
+	 $(".added-element").remove();
+    	addedElements_reply.forEach(function (element) {
+            element.remove();
+            console.log("배열 원소값 ==>"+addedElements_reply);
+        });
+    });
+    
     }); //end of td click function
     
     
@@ -164,7 +181,8 @@ $(document).ready(function () {
 				$("#search-email").text("이메일 :    "+ data.email);
 				
 				
-	 var addedElements = []; // 초기화를 위한 배열			
+	 var addedElements = []; // 초기화를 위한 배열		
+	
     $('.search-info').on('click',function(){
     	
     	// 새로 클릭시 이전 검색내용 초기화
@@ -382,7 +400,7 @@ cursor: pointer;
 	border-radius : 5px;
 	background-color: #fffff0;
 	width:800px;
-	height : 500px;
+	height : 550px;
 	display : none;
 }
 
@@ -766,6 +784,10 @@ cursor: pointer;
       				
       				<div class="msg-view-content">
       				
+      				</div>
+      				
+      				<div>
+      				<span style="margin-left : 730px;"><button id="reply" type="button">회신</button></span>
       				</div>
       			</div>
 
