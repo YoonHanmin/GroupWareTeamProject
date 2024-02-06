@@ -125,7 +125,9 @@ CREATE TABLE picture_board(
     pcontent varchar2(300),
     pdate date default sysdate,
     phit number(4) default 0,
-    pempno number default 0
+    pempno number default 0,
+    filename varchar2(50),
+    uploadpath varchar2(100)
 );
 
 CREATE SEQUENCE picture_board_SEQ
