@@ -176,10 +176,14 @@ public class PBController {
 		
 		log.info("name~~~" + dto.getName());
 		
+		log.info("pid~~~" + param.get("pid"));
+		
 		PBDto picturedto = pservice.pcontentView(param);
 		model.addAttribute("pcontent_view", picturedto);
 		model.addAttribute("pageMaker", param);
 
+		log.info("pid~~~" + param.get("pid"));
+		
 		// 게시글의 id를 이용하여 댓글 목록을 가져옵니다.
 		int pid = Integer.parseInt(param.get("pid").trim());
 		model.addAttribute("prlist", preplyService.prlist(pid));
@@ -193,7 +197,20 @@ public class PBController {
 	}
 
 	@RequestMapping("/picture_modify")
-	public String picture_modify(@RequestParam HashMap<String, String> param, Model model) {
+	public String picture_modify(HttpSession session, @RequestParam HashMap<String, String> param, Model model) {
+		String empno = (String) session.getAttribute("empno");
+		EmpDto dto = empservice.getEmpByEmpno(empno);
+		model.addAttribute("dto", dto);
+		
+		log.info("empno~~~" + empno);
+		
+		PBDto pbDto = new PBDto();
+		try {
+			pbDto.setPempno(Integer.parseInt(empno));
+		} catch(NumberFormatException e) {
+			pbDto.setPempno(0);
+		}
+		
 		PBDto picturedto = pservice.pcontentView(param);
 		model.addAttribute("pcontent_view", picturedto);
 		model.addAttribute("pageMaker", param);
@@ -314,11 +331,6 @@ public class PBController {
 				+ "&pid=" + dto.getPid();
 	}
 
-//    @PutMapping("/prmodify")
-//    public ResponseEntity<String> prmodify(@RequestBody PBReplyDTO dto) {  // RequestBody를 통해 받은 param을 바로 dto로 사용
-//        preplyService.prmodify(dto);
-//        return ResponseEntity.ok("댓글이 수정되었습니다.");
-//    }
 
 	@RequestMapping("/prdelete")
 	public String prelete(@ModelAttribute PBReplyDTO dto, @ModelAttribute("pcri") PBCriteria pcri,

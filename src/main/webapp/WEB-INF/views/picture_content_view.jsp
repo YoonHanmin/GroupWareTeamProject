@@ -4,15 +4,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <title>글 내용 보기</title>
-<link
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-	rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <style>
+.header{
+height : 70px;
+border-bottom: 1px solid #eee;
+background-color : #363945;
+
+}
+.content {
+	margin-left: 300px;
+}
+
+.card {
+	width: 700px;
+}
+
 .reply-icon {
 	position: relative;
 	margin-left: 40px; /* 기존의 두 배로 변경 */
@@ -45,36 +59,127 @@
 			form.style.display = "none";
 		}
 	}
+
+	$(document).ready(
+			function() {
+				var profile = "${dto.getProfileimage()}";
+				console.log("프로필사진명은 ==>" + profile);
+				$("#profile-image").html(
+						"<img src='./display?fileName=" + profile + "'>");
+
+			});
 </script>
 </head>
 <body>
-	<div class="container mt-5">
-		<h2 class="mb-4">글 내용 보기</h2>
-		<form>
-			<input type="hidden" name="ppageNum" value="${pageMaker.ppageNum}">
-			<input type="hidden" name="pamount" value="${pageMaker.pamount}">
-			<input type="hidden" id="pid" name="pid" value="${pageMaker.pid}">
-			<!-- pid를 id로도 추가 -->
-			<div class="card">
-				<div class="card-body">
-					<h5 class="card-title">${pcontent_view.ptitle}</h5>
-					<h6 class="card-subtitle mb-2 text-muted">작성자:
-						${pcontent_view.pname}</h6>
-					<img class="card-img-top"
-						src="${pageContext.request.contextPath}/display2?fileName=${pcontent_view.filename}"
-						alt="Card image cap">
-					<p class="card-text">${pcontent_view.pcontent}</p>
+	<jsp:include page="nav2.jsp" />
+	<main>
+	<div class="header">
+
+ <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%; height:70px;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="main" style="color: white;margin-left:50px;">메인</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           
+            <li class="nav-item" style="margin-left:50px;">
+              <a class="nav-link" href="myinfo" style="color: white">마이페이지</a>
+            </li>
+            <li class="nav-item dropdown" style="margin-left:50px;">
+              <a
+                class="nav-link dropdown-toggle"
+                style="color: white"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                font-size="1.25rem"
+              >
+                내 업무
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="approval" style="color: black"
+                    >전자결재</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="receive" style="color: black"
+                    >메신저</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="vacationRequest" style="color: black"
+                    >자원요청</a
+                  >
+                </li>
+              </ul>
+            </li>
+           
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="사원명"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              style="color: white"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+
+
+      </div>
+	
+	<div class="content">
+		<div class="container mt-5">
+			<h2 class="mb-4">글 내용 보기</h2>
+			<form>
+				<input type="hidden" name="ppageNum" value="${pageMaker.ppageNum}">
+				<input type="hidden" name="pamount" value="${pageMaker.pamount}">
+				<input type="hidden" id="pid" name="pid" value="${pageMaker.pid}">
+				<!-- pid를 id로도 추가 -->
+				<div class="card" style="width: 700px">
+					<div class="card-body">
+						<h5 class="card-title">${pcontent_view.ptitle}</h5>
+						<h6 class="card-subtitle mb-2 text-muted">작성자:
+							${pcontent_view.pname}</h6>
+						<img class="card-img-top"
+							src="${pageContext.request.contextPath}/display2?fileName=${pcontent_view.filename}"
+							style="width: 500px; height: 500px;" alt="Card image cap">
+						<p class="card-text">${pcontent_view.pcontent}</p>
+					</div>
+					<div class="card-footer text-muted">번호: ${pcontent_view.pid}
+						/ 조회수: ${pcontent_view.phit}</div>
 				</div>
-				<div class="card-footer text-muted">번호: ${pcontent_view.pid} /
-					조회수: ${pcontent_view.phit}</div>
-			</div>
-			<div class="mt-3">
-				<input type="submit" value="수정하기"
-					formaction="picture_modify?ppageNum=${pageMaker.ppageNum}&pamount=${pageMaker.pamount}&pid=${pageMaker.pid}"
-					class="btn btn-primary"> <input type="submit" value="목록보기"
-					formaction="picture_list" class="btn btn-secondary">
-			</div>
-		</form>
+				<div class="mt-3">
+					<input type="submit" value="수정하기"
+						formaction="picture_modify?ppageNum=${pageMaker.ppageNum}&pamount=${pageMaker.pamount}&pid=${pageMaker.pid}"
+						class="btn btn-primary"> <input type="submit" value="목록보기"
+						formaction="picture_list" class="btn btn-secondary">
+				</div>
+			</form>
+		</div>
 
 		<!-- 댓글 기능 -->
 
@@ -132,7 +237,7 @@
 
 
 			<!-- 대댓글 작성 -->
-			<form id="rprForm${status.index}" style="display: none;"
+			<form id="rprForm${status.index}" style="display: none; width: 700px"
 				action="${pageContext.request.contextPath}/rprwrite" method="post"
 				class="mt-3">
 				<div class="form-group">
@@ -176,11 +281,6 @@
 		</div>
 		<!-- 댓글 기능 끝 -->
 	</div>
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	</main>
 </body>
 </html>
-

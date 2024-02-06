@@ -1,6 +1,11 @@
 package com.green.teamproject_groupware.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +25,15 @@ public class PBServiceImpl implements PBService{
 	
 	@Override
 	public ArrayList<PBDto> picture_list() {
-	    PBDao dao = sqlSession.getMapper(PBDao.class);
-	    
-	    ArrayList<PBDto> plist = dao.picture_list();
+        PBDao dao = sqlSession.getMapper(PBDao.class);
+        ArrayList<PBDto> plist = dao.picture_list();
 
-	    return plist;
-	}
+       
+
+        return plist;
+    }
+
+    
 
 	@Override
 	public void pwrite(HashMap<String, String> param) {
@@ -65,10 +73,29 @@ public class PBServiceImpl implements PBService{
 	@Override
 	public ArrayList<PBDto> plist(PBCriteria pcri) {
 		PBDao dao = sqlSession.getMapper(PBDao.class);
-		
-		return dao.plistWithPaging(pcri);
+		ArrayList<PBDto> plist = dao.plistWithPaging(pcri);
+		 // 각각의 PBDto에 대해 이미지를 바이트 배열로 변환하여 저장
+        for (PBDto pdto : plist) {
+            String imagePath = pdto.getUploadPath();
+            try {
+                byte[] imageBytes = readBytesFromFile(imagePath);
+                pdto.setImagebyte(imageBytes);
+                
+              
+            } catch (IOException e) {
+                e.printStackTrace();
+                
+            }
+        }
+		return plist;
 	}
 
+	private byte[] readBytesFromFile(String filePath) throws IOException {
+        Path path = Paths.get(filePath);
+        return Files.readAllBytes(path);
+    }
+
+	
 	@Override
 	public int getTotalCount(PBCriteria pcri) {
 	log.info("@# PBServiceImpl.getTotalCount() start");

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+    namespace="com.green.teamproject_groupware.dao.FBReply2Dao">
+
+    <!-- 대댓글 조회 -->
+    <select id="rrlist" parameterType="map"
+        resultType="com.green.teamproject_groupware.dto.FBReply2DTO">
+        select rrid, parentrid, bid, rrwriter, rrcontent, rregDate
+        from
+        reply2
+        where bid = #{bid} and parentrid = #{parentrid}
+        ORDER BY RRREGDATE
+    </select>
+
+    <!-- 대댓글 작성 -->
+    <insert id="rrwrite"
+        parameterType="com.green.teamproject_groupware.dto.FBReply2DTO">
+        insert into reply2(rrid, parentrid, bid, rrwriter,
+        rrcontent, rregDate)
+        values(reply2_seq.NEXTVAL, #{parentrid}, #{bid},
+        #{rrwriter}, #{rrcontent},
+        SYSDATE)
+    </insert>
+
+    <!-- 대댓글 삭제 -->
+    <delete id="rrdelete"
+        parameterType="com.green.teamproject_groupware.dto.FBReply2DTO">
+        delete from reply2
+        where rrid = #{rrid}
+        and bid = #{bid}
+    </delete>
+
+</mapper>

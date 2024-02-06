@@ -19,4 +19,5 @@ public class PBDto {
 	private int pempno;
 	private String filename;
 	private String uploadPath;
+	private byte[] imagebyte;
 }

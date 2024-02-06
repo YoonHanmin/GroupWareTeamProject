@@ -24,7 +24,7 @@ public class EmitterrepositoryImpl implements EmitterRepository{
 	@Override
 	public SseEmitter save(String emitterId, SseEmitter sseEmitter) {
 		emitters.putIfAbsent(emitterId, sseEmitter);
-		log.info(""+emitters);
+		log.info("emitter객체 저장!!"+emitters);
 		return sseEmitter;
 	}
 

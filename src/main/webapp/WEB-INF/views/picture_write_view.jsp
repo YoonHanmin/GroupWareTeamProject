@@ -61,7 +61,6 @@ function readURL(input) {
 <body>
 	<div class="container mt-5">
 		<h2 class="mb-4">글 작성</h2>
-		<div class="container mt-5">
 			<form id="frm" method="post" action="write">
 				<div class="form-group row">
 					<label for="pname" class="col-sm-2 col-form-label">이름</label>
