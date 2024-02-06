@@ -192,7 +192,7 @@ a:hover {
 								</h5>
 								<p class="card-text">날짜: ${picturedto.pdate}, 조회수:
 									${picturedto.phit}</p>
-								<p class="card-text">글쓴이: ${picturedto.pname}</p>
+								<p class="card-text">작성자: ${picturedto.pname}</p>
 							</div>
 						</div>
 					</div>

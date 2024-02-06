@@ -37,10 +37,6 @@
         WHERE bid = #{bid}
     </update>
     
-<!--     <insert id="write" > -->
-<!--     insert into free_board(bid, bname, btitle, bcontent, bhit) -->
-<!--     values (free_board_seq.NEXTVAL,#{bname},#{btitle},#{bcontent},0) -->
-<!-- </insert> -->
 	<insert id="write" >
 	    insert into free_board(bid, bname, btitle, bcontent, bhit)
 	    values (free_board_SEQ.NEXTVAL, #{bname}, #{btitle}, #{bcontent}, 0)

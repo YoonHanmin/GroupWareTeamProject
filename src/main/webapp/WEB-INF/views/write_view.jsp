@@ -43,12 +43,11 @@
 <body>
 <div class="container mt-5">
     <h2 class="mb-4">글 작성</h2>
-    <div class="container mt-5">
     <form id="frm" method="post" action="write" >
         <div class="form-group row">
             <label for="bname" class="col-sm-2 col-form-label">이름</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="bname" id="bname" placeholder="이름을 입력하세요">
+                <input type="text" class="form-control" name="bname" id="bname" value="${dto.name}" readonly>
             </div>
         </div>
         
@@ -58,16 +57,14 @@
                 <input type="text" class="form-control" name="btitle" id="btitle" placeholder="제목을 입력하세요">
             </div>
         </div>
+        
         <div class="form-group row">
             <label for="bcontent" class="col-sm-2 col-form-label">내용</label>
             <div class="col-sm-10">
                 <textarea class="form-control" name="bcontent" id="bcontent" rows="5" placeholder="내용을 입력하세요"></textarea>
             </div>
         </div>
-        <div class="form-group row">
-
-        </div>
-    </div>
+        
         <div class="form-group row">
             <div class="col-sm-10 offset-sm-2">
                 <input type="button" onclick="fn_submit()" class="btn btn-primary" value="등록">

@@ -17,7 +17,7 @@
 	margin-left: 300px;
 }
 
-.card { 
+.card {
 	width: 700px;
 }
 
