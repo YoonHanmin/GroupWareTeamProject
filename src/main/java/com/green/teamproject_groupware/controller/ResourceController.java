@@ -107,7 +107,7 @@ public class ResourceController {
 			int todoCnt = todoSupplyList.size() + todoVehicleList.size() + todoExpenseList.size() + todoReservationList.size();
 			int ingCnt = ingSupplyList.size() + ingVehicleList.size() + ingExpenseList.size() + ingReservationList.size();;
 			int rejectCnt = rejectSupplyList.size() + rejectVehicleList.size() + rejectExpenseList.size() + rejectReservationList.size();;
-			
+			model.addAttribute("dto",dto);
 			model.addAttribute("supplyList", supplyList);
 	        model.addAttribute("vehicleList", vehicleList);
 	        model.addAttribute("expenseList", expenseList);

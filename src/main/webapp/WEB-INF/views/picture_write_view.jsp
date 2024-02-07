@@ -44,8 +44,8 @@ function readURL(input) {
 			enctype : 'multipart/form-data',
 			url : "pwrite",
 			data : formData,
-			processData : false, // Important! Tell jQuery not to process the data
-			contentType : false, // Important! Tell jQuery not to set contentType
+			processData : false,
+			contentType : false,
 			success : function(data) {
 				alert("등록 완료");
 				location.href = "picture_list";
@@ -61,13 +61,11 @@ function readURL(input) {
 <body>
 	<div class="container mt-5">
 		<h2 class="mb-4">글 작성</h2>
-		<div class="container mt-5">
 			<form id="frm" method="post" action="write">
 				<div class="form-group row">
 					<label for="pname" class="col-sm-2 col-form-label">이름</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="pname" id="pname"
-							placeholder="이름을 입력하세요">
+						<input type="text" class="form-control" name="pname" id="pname" value="${dto.name}" readonly>
 					</div>
 				</div>
 

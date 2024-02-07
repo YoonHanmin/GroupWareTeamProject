@@ -13,7 +13,7 @@
              , details
              , rdate
              , reservation_status 
-                , modify_dtm as modifyDtm
+                , modifydtm
           from reservation_TABLE
          where 1=1
            and empno = #{empno}

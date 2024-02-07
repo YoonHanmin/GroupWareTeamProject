@@ -8,15 +8,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +32,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.dao.VacationDao;
 import com.green.teamproject_groupware.dto.EmpDto;
+import com.green.teamproject_groupware.dto.ExpenseDto;
+import com.green.teamproject_groupware.dto.ReservationDto;
+import com.green.teamproject_groupware.dto.SupplyDto;
+import com.green.teamproject_groupware.dto.VacationApprovalDto;
 import com.green.teamproject_groupware.dto.VacationRequestDto;
+import com.green.teamproject_groupware.dto.VehicleDto;
 import com.green.teamproject_groupware.service.EmpService;
 import com.green.teamproject_groupware.service.VacationService;
 
@@ -124,7 +134,6 @@ public class VacationController {
         return "success";
     }
 
-
     @RequestMapping(value="/myVacationRequests", method=RequestMethod.GET)
     public String myVacationRequests(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");
@@ -136,42 +145,125 @@ public class VacationController {
         return "vacation/myVacationRequests";
     }
     
-//    @RequestMapping(value = "/checkDuplicateVacation", method = RequestMethod.POST)
-//    @ResponseBody
-//    public String checkDuplicateVacation(@RequestParam HashMap<String, String> param) {
-//        String empno = param.get("empno");
-//        String startdate = param.get("startdate");
-//        String enddate = param.get("enddate");
-//
-//        // 중복 여부 확인을 위한 서비스 메소드 호출
-//        boolean isDuplicate = service.checkDuplicateVacation(empno, startdate, enddate);
-//
-//        // 중복 여부에 따라 결과 반환
-//        return isDuplicate ? "duplicate" : "not_duplicate";
-//    }
-    
     @RequestMapping(value = "/cancelVacation", method = RequestMethod.POST)
     @ResponseBody
     public String cancelVacation(HttpSession session,Model model, @RequestParam("empid") String empid) {
     	log.info(empid);
         try {
-            // 취소 로직 수행: 예시로 VacationDao.cancelVacation(empid)를 호출하는 코드
-            service.cancelVacation(Integer.parseInt(empid));
+            // 취소 로직 수행: VacationDao.cancelVacation(empid)를 호출하는 코드
+        	service.cancelVacation(Integer.parseInt(empid));
             return "success";
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
         }
     }
+    
+//    @GetMapping("/vacationApproval")
+//	public String vacation_approval(HttpSession session,Model model) {
+//		String empno = (String) session.getAttribute("empno");
+//		EmpDto dto = empService.getEmpByEmpno(empno);
+//		
+//		String dname = dto.getDname();		
+//		String insaYn = "인사팀".equals(dname) ? "Y" : "N";
+//		
+//		if ("Y".equals(insaYn)) {
+//			ArrayList<VacationApprovalDto> vacationList = service.vacationApproval(empno);
+//	
+//			// todoCnt 확인할문서
+//			List<VacationApprovalDto> todoVacationList = vacationList.stream()
+//					.filter(t -> "처리중".equals(t.getStatus()))
+//				    .collect(Collectors.toList());
+//			
+//			// ingCnt 승인한문서
+//			List<VacationApprovalDto> ingVacationList = vacationList.stream()
+//					.filter(t -> "승인".equals(t.getStatus()))
+//				    .collect(Collectors.toList());
+//		
+//			// rejectCnt 반려한문서
+//			List<VacationApprovalDto> rejectVacationList = vacationList.stream()
+//					.filter(t -> "반려".equals(t.getStatus()))
+//				    .collect(Collectors.toList());
+//			
+//			int todoCnt = todoVacationList.size();
+//			int ingCnt = ingVacationList.size();
+//			int rejectCnt = rejectVacationList.size();
+//			
+//			model.addAttribute("vacationList", vacationList);
+//	        
+//			model.addAttribute("todoCnt", todoCnt);
+//	        model.addAttribute("ingCnt", ingCnt);
+//	        model.addAttribute("rejectCnt", rejectCnt);
+//		}
+//		
+//		model.addAttribute("insaYn", insaYn);		
+//        
+//		return "vacation/vacationAprroval";
+//	}  
+	
     @RequestMapping(value="/vacationApproval", method=RequestMethod.GET)
     public String vacationApproval(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");
         EmpDto dto = empService.getEmpByEmpno(empno);
         model.addAttribute("dto", dto);
-
-        ArrayList<VacationRequestDto> list2 = service.vacationApproval(empno);
-        model.addAttribute("vacationApproval", list2);
         
+		String dname = dto.getDname();		
+		String insaYn = "인사팀".equals(dname) ? "Y" : "N";
+		
+		if ("Y".equals(insaYn)) {
+        
+        List<VacationApprovalDto> vacationList = service.vacationApproval(empno);
+        model.addAttribute("vacationApproval", vacationList);
+
+        // '신청', '승인', '반려' 상태에 따른 데이터 갯수 카운트
+        int tovacnt = 0; // 미승인 휴가 카운트
+        int ingCnt = 0; // 승인 완료 휴가 카운트
+        int rejectCnt = 0; // 휴가 반려 카운트
+
+        for (VacationApprovalDto vacation : vacationList) {
+            if ("신청".equals(vacation.getStatus())) {
+                tovacnt++;
+            } else if ("승인".equals(vacation.getStatus())) {
+                ingCnt++;
+            } else if ("반려".equals(vacation.getStatus())) {
+                rejectCnt++;
+            }
+        }
+
+        // 모델에 각각의 카운트 추가
+        model.addAttribute("tovacnt", tovacnt);
+        model.addAttribute("ingCnt", ingCnt);
+        model.addAttribute("rejectCnt", rejectCnt);
+		}
+		
+		model.addAttribute("insaYn", insaYn);		
+
         return "vacation/vacationApproval";
+    }
+    
+    @PostMapping("/vacationApprovalUpdate")
+    @ResponseBody
+    public String vacationApprovalUpdate(@RequestBody Map<String, String> request) {
+        try {
+            String empid = request.get("empid");
+            service.vacationApprovalUpdate(Integer.parseInt(empid));
+            return "approvalUpdate 성공";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "approvalUpdate 예외 발생";
+        }
+    }
+
+    @PostMapping("/vacationRejectUpdate")
+    @ResponseBody
+    public String vacationRejectUpdate(@RequestBody Map<String, String> request) {
+        try {
+            String empid = request.get("empid");
+            service.vacationRejectUpdate(Integer.parseInt(empid));
+            return "rejectUpdate 성공";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "rejectUpdate 예외 발생";
+        }
     }
 }

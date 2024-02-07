@@ -14,13 +14,6 @@ $(document).ready(function () {
 			// 화면 최상단으로 이동    	
     	 $("html, body").scrollTop(0);
 			
-			
-			
-			
-			
-			
-			
-			
     		$(".msg-view").css({"display":"flex"});
         // 클릭된 td에 대한 정보 추출
         var msgid = $(this).find("input[id='msgid']").val();
@@ -46,7 +39,7 @@ $(document).ready(function () {
              }
     			 });
     	 
-    	 console.log("이건왜 hit ==> "+hit);
+    	
         var from_id = $(this).find("input[id='from_id']").val();
         var title = $(this).find("input[id='title']").val();
         var content = $(this).find("input[id='content']").val();
@@ -95,7 +88,31 @@ $(document).ready(function () {
     	$(".popup_bg").css({"display":"none"});
     	$(".popup-empinfo").css({ "display": "none" });
     });  
-	
+    
+   
+    
+    var addedElements_reply = []; 
+    $("#reply").off("click").on("click",function(){
+    	
+    	addedElements_reply = [];
+    	var addedElement_reply = $("<span>").text(from_name+"        "+from_position).append("<i id='delete-add' class='bi bi-x' ></i><input type='hidden' id='send_empno' value='"+from_id+"'>").addClass("added-element")
+    	$(".to-add").before(addedElement_reply);	
+    	$("#send_title").val("[회신]"+title);
+    	$("#send_content").val("원 메시지 : \n"+content+"\n");
+    	addedElements_reply.push(addedElement_reply);
+    	$(".popup_bg").css({"display":"block"});
+    	$(".popup-send").css({ "display": "block" });
+    	
+    });
+    
+ $("#popup-send-out").on('click',function(){
+	 $(".added-element").remove();
+    	addedElements_reply.forEach(function (element) {
+            element.remove();
+            console.log("배열 원소값 ==>"+addedElements_reply);
+        });
+    });
+    
     }); //end of td click function
     
     
@@ -164,7 +181,8 @@ $(document).ready(function () {
 				$("#search-email").text("이메일 :    "+ data.email);
 				
 				
-	 var addedElements = []; // 초기화를 위한 배열			
+	 var addedElements = []; // 초기화를 위한 배열		
+	
     $('.search-info').on('click',function(){
     	
     	// 새로 클릭시 이전 검색내용 초기화
@@ -248,9 +266,11 @@ $(document).ready(function () {
 </head>
 <style>
 .header{
-height : 80px;
+height : 70px;
 border-bottom: 1px solid #eee;
-display : flex;
+background-color : 363945;
+
+
 }
 
 .info{
@@ -361,15 +381,16 @@ height : 80px;
       font-style: italic;
     }
 #new-msg{
-border : 1px solid #84c1ff;
-border-radius: 6px;
-color : black;
-background-color: #84c1ff;
-margin-top : 30px;
-font-weight : bold;
-height:80px ;
-width: 120px;
-cursor: pointer;
+/* border : 1px solid #84c1ff; */
+/* border-radius: 6px; */
+/* color : black; */
+/* background-color: #84c1ff; */
+/* font-weight : bold; */
+/* height:40px ; */
+/* width: 100px; */
+/* cursor: pointer; */
+/* margin-top : 10px; */
+/* margin-left : 30px; */
 
 }
 .msg-view{
@@ -382,7 +403,7 @@ cursor: pointer;
 	border-radius : 5px;
 	background-color: #fffff0;
 	width:800px;
-	height : 500px;
+	height : 550px;
 	display : none;
 }
 
@@ -623,14 +644,81 @@ cursor: pointer;
  
  <main>
  	<div class="header">
-      	<ul class="nav nav-underline">
-  <li class="item">
-    <a class="receive-list" aria-current="page" href="receive" ><i class="bi bi-envelope-open"></i>  받은 메시지</a>
-  </li>
-  <li class="item">
-    <a class="send-list" href="send" style="color:#black;"><i class="bi bi-envelope-check" style="color:#black;"></i>  보낸 메시지</a>
-  </li>
-</ul>      	
+
+ <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%; height:70px;">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="main" style="color: white;margin-left:50px;">메인</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           
+            <li class="nav-item" style="margin-left:50px;">
+              <a class="nav-link" href="myinfo" style="color: white">마이페이지</a>
+            </li>
+            <li class="nav-item dropdown" style="margin-left:50px;">
+              <a
+                class="nav-link dropdown-toggle"
+                style="color: white"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                font-size="1.25rem"
+              >
+                내 업무
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="approval" style="color: black"
+                    >전자결재</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="receive" style="color: black"
+                    >메신저</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="vacationRequest" style="color: black"
+                    >자원요청</a
+                  >
+                </li>
+              </ul>
+            </li>
+           
+          </ul>
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="사원명"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              style="color: white"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+
+
       </div>
       
       <div class="info">
@@ -640,11 +728,18 @@ cursor: pointer;
       			<span id="msg-search-btn"><i class="bi bi-search"></i></span>
       			</form>
       			</div>
-      			<ul class="msg-menu">
-      				<li>
-      				<span id="new-msg"><i class="fa-sharp fa-regular fa-paper-plane">작성하기</i></span></li>
+      			<div class="msg-menu">
       				
-      			</ul>
+      				<div id="new-msg">
+      					<div style="margin-top:10px;font-family: 'Noto Sans KR', sans-serif;">
+      					<button type="button" class="btn btn-primary position-relative" style="background-color:#363945;border:1px solid #363945;  margin-left:50px;">
+      					<i class="fa-sharp fa-regular fa-paper-plane">
+      					 <span>작성하기</span></i> </button>
+
+      					</div>
+      				</div>
+      				
+      			</div>
       </div>
       
       <div class="msg-box">
@@ -766,6 +861,10 @@ cursor: pointer;
       				
       				<div class="msg-view-content">
       				
+      				</div>
+      				
+      				<div>
+      				<span style="margin-left : 730px;"><button id="reply" type="button">회신</button></span>
       				</div>
       			</div>
 

@@ -7,6 +7,12 @@
 <title>Insert title here</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+    .header{
+height : 70px;
+border-bottom: 1px solid #eee;
+background-color : #363945;
+
+}
         body {
             padding: 20px;
         }

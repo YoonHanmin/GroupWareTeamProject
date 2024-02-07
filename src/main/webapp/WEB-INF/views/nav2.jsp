@@ -94,24 +94,24 @@ cursor: pointer;
 </style>
 
  <script>
- window.onload = function () {
+//  window.onload = function () {
  	
-	 const empno = $("input[name='empno']").val();
- 	console.log(empno);
- const eventSource = new EventSource("/connect/"+empno)
+// 	 const empno = $("input[name='empno']").val();
+//  	console.log(empno);
+//  const eventSource = new EventSource("/connect/"+empno)
  
- eventSource.addEventListener('NewMsg', function(e){
-     console.log(e.data);
-     const receivedConnectData = JSON.parse(e.data);
-     console.log('connect event data:', receivedConnectData);
-    if(receivedConnectData.msgDto!=null){
- 	var notifyTime = receivedConnectData.time;
- 	var currentTime = new Date().getTime();
- 	var time = currentTime - notifyTime;
- 	var minute_before = Math.floor(time/(1000*60));
+//  eventSource.addEventListener('NewMsg', function(e){
+//      console.log(e.data);
+//      const receivedConnectData = JSON.parse(e.data);
+//      console.log('connect event data:', receivedConnectData);
+//     if(receivedConnectData.msgDto!=null){
+//  	var notifyTime = receivedConnectData.time;
+//  	var currentTime = new Date().getTime();
+//  	var time = currentTime - notifyTime;
+//  	var minute_before = Math.floor(time/(1000*60));
  
-     var msgFromName = receivedConnectData.msgDto.from_name;
-     console.log(msgFromName);
+//      var msgFromName = receivedConnectData.msgDto.from_name;
+//      console.log(msgFromName);
 //      var notify_num = ${notifyList.size()};
 //      notify_num = notify_num+1;
 //      console.log(notify_num);
@@ -120,18 +120,18 @@ cursor: pointer;
 
 //    $('#notify_num').text(notify_num);
    
-   var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
-   .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
-   "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
+//    var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
+//    .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
+//    "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
 
- $("#new_notify").after(newDiv);
+//  $("#new_notify").after(newDiv);
    
    
-    };
- });
+//     };
+//  });
  
 
- };
+//  };
  
  
     $(document).ready(function () {
@@ -195,7 +195,7 @@ cursor: pointer;
 </script>
  <input type="hidden" name="empno" value="${dto.getEmpno()}">
     <!-- <nav>~</nav> 메인 페이지 좌측 Nav바 -->
-    <nav>
+    <nav class="nav2">
     <div class="profile">
 <!--     	<button style="float:left;">로그아웃</button> -->
         <div class="profile-img">
@@ -213,14 +213,7 @@ cursor: pointer;
             	
             	<li id="messenger" style="height:30px;margin-right:30px; height:35px;cursor:pointer; "><button type="button" class="btn btn-primary position-relative" style="background-color:#363945;border:1px solid #363945">
       새소식
-      <c:choose>
-    <c:when test="${notifyList.size() > 0}">
-        <span id="notify_num" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            ${notifyList.size()}
-        </span>
-    </c:when>
-</c:choose>
-      
+
       
     </button></li>
             	
@@ -237,14 +230,6 @@ cursor: pointer;
                 <li><a href="people">회사 정보</a></li>
             </ul>
         </li>
-        
-        
-        
-        
-        
-        
-
-        
         <li ><a href="receive"><i class="bi bi-envelope"></i> 메신저</a>
             <!-- 서브메뉴는 제이쿼리 이용해서 토글처리(아래 제이쿼리 코드 참조) -->
             <ul>
@@ -267,8 +252,8 @@ cursor: pointer;
         </li>
         <li><a href="#"><i class="bi bi-boxes"></i> 자원요청</a>
             <ul>
-                <li><a href="resource_apply">신청하기</a></li>
-                <li><a href="resource_approval">자원요청 목록</a></li>
+                <li><a href="resource">자원 신청</a></li>
+                
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
@@ -278,19 +263,12 @@ cursor: pointer;
                 <li><a href="picture_list">사진게시판</a></li>
             </ul>
         </li>
-        
-<!-- 출근 버튼 -->
-<li>
-    <a href="#" onclick="markAttendance('in')" style="color: white; background-color: #007bff; padding: 8px 16px; display: inline-block; text-decoration: none; border-radius: 5px;">출근</a>
-</li>
-<!-- 퇴근 버튼 -->
-<li>
-    <a href="#" onclick="markAttendance('out')" style="color: white; background-color: #dc3545; padding: 8px 16px; display: inline-block; text-decoration: none; border-radius: 5px;">퇴근</a>
-</li>
-        
-        
-        
-        
+        <li><a href="#"><i class="bi bi-people-fill"></i> 인사관리자</a>
+            <ul>
+                <li><a href="resource_approval">자원요청 현황</a></li>
+                <li><a href="vacationApproval">휴가승인 현황</a></li>
+            </ul>
+        </li>
       </ul>
     </nav>
      <!--  모달 팝업창-->
