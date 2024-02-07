@@ -41,9 +41,9 @@
 		WHERE bid = #{bid}
 	</update>
 
-	<insert id="write">
-		insert into free_board(bid, bname, btitle, bcontent, bhit)
-		values (free_board_SEQ.NEXTVAL, #{bname}, #{btitle}, #{bcontent}, 0)
+	<insert id="write" >
+		insert into free_board(bid, btitle, bname, bcontent,empno)
+		values (free_board_SEQ.NEXTVAL,#{btitle},#{bname},#{bcontent},#{empno})
 	</insert>
 
 	<select id="listWithPaging"

@@ -16,7 +16,7 @@
         var bname = $("#bname").val();
         var btitle = $("#btitle").val();
         var bcontent = $("#bcontent").val();
-
+		var empno = $("#empno").val();
         // 필수 입력 검사
         if (btitle.trim() === "" || bcontent.trim() === "") {
             alert("글 제목과 내용은 필수 입력 항목입니다.");
@@ -48,6 +48,8 @@
             <label for="bname" class="col-sm-2 col-form-label">이름</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="bname" id="bname" value="${dto.name}" readonly>
+                <input type="hidden" name="empno" value="${dto.empno}">
+                
             </div>
         </div>
         
@@ -67,7 +69,8 @@
         
         <div class="form-group row">
             <div class="col-sm-10 offset-sm-2">
-                <input type="button" onclick="fn_submit()" class="btn btn-primary" value="등록">
+<!--                 <input type="button" onclick="fn_submit()" class="btn btn-primary" value="등록"> -->
+                <input type="submit" class="btn btn-primary" value="등록">
                 <a href="free_board_list" class="btn btn-secondary">목록보기</a>
             </div>
         </div>

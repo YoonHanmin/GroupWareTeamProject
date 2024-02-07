@@ -343,6 +343,7 @@ font-weight : bold;
         	
         });
         
+   
         	
         
        
@@ -393,10 +394,56 @@ font-weight : bold;
     	location.href="receive";
     	
     });
+    $("#popup_notify_vacation").on("click",function(){
+    	location.href="myVacationRequests";
+    	
+    });
+    $("#popup_notify_reply").on("click",function(){
+    	location.href="free_board_list";
+    	
+    });
+    
+    
+    $('div[id^="popup_notify_"]').click(function() {
+        // 클릭한 div의 id를 가져옴
+        var divId = $(this).attr('id');
+        var divClass = $(this).attr('class');
+        console.log(divClass);
+        // divId에서 notify_id 값을 추출하여 가져옴
+        var notify_id = $('#' + divId + ' input[name="notify_id"]').val();
+        
+        $.ajax({ // td클릭시 조회수 1 증가
+            type: "POST",
+            url: "read", // 실제 컨트롤러 매핑 경로로 변경
+            data: { notify_id : notify_id
+     				},
+            success: function (data) {
+            	if(data=='success'){
+            		if(divClass=='popup_notify_approval'){
+            			location.href="approval";
+            		}else if(divClass=='popup_notify_msg'){
+            			location.href="receive";
+            		}else if(divClass=='popup_notify_vacation'){
+            			location.href="myVacationRequests";
+            		}else if(divClass=='popup_notify_reply'){
+            			location.href="free_board_list";
+            		}else{
+            			location.href="main";
+            		}
+            	}
+            }
+            });
+       
+       
+    });
+    
     
     }); // end of ready(function)
 	
 
+  
+    
+    
     
     
     function openPop(){
@@ -791,24 +838,35 @@ font-weight : bold;
         <c:forEach items="${notifyList}" var="notify">
             <c:choose>
                 <c:when test="${notify.notify_type eq 'APPROVAL' }">
-                    <div id="popup_notify_approval" class="popup_notify" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                    <div id="popup_notify_${notify.notify_id}" class="popup_notify_approval" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
                         <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/todo.png' style="width:25px; height:25px;margin-right:5px;"></div>
                         <div style="margin-left:5px; margin-top:5px;">결재할 문서가 도착했어요!</div>
                         <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                        <input type="hidden" name="notify_id" value="${notify.notify_id}">
                     </div>
                 </c:when>
                 <c:when test="${notify.notify_type eq 'MSG' }">
-                    <div id="popup_notify_msg" class="popup_notify" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                    <div id="popup_notify_${notify.notify_id}" class="popup_notify_msg" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
                         <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div>
-                        <div style="margin-left:5px; margin-top:5px;">${notify.notify_sender}님이 메시지를 보냈습니다!</div>
+                        <div style="margin-left:5px; margin-top:5px;">${notify.notify_sender}님이 메시지를 보냈어요!</div>
                         <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                          <input type="hidden" name="notify_id" value="${notify.notify_id}">
                     </div>
                 </c:when>
                 <c:when test="${notify.notify_type eq 'VACATION' }">
-                    <div id="popup_notify_msg" class="popup_notify" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                    <div id="popup_notify_${notify.notify_id}" class="popup_notify_vacation" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
                         <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/vacation.png' style="width:25px; height:25px;margin-right:5px;"></div>
                         <div style="margin-left:5px; margin-top:5px;">휴가신청이 승인되었어요!</div>
                         <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                          <input type="hidden" name="notify_id" value="${notify.notify_id}">
+                    </div>
+                </c:when>
+                <c:when test="${notify.notify_type eq 'REPLY' }">
+                    <div id="popup_notify_${notify.notify_id}" class="popup_notify_reply" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                        <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/reply.png' style="width:25px; height:25px;margin-right:5px;"></div>
+                        <div style="margin-left:5px; margin-top:5px;">${notify.notify_sender}님이 댓글을 달았어요!</div>
+                        <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                          <input type="hidden" name="notify_id" value="${notify.notify_id}">
                     </div>
                 </c:when>
             </c:choose>

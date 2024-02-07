@@ -44,7 +44,7 @@ public class FBServiceImpl implements FBService{
 	}
 
 	@Override
-	public void write(HashMap<String, String> param) {
+	public void write( HashMap<String, String>param){
 		log.info("@# FBServiceImpl.write() start");
 		
 		FBDao dao = sqlSession.getMapper(FBDao.class);

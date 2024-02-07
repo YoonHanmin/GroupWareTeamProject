@@ -16,7 +16,7 @@ import com.green.teamproject_groupware.dto.NotificationDto;
 
 @Service
 public class MsgServiceImpl implements MsgService {
-
+	
 	@Autowired
 	private SqlSession sqlSession;
 	

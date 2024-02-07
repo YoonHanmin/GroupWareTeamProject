@@ -1,5 +1,6 @@
 package com.green.teamproject_groupware.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,10 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.MsgDto;
+import com.green.teamproject_groupware.dto.NotificationDto;
 import com.green.teamproject_groupware.service.EmpService;
 import com.green.teamproject_groupware.service.MsgService;
+import com.green.teamproject_groupware.service.NotifyService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,14 +34,22 @@ public class MsgController {
 	EmpService service;
 	@Autowired
 	MsgService msgService;
-	
+	@Autowired
+	NotifyService notifyService;
 //	메신저 메인화면 유저정보 가져오는 메소드
 	@RequestMapping("/messenger")
 	public String messenger(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
 		EmpDto dto = service.getEmpByEmpno(empno);
 		model.addAttribute("dto", dto);
-		
+		ArrayList<NotificationDto> notifyList = notifyService.getNotification(empno);
+//		몇분전 설정 세팅
+		for (int i = 0; i < notifyList.size(); i++) {
+			String minute = calculateTime(notifyList.get(i).getNotify_time());
+			notifyList.get(i).setMinute(minute);
+		}
+	
+		model.addAttribute("notifyList", notifyList);
 		
 		return "msg/messenger";
 	}
@@ -120,5 +132,43 @@ public class MsgController {
 		log.info("@#@#@#reult ===>"+result);
 	return result;
 	}
+	
+	 private static class TIME_MAXIMUM {
+			public static final int SEC = 60;
+			public static final int MIN = 60;
+			public static final int HOUR = 24;
+			public static final int DAY = 30;
+			public static final int MONTH = 12;
+		}
+	    
+	 
+	    
+	    public static String calculateTime(Timestamp date) {
+			long curTime = System.currentTimeMillis();
+			long regTime = date.getTime();
+			long diffTime = (curTime - regTime) / 1000;
+	    
+			String msg = null;
+			if (diffTime < TIME_MAXIMUM.SEC) {
+				// sec
+				msg = diffTime + "초 전";
+			} else if ((diffTime /= TIME_MAXIMUM.SEC) < TIME_MAXIMUM.MIN) {
+				// min
+				msg = diffTime + "분 전";
+			} else if ((diffTime /= TIME_MAXIMUM.MIN) < TIME_MAXIMUM.HOUR) {
+				// hour
+				msg = (diffTime) + "시간 전";
+			} else if ((diffTime /= TIME_MAXIMUM.HOUR) < TIME_MAXIMUM.DAY) {
+				// day
+				msg = (diffTime) + "일 전";
+			} else if ((diffTime /= TIME_MAXIMUM.DAY) < TIME_MAXIMUM.MONTH) {
+				// day
+				msg = (diffTime) + "달 전";
+			} else {
+				msg = (diffTime) + "년 전";
+			}
+			return msg;
+		}
+	
 	
 }

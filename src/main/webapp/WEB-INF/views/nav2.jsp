@@ -275,11 +275,56 @@ cursor: pointer;
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
 	<div style="height:40px; font-weight:bold; font-size:20px; background-color:white; ">
-	<span style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
-<!-- 	<div id="popup_notify" style="height:40px;width:300px; font-weight:bold; margin-top:10px;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;"> -->
-<!--       <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div> -->
-<!--       <div style="margin-left:5px; margin-top:5px;">한소희 님이 메시지를 보냈습니다.</div><p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;5분전</p> -->
-<!--       </div> -->
+	<span id="new_notify" style="padding : 5px; margin-bottom:10px;"><img src='resources/images/bell2.jpg' style="width:25px; height:25px;margin-right:5px;">새로온 소식</span>
+	
+	<c:choose>
+    <c:when test="${not empty notifyList }">
+        <c:forEach items="${notifyList}" var="notify">
+            <c:choose>
+                <c:when test="${notify.notify_type eq 'APPROVAL' }">
+                    <div id="popup_notify_${notify.notify_id}" class="popup_notify_approval" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                        <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/todo.png' style="width:25px; height:25px;margin-right:5px;"></div>
+                        <div style="margin-left:5px; margin-top:5px;">결재할 문서가 도착했어요!</div>
+                        <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                        <input type="hidden" name="notify_id" value="${notify.notify_id}">
+                    </div>
+                </c:when>
+                <c:when test="${notify.notify_type eq 'MSG' }">
+                    <div id="popup_notify_${notify.notify_id}" class="popup_notify_msg" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                        <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div>
+                        <div style="margin-left:5px; margin-top:5px;">${notify.notify_sender}님이 메시지를 보냈어요!</div>
+                        <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                          <input type="hidden" name="notify_id" value="${notify.notify_id}">
+                    </div>
+                </c:when>
+                <c:when test="${notify.notify_type eq 'VACATION' }">
+                    <div id="popup_notify_${notify.notify_id}" class="popup_notify_vacation" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                        <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/vacation.png' style="width:25px; height:25px;margin-right:5px;"></div>
+                        <div style="margin-left:5px; margin-top:5px;">휴가신청이 승인되었어요!</div>
+                        <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                          <input type="hidden" name="notify_id" value="${notify.notify_id}">
+                    </div>
+                </c:when>
+                <c:when test="${notify.notify_type eq 'REPLY' }">
+                    <div id="popup_notify_${notify.notify_id}" class="popup_notify_reply" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                        <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/reply.png' style="width:25px; height:25px;margin-right:5px;"></div>
+                        <div style="margin-left:5px; margin-top:5px;">${notify.notify_sender}님이 댓글을 달았어요!</div>
+                        <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                          <input type="hidden" name="notify_id" value="${notify.notify_id}">
+                    </div>
+                </c:when>
+            </c:choose>
+        </c:forEach>
+    </c:when>
+    <c:otherwise>
+        <div id="popup_notify" style="height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+            <div  style="margin-left:5px; margin-top:5px;"></div>
+            <div style="margin-left:5px; margin-top:5px;">새로운 소식이 없습니다.</div>
+        </div>
+    </c:otherwise>
+</c:choose>
+      
+      
 	</div>
 	
 	

@@ -9,4 +9,5 @@ public interface NotificationDao {
 	public int deleteNotification(int msgid);
 	public void addNotification(NotificationDto notifyDto);
 	public void deleteAllNotification();
+	public void read(String notify_id);
 }

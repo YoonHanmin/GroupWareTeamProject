@@ -3,6 +3,7 @@ package com.green.teamproject_groupware.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,8 +26,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.dto.ApprovalDto;
 import com.green.teamproject_groupware.dto.EmpDto;
+import com.green.teamproject_groupware.dto.NotificationDto;
 import com.green.teamproject_groupware.service.ApprovalService;
 import com.green.teamproject_groupware.service.EmpService;
+import com.green.teamproject_groupware.service.NotifyService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,12 +46,16 @@ public class ApprovalController {
 	@Autowired
 	ObjectMapper objectMapper;
 	
+	@Autowired
+	NotifyService notifyService;
+	
 	@GetMapping("/approval")
 	public String approval(HttpSession session,Model model) {
 		String empno = (String) session.getAttribute("empno");
 		EmpDto dto = empservice.getEmpByEmpno(empno);
 		model.addAttribute("dto",dto);
 		String doc_empno = empno;
+		
 		ArrayList<ApprovalDto> list = appservice.getAllDoc(doc_empno);
 		model.addAttribute("list", list);
 //		내가 결재해야할 문서를 출력
@@ -60,7 +67,14 @@ public class ApprovalController {
 		}catch(JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		
+		ArrayList<NotificationDto> notifyList = notifyService.getNotification(empno);
+//		몇분전 설정 세팅
+		for (int i = 0; i < notifyList.size(); i++) {
+			String minute = calculateTime(notifyList.get(i).getNotify_time());
+			notifyList.get(i).setMinute(minute);
+		}
+	
+		model.addAttribute("notifyList", notifyList);
 //		내가 결재한 문서 출력
 		ArrayList<ApprovalDto> ingList = appservice.getMyDoc(empno);
 		model.addAttribute("ingList",ingList);
@@ -139,5 +153,40 @@ public class ApprovalController {
 		return result;
 		
 	}
-	
+	 private static class TIME_MAXIMUM {
+			public static final int SEC = 60;
+			public static final int MIN = 60;
+			public static final int HOUR = 24;
+			public static final int DAY = 30;
+			public static final int MONTH = 12;
+		}
+	    
+	 
+	    
+	    public static String calculateTime(Timestamp date) {
+			long curTime = System.currentTimeMillis();
+			long regTime = date.getTime();
+			long diffTime = (curTime - regTime) / 1000;
+	    
+			String msg = null;
+			if (diffTime < TIME_MAXIMUM.SEC) {
+				// sec
+				msg = diffTime + "초 전";
+			} else if ((diffTime /= TIME_MAXIMUM.SEC) < TIME_MAXIMUM.MIN) {
+				// min
+				msg = diffTime + "분 전";
+			} else if ((diffTime /= TIME_MAXIMUM.MIN) < TIME_MAXIMUM.HOUR) {
+				// hour
+				msg = (diffTime) + "시간 전";
+			} else if ((diffTime /= TIME_MAXIMUM.HOUR) < TIME_MAXIMUM.DAY) {
+				// day
+				msg = (diffTime) + "일 전";
+			} else if ((diffTime /= TIME_MAXIMUM.DAY) < TIME_MAXIMUM.MONTH) {
+				// day
+				msg = (diffTime) + "달 전";
+			} else {
+				msg = (diffTime) + "년 전";
+			}
+			return msg;
+		}
 }

@@ -33,5 +33,10 @@ public class NotifyService {
 		NotificationDao dao = sqlSession.getMapper(NotificationDao.class);
 		dao.deleteAllNotification();
 	}
+	public void read(String notify_id) {
+		NotificationDao dao = sqlSession.getMapper(NotificationDao.class);
+		dao.read(notify_id);
+		
+	}
 	
 }

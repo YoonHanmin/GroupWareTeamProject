@@ -26,4 +26,6 @@ public class VacationRequestDto {
     private Timestamp requestdate;
     private Timestamp updatedate;
     private boolean read;
+    
+  
 }

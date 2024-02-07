@@ -72,23 +72,16 @@ public class FBController {
 	}
 	
 	@RequestMapping("/write")
-	public String write(HttpSession session, @RequestParam HashMap<String, String> param, Model model) {
+	public String write(HttpSession session,@RequestParam HashMap<String, String>param, Model model) {
 	    
 		String empno = (String) session.getAttribute("empno");
 		EmpDto dto = empservice.getEmpByEmpno(empno);
 		model.addAttribute("dto", dto);
 		
-		log.info("empno~~~" + empno);
-		
-		FBDto fbDto = new FBDto();
-		try {
-			fbDto.setEmpno(Integer.parseInt(empno));
-		} catch(NumberFormatException e) {
-			fbDto.setEmpno(0);
-		}
-		
-		fbDto.setBname(dto.getName());
-		
+		log.info("@@#@param ==>"+param.get("bname"));
+		log.info("@@#param ==>"+param.get("btitle"));
+		log.info("@@#@param ==>"+param.get("bcontent"));
+
 		service.write(param);
 	    
 	    return "redirect:free_board_list";
@@ -158,7 +151,6 @@ public class FBController {
 		} catch(NumberFormatException e) {
 			fbDto.setEmpno(0);
 		}
-		
 		FBDto freedto= service.contentView(param);
 		model.addAttribute("content_view", freedto);
 		model.addAttribute("pageMaker", param);
@@ -214,7 +206,7 @@ public class FBController {
 			RedirectAttributes rttr) {
 		// 댓글 작성
 		replyService.rwrite(dto);
-
+		
 		// 댓글 목록 페이지로 리다이렉트
 		return "redirect:content_view?pageNum=" + cri.getPageNum() + "&amount=" + cri.getAmount()
 				+ "&bid=" + dto.getBid();

@@ -29,8 +29,7 @@ public class VacationServiceImpl implements VacationService {
 
     @Autowired
     private NotifyService notifyService;
-    
-    
+
 	@Override
     public void vacationRequest(VacationRequestDto vacationDTO) {
         VacationDao dao = sqlSession.getMapper(VacationDao.class);
@@ -48,7 +47,7 @@ public class VacationServiceImpl implements VacationService {
 	public void cancelVacation(int empid) {
         try {
             VacationDao dao = sqlSession.getMapper(VacationDao.class);
-            dao.cancelVacation(empid);
+            dao.cancelVacation(empid);         
         } catch (Exception e) {
             log.error("휴가 취소 중 오류 발생.", e);
             throw new RuntimeException("휴가 취소 중 오류 발생: " + e.getMessage(), e);

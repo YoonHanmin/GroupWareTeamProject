@@ -33,12 +33,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.green.teamproject_groupware.dao.VacationDao;
 import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.ExpenseDto;
+import com.green.teamproject_groupware.dto.NotificationDto;
 import com.green.teamproject_groupware.dto.ReservationDto;
 import com.green.teamproject_groupware.dto.SupplyDto;
 import com.green.teamproject_groupware.dto.VacationApprovalDto;
 import com.green.teamproject_groupware.dto.VacationRequestDto;
 import com.green.teamproject_groupware.dto.VehicleDto;
 import com.green.teamproject_groupware.service.EmpService;
+import com.green.teamproject_groupware.service.NotifyService;
 import com.green.teamproject_groupware.service.VacationService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -52,14 +54,23 @@ public class VacationController {
     
     @Autowired
 	EmpService empService;
-    
+    @Autowired
+    NotifyService notifyService;
 
     @RequestMapping(value="/vacationRequest", method=RequestMethod.GET)
     public String vacationRequest(HttpSession session, Model model) {
         String empno = (String) session.getAttribute("empno");
         EmpDto dto = empService.getEmpByEmpno(empno);
         model.addAttribute("dto", dto);
-
+        
+        ArrayList<NotificationDto> notifyList = notifyService.getNotification(empno);
+//		몇분전 설정 세팅
+		for (int i = 0; i < notifyList.size(); i++) {
+			String minute = calculateTime(notifyList.get(i).getNotify_time());
+			notifyList.get(i).setMinute(minute);
+		}
+	
+		model.addAttribute("notifyList", notifyList);
         // 휴가 데이터를 가져오는 부분
         ArrayList<VacationRequestDto> vacationEvents = service.getVacationEvents(empno);
         // Java 객체를 JSON 문자열로 변환
@@ -228,4 +239,43 @@ public class VacationController {
             return "rejectUpdate 예외 발생";
         }
     }
+    private static class TIME_MAXIMUM {
+		public static final int SEC = 60;
+		public static final int MIN = 60;
+		public static final int HOUR = 24;
+		public static final int DAY = 30;
+		public static final int MONTH = 12;
+	}
+    
+ 
+    
+    public static String calculateTime(Timestamp date) {
+		long curTime = System.currentTimeMillis();
+		long regTime = date.getTime();
+		long diffTime = (curTime - regTime) / 1000;
+    
+		String msg = null;
+		if (diffTime < TIME_MAXIMUM.SEC) {
+			// sec
+			msg = diffTime + "초 전";
+		} else if ((diffTime /= TIME_MAXIMUM.SEC) < TIME_MAXIMUM.MIN) {
+			// min
+			msg = diffTime + "분 전";
+		} else if ((diffTime /= TIME_MAXIMUM.MIN) < TIME_MAXIMUM.HOUR) {
+			// hour
+			msg = (diffTime) + "시간 전";
+		} else if ((diffTime /= TIME_MAXIMUM.HOUR) < TIME_MAXIMUM.DAY) {
+			// day
+			msg = (diffTime) + "일 전";
+		} else if ((diffTime /= TIME_MAXIMUM.DAY) < TIME_MAXIMUM.MONTH) {
+			// day
+			msg = (diffTime) + "달 전";
+		} else {
+			msg = (diffTime) + "년 전";
+		}
+		return msg;
+	}
+
+    
+    
 }

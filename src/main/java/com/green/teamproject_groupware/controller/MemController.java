@@ -68,13 +68,17 @@ public class MemController {
     ApprovalService appservice;
     @Autowired
     VacationService vacationService;
-    private static class TIME_MAXIMUM {
+    
+    public static class TIME_MAXIMUM {
 		public static final int SEC = 60;
 		public static final int MIN = 60;
 		public static final int HOUR = 24;
 		public static final int DAY = 30;
 		public static final int MONTH = 12;
 	}
+    
+ 
+    
     public static String calculateTime(Timestamp date) {
 		long curTime = System.currentTimeMillis();
 		long regTime = date.getTime();
@@ -102,86 +106,7 @@ public class MemController {
 		return msg;
 	}
 
-//	@RequestMapping("/main")
-//	public String main(HttpSession session,Model model) {
-//		String empno = (String)session.getAttribute("empno");
-//		notifyService.deleteAllNotification();
-//		 ArrayList<NotificationDto> notifyList = new ArrayList<NotificationDto>();
-//		ArrayList<NoticeDto> noticeList = noticeService.notice_list();
-//		ArrayList<ApprovalDto> todoList = appservice.getTodoDoc(empno);
-//		model.addAttribute("todoList", todoList);
-//		ArrayList<ApprovalDto> ingList = appservice.getMyDoc(empno);
-//		model.addAttribute("ingList",ingList);
-//		
-//		//		메인_전자결재 알림 전송
-//		for (int i = 0; i < todoList.size(); i++) {
-//			NotificationDto dto = new NotificationDto();
-//			dto.setEmpno(empno);
-//			dto.setMsg_id(todoList.get(i).getDoc_id());			
-//			dto.setNotify_receiver(""+empno);
-//			dto.setNotify_sender(""+empno);
-//			dto.setNotify_time(todoList.get(i).getDoc_date());
-//			dto.setNotify_type("APPROVAL");	
-//			  notifyService.addNotification(dto);
-//	       String minute = calculateTime(todoList.get(i).getDoc_date());	
-//	        dto.setMinute(minute);
-//			notifyList.add(dto);
-//			
-//		}
-////		메인_알림
-//		
-//		ArrayList<MsgDto> msgList = msgService.getNotifyMsgByEmpno(empno);
-//		
-//		for (int i = 0; i < msgList.size(); i++) {
-//			NotificationDto dto = new NotificationDto();
-//			dto.setEmpno(empno);
-//			dto.setMsg_id(msgList.get(i).getMsgid());			
-//			dto.setNotify_receiver(msgList.get(i).getTo_name());
-//			dto.setNotify_sender(msgList.get(i).getFrom_name());
-//			dto.setNotify_time(msgList.get(i).getTime());
-//			dto.setNotify_type("MSG");	
-//			
-//			long currentTimeMillis = System.currentTimeMillis();
-//	        long timestampMillis = msgList.get(i).getTime().getTime();
-//	        long differenceMillis = currentTimeMillis - timestampMillis;
-//
-//	        String minute = calculateTime(msgList.get(i).getTime());	
-//	        dto.setMinute(minute);
-//			notifyList.add(dto);
-//			notifyService.addNotification(dto);
-//			
-//		}
-//		log.info("notifyList===>>"+notifyList);
-//		model.addAttribute("notifyList", notifyList);
-//		model.addAttribute("noticeList", noticeList);
-//		// 휴가 데이터를 가져오는 부분
-//        ArrayList<VacationRequestDto> vacationEvents = vacationService.getVacationEvents(empno);
-//        // Java 객체를 JSON 문자열로 변환
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        String vacationEventsJson = null;
-//        try {
-//            vacationEventsJson = objectMapper.writeValueAsString(vacationEvents);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//
-//        // 모델에 JSON 데이터 추가
-//        model.addAttribute("vacationEventsJson", vacationEventsJson);
-//		
-//		
-//		
-//		
-//		if(empno !=null) {
-//		EmpDto user = service.getUserByEmpno(Integer.parseInt(empno));
-//		model.addAttribute("user", user);
-//		 log.info("name ==>"+user.getName());
-//		
-//		 if(user !=null) {
-//		return "main";
-//		 }
-//		}
-//		 return "redirect:/login";
-//	}
+
 	@RequestMapping("/main")
 	public String main(HttpSession session,Model model) {
 		String empno = (String)session.getAttribute("empno");
@@ -193,9 +118,9 @@ public class MemController {
 		model.addAttribute("ingList",ingList);
 		
 		//		메인_전자결재 알림 전송
-		
-//		메인_알림
-		
+	
+//		메인_알림 읽음처리
+	
 		ArrayList<NotificationDto> notifyList = notifyService.getNotification(empno);
 //		몇분전 설정 세팅
 		for (int i = 0; i < notifyList.size(); i++) {
@@ -234,7 +159,12 @@ public class MemController {
 		}
 		return "redirect:/login";
 	}
-	
+	@RequestMapping("/read")
+	public ResponseEntity<String> read(@RequestParam("notify_id")String notify_id) {
+		notifyService.read(notify_id);
+		return new ResponseEntity<String>("success",HttpStatus.OK);
+		
+	}
 	
 	@RequestMapping("/login")
 	public String login() {

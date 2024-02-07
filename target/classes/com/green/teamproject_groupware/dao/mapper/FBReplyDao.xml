@@ -31,7 +31,12 @@
     #{rwriter}, #{rcontent},
     SYSDATE)
 </insert>
-
+	<select id="getNextRid" resultType="java.lang.Integer">
+	select max(rid) from reply 
+	</select>
+	<select id="getEmpnoByBid" resultType="String">
+	select free_board.empno from free_board join reply on free_board.bid = reply.bid where reply.bid = #{bid} and reply.rid = #{rid}
+	</select>
 	<!-- 댓글 삭제 -->
 	<delete id="rdelete"
 		parameterType="com.green.teamproject_groupware.dto.FBReplyDTO">
@@ -40,5 +45,5 @@
 		and bid =
 		#{bid}
 	</delete>
-
+	
 </mapper>
