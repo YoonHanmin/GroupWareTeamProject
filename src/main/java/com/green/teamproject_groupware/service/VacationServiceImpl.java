@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.green.teamproject_groupware.dao.VacationDao;
+import com.green.teamproject_groupware.dto.SupplyDto;
+import com.green.teamproject_groupware.dto.VacationApprovalDto;
 import com.green.teamproject_groupware.dto.VacationRequestDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -57,11 +59,43 @@ public class VacationServiceImpl implements VacationService {
             throw new RuntimeException("휴가 이벤트 가져오기 중 오류 발생: " + e.getMessage(), e);
         }
     }
-	
+
 	@Override
-	public ArrayList<VacationRequestDto> vacationApproval(String empno) {
+	public ArrayList<VacationApprovalDto> vacationApproval(String empno) {
+		log.info("@# VacationServiceImpl.vacationList() start");
+		VacationDao dao = sqlSession.getMapper(VacationDao.class);
+		
+		ArrayList<VacationApprovalDto> vacationList  = dao.vacationApproval(empno);
+		return vacationList;
+	}
+	
+    @Override
+    public int countRequest() {
     	VacationDao dao = sqlSession.getMapper(VacationDao.class);
-        ArrayList<VacationRequestDto> list2= dao.myVacationRequests(empno);
-		return list2;
+        return dao.countRequest();
+    }
+
+    @Override
+    public int countApproval() {
+    	VacationDao dao = sqlSession.getMapper(VacationDao.class);
+        return dao.countApproval();
+    }
+
+    @Override
+    public int countReject() {
+    	VacationDao dao = sqlSession.getMapper(VacationDao.class);
+        return dao.countReject();
+    }
+
+	@Override
+	public void vacationApprovalUpdate(int empid) {
+		VacationDao dao = sqlSession.getMapper(VacationDao.class);
+		dao.vacationApprovalUpdate(empid);	
+	}
+
+	@Override
+	public void vacationRejectUpdate(int empid) {
+		VacationDao dao = sqlSession.getMapper(VacationDao.class);
+		dao.vacationRejectUpdate(empid);	
 	}
 }

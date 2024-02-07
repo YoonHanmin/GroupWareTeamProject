@@ -27,5 +27,36 @@
         SET STATUS = '취소'
         WHERE EMPID = #{empid}
     </update>
+    
+<!--     휴가 신청현황에 리스트 불러오는 SQL 쿼리 추가 -->
+    <select id="vacationApproval" resultType="com.green.teamproject_groupware.dto.VacationApprovalDto">
+        SELECT * FROM APPROVALTABLE
+        ORDER BY REQUESTDATE DESC
+    </select>
+    
+    <select id="countRequest" resultType="java.lang.Integer">
+	    SELECT COUNT(*) FROM APPROVALTABLE WHERE STATUS = '신청'
+	</select>
+	
+	<select id="countApproval" resultType="java.lang.Integer">
+	    SELECT COUNT(*) FROM APPROVALTABLE WHERE STATUS = '승인'
+	</select>
+	
+	<select id="countReject" resultType="java.lang.Integer">
+	    SELECT COUNT(*) FROM APPROVALTABLE WHERE STATUS = '반려'
+	</select>
 
+    <!-- 승인 관련 SQL 쿼리 추가 -->
+    <update id="vacationApprovalUpdate">
+        UPDATE APPROVALTABLE
+        SET STATUS = '승인'
+        WHERE EMPID = #{empid}
+    </update>
+    
+    <!-- 반려 관련 SQL 쿼리 추가 -->
+    <update id="vacationRejectUpdate">
+        UPDATE APPROVALTABLE
+        SET STATUS = '반려'
+        WHERE EMPID = #{empid}
+    </update>
 </mapper>

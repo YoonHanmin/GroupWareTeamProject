@@ -24,7 +24,18 @@
   flex-direction : row;
   justify-content: space-between; /* 양쪽 끝에 배치하도록 설정 */
   }
+/*   .profile-bar li { */
+/*   text-align : center; */
+/*   list-style: none; /* 기본 리스트 스타일 제거 */ */
+/*   margin : 0; */
+/*   padding : 5px 30px; */
+/*   cursor: pointer; */
+/* } */
 
+/* .profile-tool .profile-bar li:hover { */
+/*   background-color: #555; /* 호버 시 배경색 */ */
+/*   color: white; /* 호버 시 텍스트 색상 */ */
+/* } */
 .popup_bg{
 border : 2px solid black;
 position: absolute;
@@ -83,42 +94,47 @@ cursor: pointer;
 </style>
 
  <script>
- window.onload = function () {
+//  window.onload = function () {
  	
+// 	 const empno = $("input[name='empno']").val();
+//  	console.log(empno);
+//  const eventSource = new EventSource("/connect/"+empno)
+ 
+//  eventSource.addEventListener('NewMsg', function(e){
+//      console.log(e.data);
+//      const receivedConnectData = JSON.parse(e.data);
+//      console.log('connect event data:', receivedConnectData);
+//     if(receivedConnectData.msgDto!=null){
+//  	var notifyTime = receivedConnectData.time;
+//  	var currentTime = new Date().getTime();
+//  	var time = currentTime - notifyTime;
+//  	var minute_before = Math.floor(time/(1000*60));
+ 
+//      var msgFromName = receivedConnectData.msgDto.from_name;
+//      console.log(msgFromName);
+//      var notify_num = ${notifyList.size()};
+//      notify_num = notify_num+1;
+//      console.log(notify_num);
+//      var spanElement = $(' <span id=notify_num class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">')
+//      .text(notify_num+1);
+
+//    $('#notify_num').text(notify_num);
+   
+//    var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
+//    .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
+//    "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
+
+//  $("#new_notify").after(newDiv);
+   
+   
+//     };
+//  });
  
 
- };
+//  };
  
  
     $(document).ready(function () {
-    	
-	 const empno = $("input[name='empno']").val();
- 	console.log(empno);
- const eventSource = new EventSource("/connect/"+empno)
- eventSource.addEventListener('NewMsg', function(e){
-     console.log(e.data);
-     const receivedConnectData = JSON.parse(e.data);
-     console.log('connect event data:', receivedConnectData);
-    if(receivedConnectData.msgDto!=null){
- 	var notifyTime = receivedConnectData.time;
- 	var currentTime = new Date().getTime();
- 	var time = currentTime - notifyTime;
- 	var minute_before = Math.floor(time/(1000*60));
- 
-     var msgFromName = receivedConnectData.msgDto.from_name;
-     console.log(msgFromName);
-
-   
-   var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
-   .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
-   "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
-
- $("#new_notify").after(newDiv);
-   
-   
-    };
- });
- 
         $('nav li').click(function () {
             // 클릭한 li 요소의 하위 ul 요소를 토글하여 보이거나 감춤
             $(this).find('ul').slideToggle();
@@ -236,15 +252,21 @@ cursor: pointer;
         </li>
         <li><a href="#"><i class="bi bi-boxes"></i> 자원요청</a>
             <ul>
-                <li><a href="resource_apply">자원 신청</a></li>
-                <li><a href="resource_approval">자원요청 목록</a></li>
+                <li><a href="resource">자원 신청</a></li>
+                
             </ul>
         </li>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
             <ul>
                <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
-                <li><a href="picture_list">행사앨범</a></li>
+                <li><a href="picture_list">사진게시판</a></li>
+            </ul>
+        </li>
+        <li><a href="#"><i class="bi bi-people-fill"></i> 인사관리자</a>
+            <ul>
+                <li><a href="resource_approval">자원요청 현황</a></li>
+                <li><a href="vacationApproval">휴가승인 현황</a></li>
             </ul>
         </li>
       </ul>
@@ -253,7 +275,7 @@ cursor: pointer;
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
 	<div style="height:40px; font-weight:bold; font-size:20px; background-color:white; ">
-	<span id="new_notify" style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
+	<span style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
 <!-- 	<div id="popup_notify" style="height:40px;width:300px; font-weight:bold; margin-top:10px;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;"> -->
 <!--       <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div> -->
 <!--       <div style="margin-left:5px; margin-top:5px;">한소희 님이 메시지를 보냈습니다.</div><p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;5분전</p> -->

@@ -138,8 +138,8 @@
           empid: emp_id
         }, // emp_id를 서버로 전송합니다.
         success: function (data) {
-          // 성공 시 페이지 새로고침 또는 업데이트 로직 추가
-          location.reload(); // 예시로 페이지를 새로고침하는 코드
+          alert("취소되었습니다.");
+          location.reload(); 
         },
         error: function () {
           alert("휴가 취소 중 오류가 발생했습니다.");
@@ -164,11 +164,11 @@
 </ul>      	
       </div>
       
-      <div class="info">
-      	<span>휴가 신청 내역</span>
-      </div>
-
-    <div class="content">
+	<div class="info">
+		<span>휴가신청내역</span>
+	</div>
+  
+    <div class="content" style="width:2000px;margin-left:150px; height:500px;">
       <table id="vacation-table">
         <thead>
           <tr>
