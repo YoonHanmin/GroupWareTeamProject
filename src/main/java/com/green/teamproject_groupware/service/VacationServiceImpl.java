@@ -61,11 +61,11 @@ public class VacationServiceImpl implements VacationService {
     }
 
 	@Override
-	public ArrayList<VacationApprovalDto> vacationApproval(String empno) {
+	public ArrayList<VacationRequestDto> vacationApproval(String empno) {
 		log.info("@# VacationServiceImpl.vacationList() start");
 		VacationDao dao = sqlSession.getMapper(VacationDao.class);
 		
-		ArrayList<VacationApprovalDto> vacationList  = dao.vacationApproval(empno);
+		ArrayList<VacationRequestDto> vacationList  = dao.vacationApproval(empno);
 		return vacationList;
 	}
 	
@@ -98,4 +98,10 @@ public class VacationServiceImpl implements VacationService {
 		VacationDao dao = sqlSession.getMapper(VacationDao.class);
 		dao.vacationRejectUpdate(empid);	
 	}
+	
+	@Override
+    public int getApprovedVacationDays(String empno) {
+    	VacationDao dao = sqlSession.getMapper(VacationDao.class);
+        return dao.getApprovedVacationDays(empno);
+    }
 }

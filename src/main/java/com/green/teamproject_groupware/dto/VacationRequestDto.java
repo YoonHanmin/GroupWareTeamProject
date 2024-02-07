@@ -24,4 +24,7 @@ public class VacationRequestDto {
     private Date enddate;
     private String status;
     private Timestamp requestdate;
+    private Timestamp updatedate;
+    private boolean read;
+    private int restvacationdays;
 }

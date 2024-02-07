@@ -79,7 +79,6 @@ border-bottom : 1px soild #eee;
 
 }
 #profile-table{
-/* margin-top : 50px; */
 margin-left : 30px;
 padding : 20px;
 }
@@ -180,19 +179,21 @@ cursor: pointer;
 
   .AllList {
     margin: 20px;
+    text-align: center;
   }
 
   table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    
+    text-align: center;
   }
 
   th, td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+/*     text-align: left; */
+    text-align: center;
     
     
     overflow: hidden; /* 텍스트가 너무 길 경우 넘치지 않도록 설정 */
@@ -209,6 +210,29 @@ cursor: pointer;
     background-color: #f5f5f5;
   }
 
+/* 승인 버튼 스타일 */
+.approval-btn {
+  background-color: #3498db; /* 파란색 */
+  color: #ffffff; /* 흰색 텍스트 */
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius : 20px;
+  margin-right: 5px;
+}
+
+
+/* 반려 버튼 스타일 */
+.reject-btn {
+  background-color: #FF6347; /* 빨간색 */
+  color: #ffffff; /* 흰색 텍스트 */
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius : 20px;
+  margin-right: 5px;
+}
+
 
 </style>
 
@@ -221,26 +245,26 @@ cursor: pointer;
   
  <main>
 	<div class="header">
-<!-- 		<ul class="nav nav-underline"> -->
-<!-- 			<li class="item"> -->
-<!-- 				<a class="people" aria-current="page" href="#" style="color:black;"><i class="bi bi-people-fill" style="color:black;"></i>내 사원정보</a> -->
-<!-- 			</li> -->
-<!-- 			<li class="item"> -->
-<!-- 				<a class="company" href="#" style="color:black;"><i class="bi bi-list-ul" style="color:black;"></i>비밀번호 변경</a> -->
-<!-- 			</li> -->
-<!-- 		</ul>      	 -->
-<!-- 	</div> -->
+		<ul class="nav nav-underline">
+			<li class="item">
+				<a class="people" aria-current="page" href="#" style="color:black;"><i class="bi bi-people-fill" style="color:black;"></i>내 사원정보</a>
+			</li>
+			<li class="item">
+				<a class="company" href="#" style="color:black;"><i class="bi bi-list-ul" style="color:black;"></i>비밀번호 변경</a>
+			</li>
+		</ul>      	
+	</div>
 	
 	
 <!-- 	<div class="info"> -->
 		<h2>휴가신청 현황</h2>
 	</div>
-  
+
 	<div class="content">
 		<div class="app-header">
 			<div class="vac-todo">
 				<span style="color:#0D47A1;">미승인 휴가</span>
-				<p style="font-size:70px; font-weight:bold;">${tovacnt}</p>
+				<p style="font-size:70px; font-weight:bold;" border="bold;">${tovacnt}</p>
 			</div>
 			<div class="vac-ing">
 				<span style="color:363945">승인 완료</span>
@@ -258,10 +282,11 @@ cursor: pointer;
         	
 	<div class="AllList">
 <!-- 		<h2>휴가 신청 내역</h2> -->
-		
-			<table>
-        <thead>
-          <tr>
+
+<!-- 신청된 휴가 목록 -->
+<table>
+    <thead>
+           <tr>
             <th>휴가 코드</th>
             <th>사원 번호</th>
             <th>이름</th>
@@ -274,47 +299,148 @@ cursor: pointer;
             <th>신청 일자</th>
             <th>수정 일자</th>
             <th>처리 상태</th>
-          </tr>
-        </thead>
-				<tbody>
-					<c:forEach items="${vacationApproval}" var="vacation">
-		                <tr class="vacation-row" data-empid="${vacation.empid}">
-		                    <td class="emp_id">${vacation.empid}</td>
-		                    <td>${vacation.empno}</td>
-		                    <td>${vacation.name}</td>
-		                    <td>${vacation.position}</td>
-		                    <td>${vacation.vacationtype}</td>
-		                    <td>${vacation.vacationdays}</td>
-		                    <td>${vacation.reason}</td>
-                            <td>${vacation.startdate}</td>
-  			                <td>${vacation.enddate}</td>
-				            <td>${vacation.requestdate}</td>
-				            <td><fmt:formatDate value="${vacation.modifydate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
-		                    <td>
-			                    <c:choose>
-			                        <c:when test="${vacation.status == '신청'}">신청</c:when>
-			                        <c:when test="${vacation.status == '승인'}">승인</c:when>
-			                        <c:when test="${vacation.status == '반려'}">반려</c:when>
-			                        <c:otherwise>취소</c:otherwise>
-			                    </c:choose>
-               				 </td>
-               				 <td>
-               				 	<c:if test="${vacation.status == '신청'}">
-               				 		<button class='approval-btn' data-empid="${vacation.status}">승인</button>
-               				 	</c:if>
-               				 </td>
-               				 <td>
-               				 	<c:if test="${vacation.status == '신청'}">
-               				 		<button class='reject-btn' data-empid="${vacation.status}">반려</button>
-               				 	</c:if>
-               				 </td>
-		                </tr>
-		            </c:forEach>
-				</tbody>
-			</table>
-		</div>
-	</div>
+            <th colspan="2">결재</th>
+          </tr>       
+    </thead>
+    <tbody>
+        <c:forEach items="${vacationApproval}" var="vacation">
+            <c:if test="${vacation.status == '신청'}">
+		   <tr class="vacation-row" data-empid="${vacation.empid}">     
+                    <td class="emp_id">${vacation.empid}</td>
+                    <td>${vacation.empno}</td>
+                    <td>${vacation.name}</td>
+                    <td>${vacation.position}</td>
+                    <td>${vacation.vacationtype}</td>
+                    <td>${vacation.vacationdays}</td>
+                    <td>${vacation.reason}</td>
+                    <td>${vacation.startdate}</td>
+                    <td>${vacation.enddate}</td>
+                    <td>${vacation.requestdate}</td>
+                    <td>${vacation.updatedate}</td>
+                    <td style="color: black; font-size:20px;">${vacation.status}</td>
+  				 <td>
+ 				 	<c:if test="${vacation.status == '신청'}">
+ 				 		<button class='approval-btn' data-empid="${vacation.status}">승인</button>
+ 				 	</c:if>
+ 				 </td>
+ 				 <td>
+ 				 	<c:if test="${vacation.status == '신청'}">
+ 				 		<button class='reject-btn' data-empid="${vacation.status}">반려</button>
+ 				 	</c:if>
+ 				 </td>                     
+                </tr>
+            </c:if>
+        </c:forEach>
+    </tbody>
+</table>
+		
+<!-- 승인된 휴가 목록 -->
+<table>
+    <thead>
+           <tr>
+            <th>휴가 코드</th>
+            <th>사원 번호</th>
+            <th>이름</th>
+            <th>직급</th>
+            <th>휴가 종류</th>
+            <th>휴가 기간(일)</th>
+            <th>휴가 사유</th>
+            <th>휴가 시작일</th>
+            <th>휴가 종료일</th>
+            <th>신청 일자</th>
+            <th>수정 일자</th>
+            <th>처리 상태</th>
+            <th colspan="2">결재</th>
+          </tr>       
+    </thead>
+    <tbody>
+        <c:forEach items="${vacationApproval}" var="vacation">
+            <c:if test="${vacation.status == '승인'}">
+                <tr>
+                    <td>${vacation.empid}</td>
+                    <td>${vacation.empno}</td>
+                    <td>${vacation.name}</td>
+                    <td>${vacation.position}</td>
+                    <td>${vacation.vacationtype}</td>
+                    <td>${vacation.vacationdays}</td>
+                    <td>${vacation.reason}</td>
+                    <td>${vacation.startdate}</td>
+                    <td>${vacation.enddate}</td>
+                    <td>${vacation.requestdate}</td>
+                    <td>${vacation.updatedate}</td>
+                    <td style="color: blue; font-size:20px;">${vacation.status}</td>
+  				 <td>
+ 				 	<c:if test="${vacation.status == '신청'}">
+ 				 		<button class='approval-btn' data-empid="${vacation.status}">승인</button>
+ 				 	</c:if>
+ 				 </td>
+ 				 <td>
+ 				 	<c:if test="${vacation.status == '신청'}">
+ 				 		<button class='reject-btn' data-empid="${vacation.status}">반려</button>
+ 				 	</c:if>
+ 				 </td>                     
+                </tr>
+            </c:if>
+        </c:forEach>
+    </tbody>
+</table>
 
+
+
+<!-- 반려된 휴가 목록 -->
+<table>
+    <thead>
+           <tr>
+            <th>휴가 코드</th>
+            <th>사원 번호</th>
+            <th>이름</th>
+            <th>직급</th>
+            <th>휴가 종류</th>
+            <th>휴가 기간(일)</th>
+            <th>휴가 사유</th>
+            <th>휴가 시작일</th>
+            <th>휴가 종료일</th>
+            <th>신청 일자</th>
+            <th>수정 일자</th>
+            <th>처리 상태</th>
+            <th colspan="2">결재</th>
+          </tr>       
+    </thead>
+    <tbody>
+        <c:forEach items="${vacationApproval}" var="vacation">
+            <c:if test="${vacation.status == '반려'}">
+                <tr>
+                    <td>${vacation.empid}</td>
+                    <td>${vacation.empno}</td>
+                    <td>${vacation.name}</td>
+                    <td>${vacation.position}</td>
+                    <td>${vacation.vacationtype}</td>
+                    <td>${vacation.vacationdays}</td>
+                    <td>${vacation.reason}</td>
+                    <td>${vacation.startdate}</td>
+                    <td>${vacation.enddate}</td>
+                    <td>${vacation.requestdate}</td>
+                    <td>${vacation.updatedate}</td>
+                    <td style="color: red; font-size:20px;">${vacation.status}</td>
+   				 <td>
+ 				 	<c:if test="${vacation.status == '신청'}">
+ 				 		<button class='approval-btn' data-empid="${vacation.status}">승인</button>
+ 				 	</c:if>
+ 				 </td>
+ 				 <td>
+ 				 	<c:if test="${vacation.status == '신청'}">
+ 				 		<button class='reject-btn' data-empid="${vacation.status}">반려</button>
+ 				 	</c:if>
+ 				 </td>                    
+                </tr>
+            </c:if>
+        </c:forEach>
+    </tbody>
+</table>
+
+
+	</div>
+</div>
 </main>
 </body>
 </html>

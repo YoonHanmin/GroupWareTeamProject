@@ -18,10 +18,11 @@ public interface VacationDao {
 	public ArrayList<VacationRequestDto> myVacationRequests(String empno);
 	public void cancelVacation(int empid);
 	public ArrayList<VacationRequestDto> getVacationEvents(String empno);
-	public ArrayList<VacationApprovalDto> vacationApproval(String empno);
+	public ArrayList<VacationRequestDto> vacationApproval(String empno);
     public int countRequest();
     public int countApproval();
     public int countReject();
 	public void vacationApprovalUpdate(int empid);
 	public void vacationRejectUpdate(int empid);
+	public int getApprovedVacationDays(String empno);
 }

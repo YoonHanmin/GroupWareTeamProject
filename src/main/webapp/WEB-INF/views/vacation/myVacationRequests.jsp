@@ -10,13 +10,13 @@
 <script type="text/javascript" src="resources/js/jquery.js"></script>
 <title>Insert title here</title>
 <style>
-.header{
-	height : 70px;
-	border-bottom: 1px solid #eee;
-	background-color : 363945;
-	align-items: center;
-	display : flex;
-	padding: 30px;
+ .header{ 
+ 	height : 70px; 
+ 	border-bottom: 1px solid #eee; 
+ 	background-color : 363945; 
+ 	align-items: center; 
+ 	display : flex; 
+ 	padding: 30px; 
 }
 
 .info {
@@ -129,22 +129,25 @@
     $("#vacation-table").on("click", "#cancel", function () {
       var emp_id = $(this).closest('tr').find('td[class^="empid_"]').text();
      
-		
       // 여기서 emp_id를 컨트롤러로 전송하는 로직 추가
-      $.ajax({
-        type: "POST",
-        url: "cancelVacation",
-        data: {
-          empid: emp_id
-        }, // emp_id를 서버로 전송합니다.
-        success: function (data) {
-          alert("취소되었습니다.");
-          location.reload(); 
-        },
-        error: function () {
-          alert("휴가 취소 중 오류가 발생했습니다.");
-        }
-      });
+      if(status === '신청') { // 상태가 '신청'일 때만 취소 가능	
+	      $.ajax({
+	        type: "POST",
+	        url: "cancelVacation",
+	        data: {
+	          empid: emp_id
+	        }, // emp_id를 서버로 전송합니다.
+	        success: function (data) {
+	          alert("취소되었습니다.");
+	          location.reload(); 
+	        },
+	        error: function () {
+	          alert("휴가 취소 중 오류가 발생했습니다.");
+	        }
+	      });
+      }else{
+    	  alert("처리가 완료되어 취소할 수 없습니다.");
+      }
     });
   });
 </script>
@@ -153,6 +156,8 @@
   <jsp:include page="../nav2.jsp" />
 
   <main>
+
+      </div>
  	<div class="header">
       	<ul class="nav nav-underline">
   <li class="item">
