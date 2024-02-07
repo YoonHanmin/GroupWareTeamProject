@@ -116,7 +116,7 @@
 							type="hidden" name="rid" value="${reply.rid}"> <input
 							type="submit" value="삭제" class="btn btn-danger btn-sm">
 					</form>
-					<button onclick="showRprForm('rprForm${status.index}')"
+					<button onclick="showRrForm('rrForm${status.index}')"
 						class="btn btn-primary btn-sm">대댓글 작성하기</button>
 				</div>
 			</div>

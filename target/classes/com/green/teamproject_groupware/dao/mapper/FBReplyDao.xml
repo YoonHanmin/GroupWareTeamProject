@@ -25,14 +25,12 @@
     </select>
 
 	<!-- 댓글 작성 -->
-	<insert id="rwrite"
-		parameterType="com.green.teamproject_groupware.dto.FBReplyDTO">
-		insert into reply(rid, bid, rwriter,
-		rcontent, regDate)
-		values(reply_seq.NEXTVAL, #{bid},
-		#{rwriter}, #{rcontent},
-		SYSDATE)
-	</insert>
+	<insert id="rwrite" parameterType="com.green.teamproject_groupware.dto.FBReplyDTO">
+    insert into reply(rid, bid, rwriter, rcontent, regDate)
+    values(reply_seq.NEXTVAL, #{bid},
+    #{rwriter}, #{rcontent},
+    SYSDATE)
+</insert>
 
 	<!-- 댓글 삭제 -->
 	<delete id="rdelete"
