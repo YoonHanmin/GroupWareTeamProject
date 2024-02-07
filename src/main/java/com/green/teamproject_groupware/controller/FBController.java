@@ -128,9 +128,13 @@ public class FBController {
 		
 		fbDto.setBname(dto.getName());
 		
+		log.info("bid~~~" + param.get("bid"));
+		
 		FBDto boarddto = service.contentView(param);
 		model.addAttribute("content_view", boarddto);
 		model.addAttribute("pageMaker", param);
+		
+		log.info("bid~~~" + param.get("bid"));
 		
 		int bid = Integer.parseInt(param.get("bid").trim());
 		model.addAttribute("rlist", replyService.rlist(bid));
@@ -212,8 +216,8 @@ public class FBController {
 		replyService.rwrite(dto);
 
 		// 댓글 목록 페이지로 리다이렉트
-		return "redirect:content_view?pageNum=" + cri.getPageNum() + "&pamount=" + cri.getAmount()
-				+ "&pid=" + dto.getBid();
+		return "redirect:content_view?pageNum=" + cri.getPageNum() + "&amount=" + cri.getAmount()
+				+ "&bid=" + dto.getBid();
 	}
 
 
@@ -251,7 +255,7 @@ public class FBController {
 
         // 대댓글 목록 페이지로 리다이렉트
         return "redirect:content_view?pageNum=" + cri.getPageNum() + "&amount=" + cri.getAmount()
-                + "&pid=" + dto.getBid();
+                + "&bid=" + dto.getBid();
     }
 
     // 대댓글 삭제
@@ -263,7 +267,7 @@ public class FBController {
         rttr.addAttribute("amount", cri.getAmount());
 
         return "redirect:content_view?pageNum=" + cri.getPageNum() + "&amount=" + cri.getAmount()
-                + "&pid=" + dto.getBid();
+                + "&bid=" + dto.getBid();
     }
 }
 	
