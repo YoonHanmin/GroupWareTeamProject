@@ -117,20 +117,14 @@ public class MemController {
 		ArrayList<ApprovalDto> ingList = appservice.getMyDoc(empno);
 		model.addAttribute("ingList",ingList);
 		
-		//		메인_전자결재 알림 전송
-	
 //		메인_알림 읽음처리
-	
 		ArrayList<NotificationDto> notifyList = notifyService.getNotification(empno);
 //		몇분전 설정 세팅
 		for (int i = 0; i < notifyList.size(); i++) {
 			String minute = calculateTime(notifyList.get(i).getNotify_time());
 			notifyList.get(i).setMinute(minute);
 		}
-	
 		model.addAttribute("notifyList", notifyList);
-		
-		
 		// 휴가 데이터를 가져오는 부분
 		ArrayList<VacationRequestDto> vacationEvents = vacationService.getVacationEvents(empno);
 		// Java 객체를 JSON 문자열로 변환
@@ -144,10 +138,7 @@ public class MemController {
 		
 		// 모델에 JSON 데이터 추가
 		model.addAttribute("vacationEventsJson", vacationEventsJson);
-		
-		
-		
-		
+
 		if(empno !=null) {
 			EmpDto user = service.getUserByEmpno(Integer.parseInt(empno));
 			model.addAttribute("user", user);

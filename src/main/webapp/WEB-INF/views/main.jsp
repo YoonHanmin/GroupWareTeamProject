@@ -28,8 +28,25 @@
 		for (var i = 0; i < vacationEventsArray.length; i++) {
 			var eventData = vacationEventsArray[i];
 			console.log('title:', eventData.vacationtype); // 확인을 위한 로그 추가
+			var eventColor,eventTextColor;
+		    if (eventData.vacationtype === '휴가') {
+		        eventColor = "#00ced1";
+		        eventTextColor = "white";
+		    } else if (eventData.vacationtype === 'A사 출장') {
+		        eventColor = "#800000";
+		        eventTextColor = "white";
+		    } else if (eventData.vacationtype === '정기 재무보고') {
+		        eventColor = "#ffd700";
+		        eventTextColor = "black";
+		    } else if(eventData.vacationtype === '연차'){
+		    	 eventColor = "#4682b4";
+			        eventTextColor = "white";
+		    }
+		    
 			eventsArray.push({
 				title : eventData.vacationtype,
+				 color: eventColor,
+			     textColor: eventTextColor,
 				start : eventData.startdate,
 				end : eventData.enddate+1
 			});
@@ -553,15 +570,23 @@ font-weight : bold;
         <li><a href="#"><i class="bi bi-file-earmark-check"></i>  자원요청</a> 
         <ul>
         	<li><a href="resource_apply"><i class="bi bi-boxes"></i> 신청하기</a>
-       	 	<li><a href="resource_approval"><i class="bi bi-boxes"></i> 자원요청 목록</a>
+       	 
         </li>
         </ul>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
             <ul>
                 <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
-                <li><a href="picture_list">사진게시판</a></li>
+                <li><a href="picture_list">행사앨범</a></li>
             </ul>
+            <c:if test="${user.getDname() == '인사팀'}">
+    <li><a href="#"><i class="bi bi-people-fill"></i> 인사관리자</a>
+        <ul>
+            <li><a href="resource_approval">자원요청 현황</a></li>
+            <li><a href="vacationApproval">휴가승인 현황</a></li>
+        </ul>
+    </li>
+</c:if>
         </li>
       </ul>
     </nav>

@@ -260,7 +260,7 @@ cursor: pointer;
             <ul>
                <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
-                <li><a href="picture_list">사진게시판</a></li>
+                <li><a href="picture_list">행사앨범</a></li>
             </ul>
         </li>
 <c:if test="${dto.getDname() == '인사팀'}">

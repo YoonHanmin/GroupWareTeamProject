@@ -2,17 +2,21 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!DOCTYPE html>
+<html>
       <script src="resources/js/jquery.js"></script>
       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
       <script src="https://kit.fontawesome.com/c6078bb273.js" crossorigin="anonymous"></script>
-<!DOCTYPE html>
-<html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <style>
-
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Noto+Sans+KR&display=swap');
+    body {
+       font-family: 'Noto Sans KR', sans-serif;
+  margin: 0; 
+  }
 .header{
 height : 130px;
 border-bottom: 1px solid #eee;

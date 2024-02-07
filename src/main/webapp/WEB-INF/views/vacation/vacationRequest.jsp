@@ -32,9 +32,27 @@
 
 		for (var i = 0; i < vacationEventsArray.length; i++) {
 			var eventData = vacationEventsArray[i];
-			console.log('title:', eventData.vacationtype); // 확인을 위한 로그 추가
+			console.log('title:', eventData.vacationtype); 
+			var eventColor,eventTextColor;
+		    if (eventData.vacationtype === '휴가') {
+		        eventColor = "#00ced1";
+		        eventTextColor = "white";
+		    } else if (eventData.vacationtype === 'A사 출장') {
+		        eventColor = "#800000";
+		        eventTextColor = "white";
+		    } else if (eventData.vacationtype === '정기 재무보고') {
+		        eventColor = "#ffd700";
+		        eventTextColor = "black";
+		    } else if(eventData.vacationtype === '연차'){
+		    	 eventColor = "#4682b4";
+			        eventTextColor = "white";
+		    }
+			
+			
 			eventsArray.push({
 				title : eventData.vacationtype,
+				 color: eventColor,
+			     textColor: eventTextColor,
 				start : eventData.startdate,
 				end : eventData.enddate+1
 			});

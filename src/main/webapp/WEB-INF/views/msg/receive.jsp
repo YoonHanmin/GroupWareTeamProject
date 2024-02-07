@@ -684,8 +684,8 @@ cursor: pointer;
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="receive" style="color: black"
-                    >메신저</a
+                  <a class="dropdown-item" href="send" style="color: black"
+                    >보낸 메시지함</a
                   >
                 </li>
                 <li><hr class="dropdown-divider" /></li>
@@ -716,9 +716,6 @@ cursor: pointer;
         </div>
       </div>
     </nav>
-
-
-
       </div>
       
       <div class="info">
