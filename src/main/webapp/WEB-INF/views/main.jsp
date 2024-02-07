@@ -506,14 +506,12 @@ cursor: pointer;
                 <li><a href="picture_list">사진게시판</a></li>
             </ul>
         </li>
-<c:if test="${user.getDname() == '인사팀'}">
-    <li><a href="#"><i class="bi bi-people-fill"></i> 인사관리자</a>
-        <ul>
-            <li><a href="resource_approval">자원요청 현황</a></li>
-            <li><a href="vacationApproval">휴가승인 현황</a></li>
-        </ul>
-    </li>
-</c:if>
+        <li><a href="#"><i class="bi bi-people-fill"></i> 인사관리자</a>
+            <ul>
+                <li><a href="resource_approval">자원요청 현황</a></li>
+                <li><a href="vacationApproval">휴가승인 현황</a></li>
+            </ul>
+        </li>
       </ul>
     </nav>
     
@@ -653,11 +651,11 @@ cursor: pointer;
         	<img src="resources/images/notice.png" style="width:40px; height:40px; display:inline;">
         	<a href="/notice_list" style="text-decoration: none; color:black; font-weight:bold">&nbsp;&nbsp;공지사항</a></span>
         	</div>
-        	<c:forEach items="${noticeList}" var="noticeList">
-        		<div class="notice_board_title" style="border-bottom:1px solid #eee; margin-bottom:5px;">
-        			<a href="notice_content_view?nid=${noticeList.getNid()}">${noticeList.getNtitle()}</a>
-        		</div>
-        	</c:forEach>
+        	<c:forEach items="${noticeList}" var="noticeList" begin="0" end="6">
+    <div class="notice_board_title" style="border-bottom:1px solid #eee; margin-bottom:5px;">
+        <a href="notice_content_view?npageNum=1&namount=10&nid=${noticeList.getNid()}">${noticeList.getNtitle()}</a>
+    </div>
+</c:forEach>
         	
         </div>
         
