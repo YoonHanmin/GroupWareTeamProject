@@ -212,6 +212,7 @@ public class VacationController {
         return "vacation/vacationApproval";
     }
     
+    // 휴가 승인 처리
     @PostMapping("/vacationApprovalUpdate")
     @ResponseBody
     public String vacationApprovalUpdate(@RequestBody Map<String, String> request) {
@@ -226,7 +227,18 @@ public class VacationController {
             return "approvalUpdate 예외 발생";
         }
     }
-
+    
+ // 승인된 휴가 일수 가져오기
+    @GetMapping("/getApprovedVacationDays")
+    @ResponseBody
+    public int getApprovedVacationDays(HttpSession session) {
+        String empno = (String) session.getAttribute("empno");
+        // 여기에 승인된 휴가 일수를 가져오는 서비스 메소드를 호출합니다.
+        int approvedVacationDays = service.getApprovedVacationDays(empno);
+        return approvedVacationDays;
+    }
+    
+    // 휴가 반려 처리
     @PostMapping("/vacationRejectUpdate")
     @ResponseBody
     public String vacationRejectUpdate(@RequestBody Map<String, String> request) {

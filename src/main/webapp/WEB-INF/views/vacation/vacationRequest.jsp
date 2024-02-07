@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript"></script>
+<script type="text/javascript" src="resources/js/jquery.js"></script>
 <!-- FullCalendar 라이브러리 및 jQuery 추가 -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.css" />
@@ -44,13 +44,12 @@
 			headerToolbar : {
 				left : 'prev,next today',
 				center : 'title',
-				right : 'dayGridMonth,timeGridWeek,timeGridDay'
 			},
 			initialView : 'dayGridMonth',
 			
 			events : eventsArray,
 	        eventContent: function (info) {
-	            var title = info.event.title.replace('12a', ''); // "12a" 삭제
+	            var title = info.event.title.replace('12a', ''); // "12a" 문자 출력 삭제
 	            var titleElement = document.createElement('div');
 	            titleElement.classList.add('fc-title');
 	            titleElement.textContent = title;
@@ -64,13 +63,13 @@
 <title>Insert title here</title>
 </head>
 <style>
-.header {
-	height: 70px;
-	border-bottom: 1px solid #eee;
-	background-color: 363945;
-	align-items: center;
-	display: flex;
-	padding: 30px;
+ .header{ 
+ 	height : 70px; 
+ 	border-bottom: 1px solid #eee; 
+ 	background-color : 363945; 
+ 	align-items: center; 
+ 	display : flex; 
+ 	padding: 30px; 
 }
 
 .info {
@@ -84,11 +83,11 @@
 }
 
 .item a {
-	font-weight: bold;
-	font-size: 25px;
-	margin-top: 20px;
-	text-decoration: none; /* 밑줄 제거 */
-	color: black;
+	font-weight : bold;
+	font-size : 25px;
+	margin-top: 20px; 
+	 text-decoration: none; /* 밑줄 제거 */
+	color : black;
 }
 
 .item ul li a {
@@ -212,7 +211,15 @@ input[type="submit"]:hover {
 }
 
 
+/* 연차 정보 가로로 배열 */
+.content p {
+    display: inline-block;
+    margin-right: 20px; /* 각 요소 사이의 간격 조정 */
+    font-weight: bold;
+}
+
 </style>
+
 <script>
 	$(document).ready(
 			function() {
@@ -226,8 +233,79 @@ input[type="submit"]:hover {
 </script>
 
 <script>
-	$(document)
-			.ready(
+$(document).ready(function() {
+    // 직급에 따른 연차 일수 계산
+    function calculateVacationDays(position) {
+        var totalVacationDays = 0;
+        switch (position) {
+            case "사원":
+            	totalVacationDays = 15;
+                break;
+            case "주임":
+            	totalVacationDays = 16;
+                break;
+            case "대리":
+            	totalVacationDays = 17;
+                break;
+            case "과장":
+            	totalVacationDays = 19;
+                break;
+            case "차장":
+            	totalVacationDays = 21;
+                break;
+            case "부장":
+            	totalVacationDays = 23;
+                break;
+            case "사장":
+            	totalVacationDays = 25;
+                break;
+            default:
+            	totalVacationDays = 0;
+        }
+        return totalVacationDays;
+    }
+
+    // 남은 휴가일수 계산 함수
+    function calculateRestVacationDays(position, usedVacationDays) {
+        var totalVacationDays = calculateVacationDays(position); // 총 연차 갯수
+        var restVacationDays = totalVacationDays - usedVacationDays; // 남은 휴가일수 계산
+        return restVacationDays;
+    }
+
+    // 내부 클래스 함수를 호출하여 연차 일수 및 남은 휴가일수를 받아옴
+    var position = "${dto.position}";
+    var totalVacationDays = calculateVacationDays(position); // 총 연차 갯수
+    console.log("총 연차 갯수: " + totalVacationDays);
+
+    // Ajax를 사용하여 승인된 휴가 일수 가져오기
+    $.ajax({
+        url: "getApprovedVacationDays", // 승인된 휴가 일수를 반환하는 서비스 엔드포인트
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            var approvedVacationDays = parseInt(data); // 승인된 휴가 일수를 정수로 변환하여 변수에 저장
+            console.log("승인된 연차 일수: " + approvedVacationDays);
+
+            var restVacationDays = calculateRestVacationDays(position, approvedVacationDays); // 남은 휴가일수 계산
+            console.log("남은 휴가일수: " + restVacationDays);
+            
+            // HTML에 결과 출력
+            $("#totalVacationDays").text("총 연차 개수: " + calculateVacationDays(position));
+            $("#usedVacationDays").text("사용된 연차 개수: " + approvedVacationDays);
+            $("#remainingVacationDays").text("남은 연차 개수: " + restVacationDays);
+
+            // 남은 휴가일수 출력
+            $("input[name='totalVacationDays']").val(restVacationDays);
+        },
+        error: function(xhr, status, error) {
+            console.error("Failed to get approved vacation days: " + error);
+        }
+    });
+});
+</script>
+
+<script>
+	$(document).ready(
 					function() {
 						// 시작일 선택 시
 						$("input[name='startdate']").blur(
@@ -323,6 +401,14 @@ input[type="submit"]:hover {
 
 											// 유효성 검사 함수
 											function vacationCheck() {
+											    var restVacationDays = parseInt($("#remainingVacationDays").text().split(":")[1].trim());
+											    var requestedVacationDays = parseInt($("input[name='vacationdays']").val());
+											    
+											    if (requestedVacationDays > restVacationDays) {
+											        alert("남은 연차 개수를 초과하여 휴가를 신청할 수 없습니다.");
+											        return false; // 유효성 검사 실패
+											    }
+											    
 												if (new Date(startdate) < new Date()) {
 													alert("휴가 시작일은 오늘 날짜보다 이후여야 합니다.");
 													return false; // 유효성 검사 실패
@@ -404,17 +490,16 @@ input[type="submit"]:hover {
 	<main>
 		<div class="header">
 			<ul class="nav nav-underline">
-				<li class="item"><a class="people" aria-current="page" href="#"
-					style="color: #FFFAFA;"><i class="bi bi-calendar-week"
-						style="color: #FFFAFA;"></i>휴가 관리</a></li>
-				<li class="item"><a class="company" href="myVacationRequests"
-					style="color: #FFFAFA;"><i class="bi bi-airplane-engines"
-						style="color: #FFFAFA;"></i>휴가 신청 내역</a></li>
+				<li class="item"><a class="people" aria-current="page" href="#"	style="color: #FFFAFA;"><i class="bi bi-calendar-week" style="color: #FFFAFA;"></i>휴가 관리</a></li>
+				<li class="item"><a class="company" href="myVacationRequests"	style="color: #FFFAFA;"><i class="bi bi-airplane-engines" style="color: #FFFAFA;"></i>휴가 신청 내역</a></li>
 			</ul>
 		</div>
 
 		<div class="content">
-
+        <p id="totalVacationDays"></p>
+        <p id="usedVacationDays"></p>
+        <p id="remainingVacationDays"></p>
+		<div>
 			<form id="vacationRequest" action="vacationRequest" method="post">
 				<table width="800px">
 					<thead>
@@ -458,9 +543,7 @@ input[type="submit"]:hover {
 		<div class="calendar-container">
 			<div id="calendar" style="width:1200px;margin-left:150px; height:500px;"></div>
 		</div>
-
-
-
+	</div>
 	</main>
 
 </body>

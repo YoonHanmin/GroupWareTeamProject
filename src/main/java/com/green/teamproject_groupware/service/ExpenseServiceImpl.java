@@ -28,11 +28,15 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 
 	@Override
-	public ArrayList<ExpenseDto> expense_list(String empno) {
+	public ArrayList<ExpenseDto> expense_list(String empno, String insaYn) {
 		log.info("@# ExpenseServiceImpl.expense_list() start");
 		ExpenseDao dao = sqlSession.getMapper(ExpenseDao.class);
-		ArrayList<ExpenseDto> expenseList = dao.expense_list(empno);
 		
+		HashMap<String, String> param = new HashMap<String, String>();
+		param.put("empno", empno);
+		param.put("insaYn", insaYn);
+		
+		ArrayList<ExpenseDto> expenseList = dao.expense_list(param);
 		
 		log.info("@# ExpenseServiceImpl.expense_list() end");
 		return expenseList ;

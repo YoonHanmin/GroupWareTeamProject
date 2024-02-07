@@ -26,4 +26,5 @@ public interface VacationDao {
 	public void vacationRejectUpdate(int empid);
 	public ArrayList<VacationRequestDto> getApproval_Vacation(String empno);
 	public VacationRequestDto getVacationByID(int empid);
+	public int getApprovedVacationDays(String empno);
 }

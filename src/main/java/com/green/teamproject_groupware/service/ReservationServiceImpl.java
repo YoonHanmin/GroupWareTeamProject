@@ -22,12 +22,16 @@ public class ReservationServiceImpl implements ReservationService{
 	private SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<ReservationDto> reservation_list(String empno) {
+	public ArrayList<ReservationDto> reservation_list(String empno, String insaYn) {
 		log.info("@# ReservationServiceImpl.reservation_list() start");
 		
 		ReservationDao dao = sqlSession.getMapper(ReservationDao.class);
 		
-		ArrayList<ReservationDto> reservationList  = dao.reservation_list(empno);
+		HashMap<String, String> param = new HashMap<String, String>();
+		param.put("empno", empno);
+		param.put("insaYn", insaYn);
+		
+		ArrayList<ReservationDto> reservationList  = dao.reservation_list(param);
 		
 		log.info("@# ReservationServiceImpl.reservation_list() end");
 		return reservationList ;

@@ -11,14 +11,16 @@
 height : 70px;
 border-bottom: 1px solid #eee;
 background-color : 363945;
-
-
-}
-
-.info{
-height : 100px;
+display : flex;
 
 }
+
+.info {
+  height: 100px;
+  display: flex;
+  align-items: flex-start;
+}
+
 
 
 .item a {
@@ -107,7 +109,8 @@ border-bottom : 1px solid #eee;
 margin-top : 10px;
 margin-left : 400px;
 display : flex;
-flex-direction: row;
+align-items: flex-start;
+justify-content: flex-start;
 
 }
 .doc-todo{
@@ -119,8 +122,8 @@ text-align : center;
 border-radius : 10%;
 width : 250px;
 height : 200px;
-border : 1px solid #eee;
-
+border : 1px solid #000;
+margin-right: 10px;
 }
 .doc-ing{
 font-weight : bold;
@@ -131,8 +134,9 @@ text-align : center;
 border-radius : 10%;
 width : 250px;
 height : 200px;
-border : 1px solid #eee;
+border : 1px solid #000;
 cursor : pointer;
+margin-right: 10px;
 }
 .doc-end{
 font-weight : bold;
@@ -143,8 +147,9 @@ text-align : center;
 border-radius : 10%;
 width : 250px;
 height : 200px;
-border : 1px solid #eee;
+border : 1px solid #000;
 cursor : pointer;
+margin-right: 10px;
 }
 .app-list span{
 font-weight : bold;
@@ -182,17 +187,31 @@ cursor: pointer;
     margin: 20px;
   }
 
-  table {
+   table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
-    
+    border-radius: 20px;
+    text-align: center;
   }
 
   th, td {
-    border: 1px solid #ddd;
+    border: 10px solid #b3ecff;;
     padding: 8px;
-    text-align: left;
+    text-align: center;
+    border-bottom: 1px solid #b3ecff; /* 구분선 추가 */
+    border-radius: 10px;
+  }
+
+  th {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  tbody tr:hover {
+    background-color: #f5f5f5;
+  }
     
     
     overflow: hidden; /* 텍스트가 너무 길 경우 넘치지 않도록 설정 */
@@ -210,6 +229,109 @@ cursor: pointer;
   }
 
 
+
+/* 토글 아이콘 스타일 */
+.toggle-icon {
+  display: inline-block;
+  margin-left: 5px; /* 아이콘과 텍스트 간격 조절 */
+  font-size: 30px; /* 아이콘 크기 조절 */
+  transition: transform 0.3s ease; /* 토글 애니메이션 효과 */
+}
+
+/* 토글 아이콘이 ▲ 일 때의 스타일 */
+.AllList h2 .toggle-icon[data-icon="up"]::before {
+  content: '\25B2'; /* ▲ 유니코드 */
+}
+
+/* 토글 아이콘이 ▼ 일 때의 스타일 */
+.AllList h2 .toggle-icon[data-icon="down"]::before {
+  content: '\25BC'; /* ▼ 유니코드 */
+}
+
+/* 클릭 시 토글 아이콘의 회전 효과 */
+.AllList h2 .toggle-icon[data-rotate="true"] {
+  transform: rotate(180deg);
+}
+
+/* 승인 버튼 스타일 */
+.approval-btn {
+  background-color: #3498db; /* 파란색 */
+  color: #ffffff; /* 흰색 텍스트 */
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+    border-radius : 20px;
+}
+
+
+/* 반려 버튼 스타일 */
+.reject-btn {
+  background-color: #FF6347; /* 빨간색 */
+  color: #ffffff; /* 흰색 텍스트 */
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+    border-radius : 20px;
+}
+
+/* 승인 및 반려 버튼 간격 조절 */
+.approval-btn,
+.reject-btn {
+  margin-right: 5px; /* 원하는 간격으로 조절 */
+}
+
+
+ .supply-status-0 {
+        color: blue; /* 처리 중 상태의 폰트 색상을 파란색으로 지정 */
+    }
+
+    .supply-status-1 {
+        color: green; /* 승인 상태의 폰트 색상을 초록색으로 지정 */
+    }
+
+    .supply-status-2 {
+        color: red; /* 거부 상태의 폰트 색상을 빨간색으로 지정 */
+    }
+    
+ .vehicle-status-0 {
+        color: blue; /* 처리 중 상태의 폰트 색상을 파란색으로 지정 */
+    }
+
+    .vehicle-status-1 {
+        color: green; /* 승인 상태의 폰트 색상을 초록색으로 지정 */
+    }
+
+    .vehicle-status-2 {
+        color: red; /* 거부 상태의 폰트 색상을 빨간색으로 지정 */
+    }
+    
+    
+ .expense-status-0 {
+        color: blue; /* 처리 중 상태의 폰트 색상을 파란색으로 지정 */
+    }
+
+    .expense-status-1 {
+        color: green; /* 승인 상태의 폰트 색상을 초록색으로 지정 */
+    }
+
+    .expense-status-2 {
+        color: red; /* 거부 상태의 폰트 색상을 빨간색으로 지정 */
+    }
+    
+    
+ .reservation-status-0 {
+        color: blue; /* 처리 중 상태의 폰트 색상을 파란색으로 지정 */
+    }
+
+    .reservation-status-1 {
+        color: green; /* 승인 상태의 폰트 색상을 초록색으로 지정 */
+    }
+
+    .reservation-status-2 {
+        color: red; /* 거부 상태의 폰트 색상을 빨간색으로 지정 */
+    }
+
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -220,77 +342,18 @@ cursor: pointer;
  <jsp:include page="../nav2.jsp"/>
   
  <main>
-	<nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%; height:70px;">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="main" style="color: white;margin-left:50px;">메인</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-           
-            <li class="nav-item" style="margin-left:50px;">
-              <a class="nav-link" href="myinfo" style="color: white">마이페이지</a>
-            </li>
-            <li class="nav-item dropdown" style="margin-left:50px;">
-              <a
-                class="nav-link dropdown-toggle"
-                style="color: white"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                font-size="1.25rem"
-              >
-                내 업무
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item" href="approval" style="color: black"
-                    >전자결재</a
-                  >
-                </li>
-                <li>
-                  <a class="dropdown-item" href="receive" style="color: black"
-                    >메신저</a
-                  >
-                </li>
-                <li><hr class="dropdown-divider" /></li>
-                <li>
-                  <a class="dropdown-item" href="vacationRequest" style="color: black"
-                    >자원요청</a
-                  >
-                </li>
-              </ul>
-            </li>
-           
-          </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="사원명"
-              aria-label="Search"
-            />
-            <button
-              class="btn btn-outline-success"
-              type="submit"
-              style="color: white"
-            >
-              Search
-            </button>
-          </form>
-        </div>
-      </div>
-    </nav>
+
+
+	<div class="header">
+		<ul class="nav nav-underline">
+			<li class="item">
+				<a class="people" aria-current="page" href="#" style="color:black;"><i class="bi bi-people-fill" style="color:black;"></i>내 사원정보</a>
+			</li>
+			<li class="item">
+				<a class="company" href="#" style="color:black;"><i class="bi bi-list-ul" style="color:black;"></i>비밀번호 변경</a>
+			</li>
+		</ul>      	
+	</div>
 	
 	
 	<div class="info">
@@ -319,53 +382,114 @@ cursor: pointer;
         	
 	<div class="AllList">
 		
-		<h2>비품 신청 목록</h2>
-			<table>
-				<thead>
-					<tr>
-						<th width="100px">신청 번호</th>
-						<th width="100px">신청자</th>
-						<th width="200px">신청 물품</th>
-						<th width="200px">신청 수량</th>
-						<th width="300px">신청내용</th>
-						<th width="250px">신청일</th>	
-						<th width="250px">수정일</th>	
-						<th width="100px">진행현황</th>	
-						<th width="100px" colspan="2">결재 처리</th>	
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${supplyList}" var="supply">
-		                <tr class="supply-row" data-supply-id="${supply.supply_id}">
-		                    <td class="supply_id">${supply.supply_id}</td>
-		                    <td>${supply.empno}</td>
-		                    <td>${supply.item}</td>
-		                    <td>${supply.quantity}</td>
-		                    <td>${supply.sdescription}</td>
-		                    <td>${supply.sdate}</td>
-		                    <td>${supply.modifyDtm}</td>
-		                    <td>
-			                    <c:choose>
-			                        <c:when test="${supply.supply_status == 0}">처리 중</c:when>
-			                        <c:when test="${supply.supply_status == 1}">승인</c:when>
-			                        <c:when test="${supply.supply_status == 2}">거부</c:when>
-			                        <c:otherwise>오류</c:otherwise>
-			                    </c:choose>
-               				 </td>
-               				 <td>
-               				 	<c:if test="${supply.supply_status == 0}">
-               				 		<button class='approval-btn' data-supply-id="${supply.supply_id}">승인</button>
-               				 	</c:if>
-               				 </td>
-               				 <td>
-               				 	<c:if test="${supply.supply_status == 0}">
-               				 		<button class='reject-btn' data-supply-id="${supply.supply_id}">반려</button>
-               				 	</c:if>
-               				 </td>
-		                </tr>
-		            </c:forEach>
-				</tbody>
-			</table>
+	<h2>비품 신청 목록</h2>
+
+<!-- <label for="statusFilter">상태 필터:</label> -->
+<!-- <select id="statusFilter" onchange="console.log('onchange 이벤트 발생'); filterSupplyList()"> -->
+<!--     <option value="all">전체</option> -->
+<!--     <option value="processing">처리 중</option> -->
+<!--     <option value="approved">승인</option> -->
+<!--     <option value="rejected">거부</option> -->
+<!-- </select> -->
+
+<table>
+    <thead>
+        <tr>
+            <th width="100px">신청 번호</th>
+            <th width="100px">신청자</th>
+            <th width="200px">신청 물품</th>
+            <th width="200px">신청 수량</th>
+            <th width="300px">신청내용</th>
+            <th width="250px">신청일</th>
+            <th width="250px">수정일</th>
+            <th width="100px">진행현황</th>
+            <th width="100px" colspan="2">결재 처리</th>
+        </tr>
+    </thead>
+    <tbody>
+        <c:forEach items="${supplyList}" var="supply">
+            <tr class="supply-row supply-status-${supply.supply_status}" data-supply-id="${supply.supply_id}">
+                <td class="supply_id">${supply.supply_id}</td>
+                <td>${supply.empno}</td>
+                <td>${supply.item}</td>
+                <td>${supply.quantity}</td>
+                <td>${supply.sdescription}</td>
+                <td>${supply.sdate}</td>
+                <td>${supply.modifyDtm}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${supply.supply_status == 0}">처리 중</c:when>
+                        <c:when test="${supply.supply_status == 1}">승인</c:when>
+                        <c:when test="${supply.supply_status == 2}">거부</c:when>
+                        <c:otherwise>오류</c:otherwise>
+                    </c:choose>
+                </td>
+                <td>
+                    <c:if test="${supply.supply_status == 0}">
+                        <button class='approval-btn' data-supply-id="${supply.supply_id}">승인</button>
+                    </c:if>
+                </td>
+                <td>
+                    <c:if test="${supply.supply_status == 0 || supply.supply_status == 2}">
+                        <button class='reject-btn' data-supply-id="${supply.supply_id}">반려</button>
+                    </c:if>
+                </td>
+            </tr>
+        </c:forEach>
+    </tbody>
+</table>
+
+		
+		
+		
+<!-- 			<table> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th width="100px">신청 번호</th> -->
+<!-- 						<th width="100px">신청자</th> -->
+<!-- 						<th width="200px">신청 물품</th> -->
+<!-- 						<th width="200px">신청 수량</th> -->
+<!-- 						<th width="300px">신청내용</th> -->
+<!-- 						<th width="250px">신청일</th>	 -->
+<!-- 						<th width="250px">수정일</th>	 -->
+<!-- 						<th width="100px">진행현황</th>	 -->
+<!-- 						<th width="100px" colspan="2">결재 처리</th>	 -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody> -->
+<%-- 					<c:forEach items="${supplyList}" var="supply"> --%>
+<%-- 		                <tr class="supply-row" data-supply-id="${supply.supply_id}"> --%>
+<%-- 		                    <td class="supply_id">${supply.supply_id}</td> --%>
+<%-- 		                    <td>${supply.empno}</td> --%>
+<%-- 		                    <td>${supply.item}</td> --%>
+<%-- 		                    <td>${supply.quantity}</td> --%>
+<%-- 		                    <td>${supply.sdescription}</td> --%>
+<%-- 		                    <td>${supply.sdate}</td> --%>
+<%-- 		                    <td>${supply.modifyDtm}</td> --%>
+<%-- <%-- 		            <td>${supply.supply_status}</td> --%> 
+<!-- 		                    <td> -->
+<%-- 			                    <c:choose> --%>
+<%-- 			                        <c:when test="${supply.supply_status == 0}">처리 중</c:when> --%>
+<%-- 			                        <c:when test="${supply.supply_status == 1}">승인</c:when> --%>
+<%-- 			                        <c:when test="${supply.supply_status == 2}">거부</c:when> --%>
+<%-- 			                        <c:otherwise>오류</c:otherwise> --%>
+
+<%-- 			                    </c:choose> --%>
+<!--                				 </td> -->
+<!--                				 <td> -->
+<%--                				 	<c:if test="${supply.supply_status == 0}"> --%>
+<%--                				 		<button class='approval-btn' data-supply-id="${supply.supply_id}">승인</button> --%>
+<%--                				 	</c:if> --%>
+<!--                				 </td> -->
+<!--                				 <td> -->
+<%--                				 	<c:if test="${supply.supply_status == 0}"> --%>
+<%--                				 		<button class='reject-btn' data-supply-id="${supply.supply_id}">반려</button> --%>
+<%--                				 	</c:if> --%>
+<!--                				 </td> -->
+<!-- 		                </tr> -->
+<%-- 		            </c:forEach> --%>
+<!-- 				</tbody> -->
+<!-- 			</table> -->
 
 		<h2>차량 신청 목록</h2>
 			<table>
@@ -384,7 +508,8 @@ cursor: pointer;
 				</thead>
 				<tbody>
 					<c:forEach items="${vehicleList}" var="vehicle">
-						<tr>
+					            <tr class="vehicle-row vehicle-status-${vehicle.vehicle_status}" data-supply-id="${vehicle.vehicle_id}">
+<!-- 						<tr> -->
 				    		<td class="vehicle_id">${vehicle.vehicle_id}</td>
 								<td>${vehicle.empno}</td>
 								<td>${vehicle.vstartdate}</td>
@@ -392,6 +517,7 @@ cursor: pointer;
 								<td>${vehicle.vdescription}</td>
 								<td>${vehicle.vdate}</td>
 								<td>${vehicle.modifyDtm}</td>
+<%-- 						<td>${vehicle.vehicle_status}</td> --%>
 								<td>
 			                    <c:choose>
 			                        <c:when test="${vehicle.vehicle_status == 0}">처리 중</c:when>
@@ -432,13 +558,14 @@ cursor: pointer;
 				</thead>
 				<tbody>
 					<c:forEach items="${expenseList}" var="expense">
-						<tr>
+					 <tr class="expense-row expense-status-${expense.expense_status}" data-supply-id="${expense.expense_id}">
 				    		<td class="expense_id">${expense.expense_id}</td>
 								<td>${expense.empno}</td>
 								<td>${expense.usagePlace}</td>
 								<td>none</td>
 								<td>${expense.edate}</td>
 								<td>${expense.modifyDtm}</td>
+<%-- 						<td>${expense.expense_status}</td> --%>
 								<td>
 			                    <c:choose>
 			                        <c:when test="${expense.expense_status == 0}">처리 중</c:when>
@@ -480,7 +607,7 @@ cursor: pointer;
 				</thead>
 				<tbody>			
 					<c:forEach items="${reservationList}" var="reservation">
-						<tr>
+						<tr class="reservation-row reservation-status-${reservation.reservation_status}" data-supply-id="${reservation.reservation_id}">
 							<td class="reservation_id">${reservation.reservation_id}</td>
 							<td>${reservation.empno}</td>
 							<td>${reservation.numOfPeople}</td>
@@ -489,6 +616,7 @@ cursor: pointer;
 							<td>${reservation.details}</td>
 							<td>${reservation.rdate}</td>
 							<td>${reservation.modifyDtm}</td>
+<%-- 					<td>${reservation.reservation_status}</td> --%>
 							<td>
 			                    <c:choose>
 			                        <c:when test="${reservation.reservation_status == 0}">처리 중</c:when>
@@ -515,12 +643,53 @@ cursor: pointer;
 	</div>
 
 </main>
+
+<jsp:include page="../footer.jsp"/>
+
+
 </body>
 </html>
 
 <script>
 
+// function filterSupplyList() {
+//     console.log("filterSupplyList 함수 호출됨");
+
+//     var selectedStatus = document.getElementById("statusFilter").value;
+
+//     // 전체를 선택한 경우 모든 행을 보이도록 설정
+//     $(".supply-row").show();
+
+//     // 선택된 상태가 "전체"가 아닌 경우, 해당 상태가 아닌 행을 숨깁니다.
+//     if (selectedStatus !== "all") {
+//         $(".supply-row:not(.supply-status-" + selectedStatus + ")").hide();
+//     }
+// }
+
+
+
+
+
+
+
+
 $(document).ready(function () {
+				
+	// 각 h2 요소에 대해 토글 아이콘과 클릭 이벤트 추가
+	$(".AllList h2").each(function () {
+	  $(this).prepend('<span class="toggle-icon" data-icon="up" data-rotate="false"></span>'); // 토글 아이콘 추가
+	});
+
+	// h2 요소를 클릭하면 해당 테이블을 토글하고 아이콘도 변경
+	$(".AllList h2").click(function () {
+	  $(this).next("table").toggle();
+	  // 토글 아이콘 변경 및 회전 효과 적용
+	  $(this).find('.toggle-icon').attr('data-icon', function (_, icon) {
+	    return icon === 'up' ? 'down' : 'up';
+	  }).attr('data-rotate', function (_, rotate) {
+	    return rotate === 'true' ? 'false' : 'true';
+	  });
+	});
 
 	// 인사팀 접근여부 체크 로직
 	var insaYnTxt = '${insaYn}';	
@@ -622,7 +791,6 @@ $(document).ready(function () {
 	        });
 	    }
 	});
-	
 	
 });
 

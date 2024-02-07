@@ -122,7 +122,7 @@ $(document).ready(function () {
         <div >
             <label for="nname" >이름</label>
             <div>
-                <input type="text"  name="nname" id="nname" placeholder="이름을 입력하세요">
+                <input type="text"  name="nname" id="nname" value="${dto.name}" readonly>
             </div>
         </div>
         

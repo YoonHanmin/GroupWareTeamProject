@@ -16,7 +16,7 @@ public interface VacationService {
 	public ArrayList<VacationRequestDto> myVacationRequests(String empno);
 	public void cancelVacation(int empid);
 	public ArrayList<VacationRequestDto> getVacationEvents(String empno);
-	public ArrayList<VacationRequestDto> vacationApproval(String empno);
+	public List<VacationRequestDto> vacationApproval(String empno);
     public int countRequest();
     public int countApproval();
     public int countReject();
@@ -24,4 +24,5 @@ public interface VacationService {
 	public void vacationRejectUpdate(int empid);
 	public ArrayList<VacationRequestDto> getApproval_Vacation(String empno);
 	public VacationRequestDto getVacationByID(int empid);
+	public int getApprovedVacationDays(String empno);
 }

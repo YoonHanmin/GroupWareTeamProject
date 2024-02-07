@@ -6,8 +6,8 @@
 	
 <mapper namespace="com.green.teamproject_groupware.dao.VacationDao">
     <insert id="vacationRequest" parameterType="com.green.teamproject_groupware.dto.VacationRequestDto">
-        INSERT INTO APPROVALTABLE (EMPNO, NAME, POSITION, VACATIONTYPE, VACATIONDAYS, REASON, STARTDATE, ENDDATE, STATUS, REQUESTDATE)
-        VALUES (#{empno}, #{name}, #{position}, #{vacationtype}, #{vacationdays}, #{reason}, #{startdate}, #{enddate}, #{status}, CURRENT_TIMESTAMP)
+        INSERT INTO APPROVALTABLE (EMPNO, NAME, POSITION, VACATIONTYPE, VACATIONDAYS, REASON, STARTDATE, ENDDATE, STATUS, REQUESTDATE, UPDATEDATE)
+        VALUES (#{empno}, #{name}, #{position}, #{vacationtype}, #{vacationdays}, #{reason}, #{startdate}, #{enddate}, #{status}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     </insert>
 
     <select id="myVacationRequests" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">
@@ -38,6 +38,7 @@
 <!--     휴가 신청현황에 리스트 불러오는 SQL 쿼리 추가 -->
     <select id="vacationApproval" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">
         SELECT * FROM APPROVALTABLE
+        WHERE status IN ('신청', '승인', '반려')
         ORDER BY REQUESTDATE DESC
     </select>
     
@@ -56,7 +57,8 @@
     <!-- 승인 관련 SQL 쿼리 추가 -->
     <update id="vacationApprovalUpdate">
         UPDATE APPROVALTABLE
-        SET STATUS = '승인'
+        SET STATUS = '승인',
+       		  UPDATEDATE = CURRENT_TIMESTAMP
         ,updatedate = sysdate
         WHERE EMPID = #{empid}
     </update>
@@ -64,11 +66,18 @@
     <!-- 반려 관련 SQL 쿼리 추가 -->
     <update id="vacationRejectUpdate">
         UPDATE APPROVALTABLE
-        SET STATUS = '반려'
+        SET STATUS = '반려',
+              UPDATEDATE = CURRENT_TIMESTAMP
         WHERE EMPID = #{empid}
     </update>
     <select id="getApproval_Vacation" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">
     	select * from approvaltable where empno=#{empno} and read = 0 and status = '승인'
     </select>
-    
+    	<!-- 승인된 휴가 일수 가져오는 SQL 쿼리 추가 -->
+    <select id="getApprovedVacationDays" resultType="int">
+	    SELECT SUM(vacationdays)
+	    FROM APPROVALTABLE
+	    WHERE EMPNO = #{empno}
+	    AND STATUS = '승인'
+	</select>
 </mapper>

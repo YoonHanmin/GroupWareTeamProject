@@ -133,7 +133,7 @@ font-weight : bold;
                 <tr>
                     <th scope="row">작성자</th>
                     <td  colspan="3">
-                        <input type="text" class="form-control" name="nname" value="${ncontentView.nname}">
+                        <input type="text" class="form-control" name="nname" value="${ncontentView.nname}" readonly>
                     </td>
                 </tr>
                 <tr>

@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.green.teamproject_groupware.dto.ExpenseDto;
 
 public interface ExpenseService {
-	public ArrayList<ExpenseDto> expense_list(String empno);
+	public ArrayList<ExpenseDto> expense_list(String empno, String insaYn);
 	 public void expense_write(ExpenseDto formData3);
 	public ExpenseDto expense_contentView(HashMap<String, String> param);
 	public void expense_modify(HashMap<String, String> param);

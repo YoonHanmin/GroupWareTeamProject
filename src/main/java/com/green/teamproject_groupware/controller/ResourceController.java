@@ -2,8 +2,10 @@ package com.green.teamproject_groupware.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
@@ -13,10 +15,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.green.teamproject_groupware.dto.EmpDto;
@@ -57,10 +62,10 @@ public class ResourceController {
 		String insaYn = "인사팀".equals(dname) ? "Y" : "N";
 		
 		if ("Y".equals(insaYn)) {
-			ArrayList<SupplyDto> supplyList = sservice.supply_list(empno);
-			ArrayList<VehicleDto> vehicleList = vservice.vehicle_list(empno);
-			ArrayList<ExpenseDto> expenseList = eservice.expense_list(empno);
-			ArrayList<ReservationDto> reservationList = rservice.reservation_list(empno);
+			ArrayList<SupplyDto> supplyList = sservice.supply_list(empno,insaYn);
+			ArrayList<VehicleDto> vehicleList = vservice.vehicle_list(empno,insaYn);
+			ArrayList<ExpenseDto> expenseList = eservice.expense_list(empno,insaYn);
+			ArrayList<ReservationDto> reservationList = rservice.reservation_list(empno,insaYn);
 	
 			// todoCnt 확인할문서
 			List<SupplyDto> todoSupplyList = supplyList.stream()
@@ -107,7 +112,7 @@ public class ResourceController {
 			int todoCnt = todoSupplyList.size() + todoVehicleList.size() + todoExpenseList.size() + todoReservationList.size();
 			int ingCnt = ingSupplyList.size() + ingVehicleList.size() + ingExpenseList.size() + ingReservationList.size();;
 			int rejectCnt = rejectSupplyList.size() + rejectVehicleList.size() + rejectExpenseList.size() + rejectReservationList.size();;
-			model.addAttribute("dto",dto);
+			
 			model.addAttribute("supplyList", supplyList);
 	        model.addAttribute("vehicleList", vehicleList);
 	        model.addAttribute("expenseList", expenseList);
@@ -135,7 +140,7 @@ public class ResourceController {
 //	    	세션을 통해서 empno를 받아옴
 	    	String empno = (String) session.getAttribute("empno");
 	    	
-	        List<SupplyDto> supplyList = sservice.supply_list(empno);
+	        List<SupplyDto> supplyList = sservice.supply_list(empno,"N");
 	        return new ResponseEntity<>(supplyList, HttpStatus.OK);
 	    } catch (Exception e) {
 	        // 예외 발생 시 500 Internal Server Error 응답
@@ -149,7 +154,7 @@ public class ResourceController {
 			
 			String empno = (String) session.getAttribute("empno");
 			
-			List<VehicleDto> vehicleList = vservice.vehicle_list(empno);
+			List<VehicleDto> vehicleList = vservice.vehicle_list(empno,"N");
 			return new ResponseEntity<>(vehicleList, HttpStatus.OK);
 		} catch (Exception e) {
 			// 예외 발생 시 500 Internal Server Error 응답
@@ -163,7 +168,7 @@ public class ResourceController {
 			
 			String empno = (String) session.getAttribute("empno");
 			
-			List<ExpenseDto> expenseList = eservice.expense_list(empno);
+			List<ExpenseDto> expenseList = eservice.expense_list(empno,"N");
 			return new ResponseEntity<>(expenseList, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -176,7 +181,7 @@ public class ResourceController {
 			
 			String empno = (String) session.getAttribute("empno");
 			
-			List<ReservationDto> reservationList = rservice.reservation_list(empno);
+			List<ReservationDto> reservationList = rservice.reservation_list(empno,"N");
 			return new ResponseEntity<>(reservationList, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -558,19 +563,5 @@ public class ResourceController {
 			 return "rejectUpdate 예외 발생";
 		 }
 	 }
-	 
-	 
-
-//	@GetMapping("/chkDept")
-//	public ResponseEntity<String> chkDept(HttpSession session,Model model) {
-//		try {
-//			String dname = (String) session.getAttribute("dname");		
-//			String insaYn = "인사팀".equals(dname) ? "Y" : "N";
-//			
-//			return new ResponseEntity<>(insaYn, HttpStatus.OK);
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
-	 
+	 	 
 }

@@ -128,4 +128,9 @@ public VacationRequestDto getVacationByID(int empid) {
 		ArrayList<VacationRequestDto> list = dao.getApproval_Vacation(empno);
 		return list;
 	}
+	@Override
+    public int getApprovedVacationDays(String empno) {
+    	VacationDao dao = sqlSession.getMapper(VacationDao.class);
+        return dao.getApprovedVacationDays(empno);
+    }
 }

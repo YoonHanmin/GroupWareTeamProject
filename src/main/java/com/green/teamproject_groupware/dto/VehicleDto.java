@@ -20,4 +20,5 @@ public class VehicleDto {
 	private int vehicle_status;
 	private String delYn;
 	private Timestamp modifyDtm;
+	private String insaYn;
 }

@@ -6,7 +6,7 @@ import java.util.HashMap;
 import com.green.teamproject_groupware.dto.SupplyDto;
 
 public interface SupplyService {
-	public ArrayList<SupplyDto> supply_list(String empno);
+	public ArrayList<SupplyDto> supply_list(String empno, String insaYn);
 	public void supply_write(SupplyDto formData1);
 //	public void write(HashMap<String, String> param);
 //	public boolean  write(SupplyDto request);
