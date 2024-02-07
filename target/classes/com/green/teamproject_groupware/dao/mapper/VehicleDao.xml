@@ -12,10 +12,13 @@
         	 , vdescription
         	 , vdate
         	 , vehicle_status 
-        	 , modifydtm
+        	 , modify_dtm as modifyDtm
       	  from vehicle_TABLE
          where 1=1
+         <if test='"N".equals(insaYn)'>
            and empno = #{empno}
+         </if>
+           and delYn = 'N'
          order by vehicle_id desc
     </select>
 
@@ -39,24 +42,25 @@
     	update vehicle_TABLE set vstartdate=#{vstartdate}, venddate=#{venddate}, vdescription=#{vdescription} where vehicle_id=#{vehicle_id}
     </update>
     
+<!--     <delete id="vehicle_delete"> -->
+<!--     	delete from vehicle_TABLE where vehicle_id=#{vehicle_id} -->
+<!--     </delete> -->
     <update id="vehicle_delete">
-    	update from vehicle_TABLE
-    	    set delYn='Y'
-    	    		, modify_dtm = sysdate
+    	update vehicle_TABLE 
+    	   set delYn='Y'
+    	     , modify_dtm = sysdate
     	 where vehicle_id=#{vehicle_id}
     </update>
     
     <update id="vehicleApprovalUpdate">
     	update vehicle_TABLE 
     	   set vehicle_status='1'
-    	   	, modify_dtm = sysdate
     	 where vehicle_id=#{vehicle_id}
     </update>
     
     <update id="vehicleRejectUpdate">
     	update vehicle_TABLE 
     	   set vehicle_status='2'
-    	   	, modify_dtm = sysdate
     	 where vehicle_id=#{vehicle_id}
     </update>
 

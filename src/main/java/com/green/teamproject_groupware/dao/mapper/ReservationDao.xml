@@ -13,11 +13,13 @@
              , details
              , rdate
              , reservation_status 
-                , modifydtm
+             , modify_dtm as modifyDtm
           from reservation_TABLE
          where 1=1
+         <if test='"N".equals(insaYn)'>
            and empno = #{empno}
-            and delYn = 'N'
+         </if>
+           and delYn = 'N'  
       order by reservation_id desc
     </select>
     
@@ -34,24 +36,26 @@
     	update reservation_TABLE set numOfPeople=#{numOfPeople}, checkInDate=#{checkInDate}, checkOutDate=#{checkOutDate}, details=#{details} where reservation_id=#{reservation_id}
     </update>
     
+<!--     <delete id="reservation_delete"> -->
+<!--     	delete from reservation_TABLE where reservation_id=#{reservation_id} -->
+<!--     </delete> -->
+    
     <update id="reservation_delete">
-    	update from reservation_TABLE
+    	update reservation_TABLE 
     	   set delYn='Y'
     	     , modify_dtm = sysdate
     	 where reservation_id=#{reservation_id}
     </update>
     
-        <update id="reservationApprovalUpdate">
+    <update id="reservationApprovalUpdate">
     	update reservation_TABLE 
     	   set reservation_status='1'
-    	    , modify_dtm = sysdate
     	 where reservation_id=#{reservation_id}
     </update>
     
     <update id="reservationRejectUpdate">
     	update reservation_TABLE 
     	   set reservation_status='2'
-    	    , modify_dtm = sysdate
     	 where reservation_id=#{reservation_id}
     </update>
 

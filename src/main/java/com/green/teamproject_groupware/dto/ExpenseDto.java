@@ -17,4 +17,5 @@ public class ExpenseDto {
     private int expense_status;
     private String delYn;
     private Timestamp modifyDtm;
+    private String insaYn;
 }

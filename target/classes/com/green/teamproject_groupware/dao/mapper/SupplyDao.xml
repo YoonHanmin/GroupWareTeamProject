@@ -12,13 +12,13 @@
              , quantity
              , sdate
              , supply_status
-             , modifydtm 
+             , modify_dtm as modifyDtm
           from supply_TABLE
          where 1=1
-<!--           <if test='insaYn == "N"'> -->
-        AND empno = #{empno}
-<!--     </if> -->
-           and delYn = 'n'
+         <if test='"N".equals(insaYn)'>
+           and empno = #{empno}
+         </if>
+           and delYn = 'N'
         order by supply_id desc
     </select>
 
@@ -28,10 +28,16 @@
     values (supply_TABLE_SEQ.NEXTVAL, #{empno}, #{item}, #{quantity}, #{sdescription})
 	</insert>
 
-<!--     <select id="supply_contentView" resultType="com.green.teamproject_groupware.dto.SupplyDto"> -->
-<!--         select supply_id, sname, item, quantity, sdescription, sdate, empno from supply_TABLE where supply_id=#{supply_id} -->
-<!--     </select> -->
-
+    <select id="supply_contentView" resultType="com.green.teamproject_groupware.dto.SupplyDto">
+        select supply_id, sname, item, quantity, sdescription, sdate, empno from supply_TABLE where supply_id=#{supply_id}
+    </select>
+    
+    
+<!--
+    <delete id="supply_delete">
+    	delete from supply_TABLE where supply_id=#{supply_id}
+    </delete>
+-->
     <update id="supply_delete">
     	update supply_TABLE 
     	   set delYn='Y'

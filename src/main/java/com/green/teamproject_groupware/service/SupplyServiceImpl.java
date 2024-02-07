@@ -20,11 +20,15 @@ public class SupplyServiceImpl implements SupplyService{
 	private SqlSession sqlSession;
 
 	@Override
-	public ArrayList<SupplyDto> supply_list(String empno) {
+	public ArrayList<SupplyDto> supply_list(String empno, String insaYn) {
 		log.info("@# SupplyServiceImpl.supply_list() start");
 		SupplyDao dao = sqlSession.getMapper(SupplyDao.class);
 		
-		ArrayList<SupplyDto> supplyList  = dao.supply_list(empno);
+		HashMap<String, String> param = new HashMap<String, String>();
+		param.put("empno", empno);
+		param.put("insaYn", insaYn);
+		
+		ArrayList<SupplyDto> supplyList  = dao.supply_list(param);
 		
 		return supplyList ;
 	}

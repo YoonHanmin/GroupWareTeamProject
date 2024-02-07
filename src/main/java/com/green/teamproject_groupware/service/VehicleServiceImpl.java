@@ -20,11 +20,15 @@ public class VehicleServiceImpl implements VehicleService{
 	private SqlSession sqlSession;
 	
 	@Override
-	public ArrayList<VehicleDto> vehicle_list(String empno) {
+	public ArrayList<VehicleDto> vehicle_list(String empno, String insaYn) {
 		log.info("@# VehicleServiceImpl.vehicle_list() start");
 		VehicleDao dao = sqlSession.getMapper(VehicleDao.class);
 		
-		ArrayList<VehicleDto> vehicleList = dao.vehicle_list(empno);
+		HashMap<String, String> param = new HashMap<String, String>();
+		param.put("empno", empno);
+		param.put("insaYn", insaYn);
+				
+		ArrayList<VehicleDto> vehicleList = dao.vehicle_list(param);
 		
 		return vehicleList;
 	}

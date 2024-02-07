@@ -20,11 +20,46 @@
     </update>
     
     
-    
-    <!-- 직원 검색 쿼리 추가 -->
-    <select id="searchEmployees" resultType="com.green.teamproject_groupware.dto.EmpDto" parameterType="java.lang.String">
-        SELECT * FROM employee WHERE name LIKE CONCAT('%', #{keyword}, '%')
+    <!-- 기존 매퍼 파일에 추가 -->
+<select id="searchEmpByEmpno" resultType="com.green.teamproject_groupware.dto.EmpDto">
+    SELECT empno, position, name, email, password, sal, hiredate, jumin, address, 
+           account, profileimage, dname, status, phone, birthday, grade
+    FROM emp
+    WHERE empno = #{empno}
+</select>
+
+
+	<select id="getSearchEmp"  resultType="com.green.teamproject_groupware.dto.EmpDto">
+        select empno
+        	 , position
+        	 , name
+        	 , email
+        	 , password
+        	 , sal
+        	 , hiredate
+        	 , jumin
+        	 , address
+        	 , account
+        	 , profileimage
+        	 , dname
+        	 , status
+        	 , phone 
+          from emp
+         where 1 = 1
+          <if test='"D".equals(searchType)'>	
+           and dname LIKE '%'|| #{employeeSearch} ||'%'
+          </if>
+          <if test='"E".equals(searchType)'>
+           and empno LIKE '%'|| #{employeeSearch} ||'%'
+          </if>
+          <if test='"N".equals(searchType)'>
+           and name LIKE '%'|| #{employeeSearch} ||'%'
+          </if>
     </select>
+    
+    
+    
+    
     
     
 </mapper>

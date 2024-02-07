@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<script src="resources/js/jquery.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!-- ... -->
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+      <script src="resources/js/jquery.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+      <script src="https://kit.fontawesome.com/c6078bb273.js" crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,268 +12,322 @@
 <title>Insert title here</title>
 </head>
 <style>
-.header {
-	height: 130px;
-	border-bottom: 1px solid #eee;
-	display: flex;
+
+.header{
+height : 130px;
+border-bottom: 1px solid #eee;
+display : flex;
 }
 
-.info {
-	height: 100px;
-	border-bottom: 1px solid #eee;
-	padding: 60px
+.info{
+height : 100px;
+border-bottom: 2px solid #eee;
+padding : 30px
 }
 
 .item a {
-	font-weight: bold;
-	font-size: 20px;
-	margin-top: 30px;
+font-weight : bold;
+font-size : 20px;
+margin-top : 30px;
 }
-
 .item ul {
-	margin-top: 10px;
+margin-top : 10px;
 }
 
-.content {
-	width: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	height: 30%;
-	margin: 10px 10px;
-	padding: 10px;
+.content{
+width : 100%;
+  display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+	  height : 30%;
+      margin: 10px 0px;
+	  padding : 50px;
+	  
+	  border-bottom: 3px solid #000;
 }
 
-.myinfo {
-	background-color:;
-	height: 200px;
-	margin-top: 30px;
-	display: flex;
+.myinfo{
+background-color : ;
+height : 200px;
+margin-top : 30px;
+display : flex;
+
+}
+#profile-image img{
+width : 150px; 
+height : 150px;
+border-radius: 10px;
+margin-left: 50px;
+margin-right : 50px;
 }
 
-#profile-image img {
-	width: 150px;
-	height: 150px;
-	border-radius: 10px;
-	margin-left: 50px;
-	margin-right: 50px;
-}
+#profile-name{
+font-size : 24px;
+font-weight : bold;
+margin-bottom : 30px;
+display : inline-block;
 
-#profile-name {
-	font-size: 24px;
-	font-weight: bold;
-	margin-bottom: 30px;
-	display: inline-block;
-}
+} 
+.profile-id span{
+font-weight : bold;
 
-.profile-id span {
-	font-weight: bold;
 }
 
 .description {
-	margin-top: 30px;
-	border-top: 1px solid #eee;
-	height: 800px;
+margin-top : 30px;
+border-top : 1px solid #eee;
+height : 800px;
 }
+.profile-info{
+border-bottom : 1px solid #eee;
 
-.profile-info {
-	border-bottom: 1px solid #eee;
 }
-
-#profile-table {
-	/* margin-top : 50px; */
-	margin-left: 30px;
-	padding: 20px;
+#profile-table{
+/* margin-top : 50px; */
+margin-left : 30px;
+padding : 20px;
 }
-
-#profile-table th, td {
-	width: 100px;
-	height: 40px;
+#profile-table th,td{
+width : 100px;
+height : 40px;
 }
-
-#profile-table td {
-	padding: 10px;
-	margin-right: 20px;
+#profile-table td{
+padding : 10px;
+margin-right : 20px;
 }
 
 /* 박스 스타일 시작   */
+
 .resource-box {
-	width: 20%;
-	height: 150px;
-	margin: 10px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: 2px solid #3498db;
-	border-radius: 10px;
-	background-color: #fff;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	transition: background-color 0.3s ease;
-	cursor: pointer;
+  width: 23%;
+  height: 150px;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid #3498db; 
+  border-radius: 50px;
+  background-color: #b3ecff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  
+  
 }
 
 .resource-box:hover {
-	background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 .resource-box h3 {
-	color: #3498db;
-	font-size: 18px;
-	font-family: 'Arial', sans-serif;
-	font-weight: bold;
-	margin-bottom: 8px;
+  color: #000; 
+  font-size: 18px;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  margin-bottom: 8px;
 }
+
 
 /* 박스 스타일 끝   */
 
+
 /* 모달 박스 스타일 시작   */
-.modal {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	justify-content: center;
-	align-items: center;
-	overflow: auto;
+
+ /* 모달 스타일 수정 */
+	.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    overflow: auto; 
 }
 
 .modal-content {
-	max-width: 890px;
-	width: 80%;
-	max-height: 550px;
-	height: 80%;
-	overflow-y: auto;
-	background-color: #fff;
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	transition: transform 0.3s ease-in-out;
+    max-width: 890px;
+    width: 80%; 
+    max-height: 550px;
+    height: 80%; 
+    overflow-y: auto; 
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
 }
 
 .modal-content:hover {
-	transform: scale(1.05); /* 마우스 호버 시 약간 확대되는 효과 추가 */
+    transform: scale(1.05); /* 마우스 호버 시 약간 확대되는 효과 추가 */
 }
 
-.modal-close {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	cursor: pointer;
-	font-size: 40px;
+    .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+        font-size: 40px;
+    }
+    .modal-content h2 {
+    text-align: center;
 }
-
-.modal-content h2 {
-	text-align: center;
-}
-
-.modal-content form {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
+    
+    .modal-content form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .modal-content label {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
-.modal-content input, .modal-content textarea {
-	width: 100%;
-	padding: 8px;
-	margin-bottom: 10px;
-	box-sizing: border-box;
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
 }
 
 .modal-content textarea {
-	resize: vertical; /* 세로 리사이즈 허용 */
+    resize: vertical; /* 세로 리사이즈 허용 */
 }
 
 .modal-content input[type="submit"] {
-	background-color: #4caf50;
-	color: white;
-	cursor: pointer;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
 }
 
 .modal-content input[type="submit"]:hover {
-	background-color: #45a049;
+    background-color: #45a049;
 }
-
 /* 모달 박스 스타일 끝   */
 
 /*  목록 버튼 스타일 시작   */
-.request-lists {
-	display: flex;
-	gap: 10px; /* 간격 조절 */
-	justify-content: center;
-	margin-bottom: 20px;
+    .request-lists {
+        display: flex;
+        gap: 10px; /* 간격 조절 */
+        justify-content: center;
+        margin-bottom: 20px;
+        
+        border-radius: 10px;
+    }
+
+.supply-list, .vehicle-list, .expense-list, .reservation-list{
+ display: flex;
+        gap: 10px; /* 간격 조절 */
+        justify-content: center;
+        margin-bottom: 20px;
+         border: 2px solid #000; 
+  border-radius: 10px;
+  background-color: #eee;
 }
 
-.request-lists>div {
-	margin: 0 10px;
-	display: flex;
-	flex-direction: column;
-	align-items: center; /* 중앙 정렬을 위해 추가 */
+.request-lists > div {
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 중앙 정렬을 위해 추가 */
+    border-radius: 10px;
 }
+    .request-lists span {
+        font-family: 'Arial', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-.request-lists span {
-	font-family: 'Arial', sans-serif;
-	font-size: 16px;
-	font-weight: bold;
-	padding: 10px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	cursor: pointer;
-	transition: background-color 0.3s ease-in-out;
-}
-
-.request-lists span:hover {
-	background-color: #f0f0f0;
-}
+    .request-lists span:hover {
+        background-color: #f0f0f0;
+    }
 /*  목록 버튼 스타일 끝   */
+    
 
 /* 리스트 스타일 시작 */
-.AllList {
-	display: flex;
-	justify-content: flex-start;
-	margin: 20px;
-	overflow-x: auto;
-}
 
-.supplylist, .vehiclelist, .expenselist, .reservationlist {
-	width: 100%;
-	background-color: #f4f4f4;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	padding: 10px;
-	margin: 10px;
-}
+ .AllList {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px;
+    overflow-x: auto;
+  }
 
-table {
-	width: 100%;
-	border-collapse: collapse;
-}
+  .supplylist, .vehiclelist, .expenselist, .reservationlist {
+  	width: 90%; 
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 10px;
+  }
 
-th, td {
-	border: 1px solid #ddd;
-	padding: 8px;
-	text-align: center;
-	border-bottom: 1px solid #ddd; /* 구분선 추가 */
-}
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 20px;
+    text-align: center;
+  }
 
-th {
-	background-color: #4CAF50;
-	color: white;
-}
+  th, td {
+    border: 10px solid #b3ecff;;
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #b3ecff; /* 구분선 추가 */
+    border-radius: 10px;
+  }
 
-tbody tr:hover {
-	background-color: #f5f5f5;
-}
+  th {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  tbody tr:hover {
+    background-color: #f5f5f5;
+  }
 /* 리스트 스타일 끝 */
-.supplylist, .vehiclelist, .expenselist, .reservationlist {
-	display: none;
+
+   .supplylist, .vehiclelist, .expenselist, .reservationlist { 
+     display: none; 
+   } 
+
+  
+    /* 아이콘 위치 및 크기 조절 */
+  .resource-box div {
+    display: flex;
+    align-items: left;
+  }
+
+  .resource-box i {
+    margin-right: 5px; /* 아이콘과 텍스트 간격 조절 */
+    font-size: 50px; /* 크기 조절 */
+  }
+
+  /* 아이콘과 텍스트 간격 조절 */
+  .resource-box h3 {
+    margin: 20px; /* 기본 마진 제거 */
+  }
+
+
+/* 반려 버튼 스타일 */
+.delete-btn {
+  background-color: #FF6347; /* 빨간색 */
+  color: #ffffff; /* 흰색 텍스트 */
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius : 20px;
 }
+
+
 </style>
 
 
@@ -285,289 +339,282 @@ tbody tr:hover {
 <!--   }); -->
 
 <body>
-	<jsp:include page="../nav2.jsp" />
+ <jsp:include page="../nav2.jsp"/>
+ 
+ <main>
+	<div class="header">
+		<ul class="nav nav-underline">
+			<li class="item">
+				<a class="people" aria-current="page" href="#" style="color:black;"><i class="bi bi-people-fill" style="color:black;"></i>내 사원정보</a>
+			</li>
+			<li class="item">
+				<a class="company" href="#" style="color:black;"><i class="bi bi-list-ul" style="color:black;"></i>비밀번호 변경</a>
+			</li>
+		</ul>      	
+	</div>
+ 
+<div class="info">
+       <h2>    자원 신청하기 </h2>
+</div>
 
-	<main>
-		<div class="header">
-			<ul class="nav nav-underline">
-				<li class="item"><a class="people" aria-current="page" href="#"
-					style="color: black;"><i class="bi bi-people-fill"
-						style="color: black;"></i>내 사원정보</a></li>
-				<li class="item"><a class="company" href="#"
-					style="color: black;"><i class="bi bi-list-ul"
-						style="color: black;"></i>비밀번호 변경</a></li>
-			</ul>
+      
+<div class="content">
+	<div class="resource-box" data-modal="modal1"> 
+		<div>
+		<i class="fa-solid fa-truck-field"></i>
+			<h3>비품 신청</h3>
 		</div>
-
-		<div class="info">
-			<h2>자원 신청하기</h2>
+	</div>
+	
+	<div class="resource-box" data-modal="modal2">
+		<div>
+		<i class="fa-solid fa-car"></i>
+			<h3>차량 신청</h3>
 		</div>
-
-
-		<div class="content">
-			<div class="resource-box" data-modal="modal1">
-				<div>
-					<h3>비품 신청</h3>
-				</div>
-			</div>
-
-			<div class="resource-box" data-modal="modal2">
-				<div>
-					<h3>차량 신청</h3>
-				</div>
-			</div>
-
-			<div class="resource-box" data-modal="modal3">
-				<div>
-					<h3>비용 신청</h3>
-				</div>
-			</div>
-
-			<div class="resource-box" data-modal="modal4">
-				<div>
-					<h3>숙박 신청</h3>
-				</div>
-			</div>
+	</div>
+	
+	<div class="resource-box" data-modal="modal3">
+		<div>
+		<i class="fa-solid fa-barcode"></i>
+			<h3>비용 신청</h3>
 		</div>
-
-		<div class="request-lists">
-			<div class="supply-list">
-				<span>비품 요청 목록</span>
-			</div>
-			<div class="vehicle-list">
-				<span>차량 요청 목록</span>
-			</div>
-			<div class="expense-list">
-				<span>비용 처리 신청 목록</span>
-			</div>
-			<div class="reservation-list">
-				<span>숙박 신청 목록</span>
-			</div>
+	</div>
+	  
+	<div class="resource-box" data-modal="modal4">
+		<div>
+		<i class="fa-solid fa-hotel"></i>
+			<h3>숙박 신청</h3>
 		</div>
+	</div>
+</div> 
 
-		<div class="AllList">
+<div class="request-lists">
+	<div class="supply-list">
+		<span>비품 요청 목록</span>
+	</div>
+	<div class="vehicle-list">
+		<span>차량 요청 목록</span>
+	</div>
+	<div class="expense-list">
+		<span>비용 처리 신청 목록</span>
+	</div>
+	<div class="reservation-list">
+		<span>숙박 신청 목록</span>
+	</div>
+</div>
 
-			<!-- 비품신청 목록 -->
-			<div class="supplylist">
-				<table>
-					<thead>
+<div class="AllList">
+
+<!-- 비품신청 목록 -->
+	<div class="supplylist">
+		<table>
+			<thead>
+				<tr>
+					<th>신청 번호</th>
+					<th>신청자</th>
+					<th>신청 물품</th>
+					<th>신청 수량</th>
+					<th width="300px">신청내용</th>
+					<th>신청일</th>	
+					<th>수정일</th>	
+					<th>진행현황</th>	
+					<th>비고</th>	
+				</tr>
+			</thead>
+				<tbody>
+			<c:forEach items="${supplyList}" var="supply">
+                <tr class="supply-row" data-supply-id="${supply.supply_id}">
+                    <td class="supply_id">${supply.supply_id}</td>
+                </tr>
+            </c:forEach>
+				</tbody>
+		</table>
+	</div>
+	
+	
+	<!-- 모달 추가 -->
+<div id="supplyDetailsModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <!-- 상세 내용을 표시할 부분 -->
+        <div id="supplyDetailsContent"></div>
+    </div>
+</div>
+	
+	
+	
+	
+<!-- 차량신청 목록 -->
+	<div class="vehiclelist">
+		<table>
+			<thead>
+				<tr>
+					<th>신청 번호</th>
+					<th>신청자</th>
+					<th>사용 시작일</th>
+					<th>사용 종료일</th>
+					<th width="300px">신청 사유</th>
+					<th>신청일</th>
+					<th>수정일</th>
+					<th>진행현황</th>	
+					<th>비고</th>
+				</tr>
+			</thead>
+				<tbody>
+					<c:forEach items="${vehicleList}" var="vehicle">
 						<tr>
-							<th>신청 번호</th>
-							<th>신청자</th>
-							<th>신청 물품</th>
-							<th>신청 수량</th>
-							<th width="300px">신청내용</th>
-							<th>신청일</th>
-							<th>수정일</th>
-							<th>진행현황</th>
-							<th>비고</th>
+				    		<td class="vehicle_id">${vehicle.vehicle_id}</td>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${supplyList}" var="supply">
-							<tr class="supply-row" data-supply-id="${supply.supply_id}">
-								<td class="supply_id">${supply.supply_id}</td>
-								<td>${supply.empno}</td>
-								<td>${supply.item}</td>
-								<td>${supply.quantity}</td>
-								<td>${supply.sdescription}</td>
-								<td>${supply.supply_status}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-
-
-			<!-- 모달 추가 -->
-			<div id="supplyDetailsModal" class="modal">
-				<div class="modal-content">
-					<span class="modal-close">&times;</span>
-					<!-- 상세 내용을 표시할 부분 -->
-					<div id="supplyDetailsContent"></div>
-				</div>
-			</div>
-
-
-
-
-			<!-- 차량신청 목록 -->
-			<div class="vehiclelist">
-				<table>
-					<thead>
+					</c:forEach>
+				</tbody>
+		</table>
+	</div>
+	
+	
+<!-- 비용신청 목록 -->
+	<div class="expenselist">
+		<table>
+			<thead>
+				<tr>
+					<th>신청 번호</th>
+					<th>신청자</th>
+					<th width="300px">사용처</th>
+					<th>신청일</th>
+					<th>수정일</th>
+					<th>진행현황</th>	
+					<th>비고</th>
+				</tr>
+			</thead>
+				<tbody>
+					<c:forEach items="${expenseList}" var="expense">
 						<tr>
-							<th>신청 번호</th>
-							<th>신청자</th>
-							<th>사용 시작일</th>
-							<th>사용 종료일</th>
-							<th width="300px">신청 사유</th>
-							<th>신청일</th>
-							<th>수정일</th>
-							<th>진행현황</th>
-							<th>비고</th>
+				    		<td class="expense_id">${expense.expense_id}</td>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${vehicleList}" var="vehicle">
-							<tr>
-								<td class="vehicle_id">${vehicle.vehicle_id}</td>
-								<%-- 								<td>${vehicle.empno}</td> --%>
-								<%-- 								<td>${vehicle.vstartdate}</td> --%>
-								<%-- 								<td>${vehicle.venddate}</td> --%>
-								<%-- 								<td>${vehicle.vdescription}</td> --%>
-								<%-- 								<td>${vehicle.vdate}</td> --%>
-								<%-- 								<td>${vehicle.vehicle_status}</td> --%>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-
-
-			<!-- 비용신청 목록 -->
-			<div class="expenselist">
-				<table>
-					<thead>
+					</c:forEach>
+				</tbody>
+		</table>
+	</div>
+	
+	
+<!-- 숙소 신청 목록 -->
+	<div class="reservationlist">
+		<table>
+			<thead>
+				<tr>
+					<th>신청 번호</th>
+					<th>신청자</th>
+					<th>숙박 인원</th>
+					<th>체크인</th>
+					<th>체크아웃</th>
+					<th width="300px">상세</th>
+					<th>신청일</th>
+					<th>수정일</th>
+					<th>진행현황</th>	
+					<th>비고</th>
+				</tr>
+			</thead>
+				<tbody>
+					<c:forEach items="${reservationList}" var="reservation">
 						<tr>
-							<th>신청 번호</th>
-							<th>신청자</th>
-							<th width="300px">사용처</th>
-							<th>신청일</th>
-							<th>수정일</th>
-							<th>진행현황</th>
-							<th>비고</th>
+				    		<td class="reservation_id">${reservation.reservation_id}</td>
+<%-- 								<td>${reservation.empno}</td> --%>
+<%-- 								<td>${reservation.rdescription}</td> --%>
+<%-- 								<td>${reservation.rdate}</td> --%>
+<%-- 								<td>${reservation.reservation_status}</td> --%>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${expenseList}" var="expense">
-							<tr>
-								<td class="expense_id">${expense.expense_id}</td>
-								<%-- 								<td>${expense.empno}</td> --%>
-								<%-- 								<td>${expense.edescription}</td> --%>
-								<%-- 								<td>${expense.edate}</td> --%>
-								<%-- 								<td>${expense.expense_status}</td> --%>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+					</c:forEach>
+				</tbody>
+		</table>
+	</div>
+        			
+		
+</div>			
+   
+     <!-- Modal 1 - Supplies -->
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>비품 신청입니다</h2>
+        <form id="suppliesForm" class="resource-form" action="/submitSuppliesForm" method="post">
+            <label for="empno">사원번호:</label>
+            <input type="text" id="empno" name="empno" value="${dto.getEmpno()}" required>
+            <label for="item">물품명:</label>
+            <input type="text" id="item" name="item" required>
+            <label for="quantity">수량:</label>
+            <input type="text" id="quantity" name="quantity" required>
+            <label for="sdescription">설명:</label>
+            <textarea id="sdescription" name="sdescription" rows="4" required></textarea>
+            <input type="submit" value="비품 신청하기">
+        </form>
+    </div>
+</div>
 
+<!-- Modal 2 - Vehicle -->
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>차량 신청입니다</h2>
+        <form id="vehicleForm" class="resource-form" action="/submitVehicleForm" method="post">
+        	<label for="empno">사원번호:</label>
+            <input type="text" id="empno" name="empno" value="${dto.getEmpno()}" required>
+            <label for="vstartdate">시작일:</label>
+            <input type="date" id="vstartdate" name="vstartdate" required>
+            <label for="venddate">종료일:</label>
+            <input type="date" id="venddate" name="venddate" required>
+            <label for="vdescription">용도:</label>
+            <textarea id="vdescription" name="vdescription" rows="4" required></textarea>
+            <input type="submit" value="차량 신청하기">
+        </form>
+    </div>
+</div>
+        
+<!-- Modal 3 - Expense -->
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>지출 비용 처리</h2>
+        <form id="expenseForm" class="resource-form" action="/submitExpenseForm" method="post" enctype="multipart/form-data">
+            <div id="fontSubject">
+                <label for="empno">사원번호:</label>
+                <input type="text" id="empno" name="empno" value="${dto.getEmpno()}" required>
+                <label for="usagePlace">사용처:</label>
+                <input type="text" id="usagePlace" name="usagePlace" required>
+                <label for="attachment">첨부 이미지:</label>
+                <input type="file" id="attachment" name="attachment" required>
+            </div>
+            <div id="fontpurpose">
+                경비 청구
+            </div>
+            <input type="submit" value="경비 청구하기">
+        </form>
+    </div>
+</div>
 
-			<!-- 숙소 신청 목록 -->
-			<div class="reservationlist">
-				<table>
-					<thead>
-						<tr>
-							<th>신청 번호</th>
-							<th>신청자</th>
-							<th>숙박 인원</th>
-							<th>체크인</th>
-							<th>체크아웃</th>
-							<th width="300px">상세</th>
-							<th>신청일</th>
-							<th>수정일</th>
-							<th>진행현황</th>
-							<th>비고</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${reservationList}" var="reservation">
-							<tr>
-								<td class="reservation_id">${reservation.reservation_id}</td>
-								<%-- 								<td>${reservation.empno}</td> --%>
-								<%-- 								<td>${reservation.rdescription}</td> --%>
-								<%-- 								<td>${reservation.rdate}</td> --%>
-								<%-- 								<td>${reservation.reservation_status}</td> --%>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+<!-- Modal 4 - Reservation -->
+<div id="modal4" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>숙소</h2>
+        <form id="reservationForm" class="resource-form" action="/submitReservationForm" method="post">
+         	<label for="empno">사원번호:</label>
+            <input type="text" id="empno" name="empno" value="${dto.getEmpno()}" required>
+            <label for="numOfPeople">숙박 인원:</label>
+            <input type="text" id="numOfPeople" name="numOfPeople" required>
+            <label for="checkInDate">숙박 시작일:</label>
+            <input type="date" id="checkInDate" name="checkInDate" required>
+            <label for="checkOutDate">숙박 종료일:</label>
+            <input type="date" id="checkOutDate" name="checkOutDate" required>
+            <label for="details">상세:</label>
+            <input type="text" id="details" name="details" required>
+            <input type="submit" value="신청하기">
+        </form>
+    </div>
+</div>
 
-
-		</div>
-
-		<!-- Modal 1 - Supplies -->
-		<div id="modal1" class="modal">
-			<div class="modal-content">
-				<span class="modal-close">&times;</span>
-				<h2>비품 신청입니다</h2>
-				<form id="suppliesForm" class="resource-form"
-					action="/submitSuppliesForm" method="post">
-					<label for="empno">사원번호:</label> <input type="text" id="empno"
-						name="empno" value="${dto.getEmpno()}" required> <label
-						for="item">물품명:</label> <input type="text" id="item" name="item"
-						required> <label for="quantity">수량:</label> <input
-						type="text" id="quantity" name="quantity" required> <label
-						for="sdescription">설명:</label>
-					<textarea id="sdescription" name="sdescription" rows="4" required></textarea>
-					<input type="submit" value="비품 신청하기">
-				</form>
-			</div>
-		</div>
-
-		<!-- Modal 2 - Vehicle -->
-		<div id="modal2" class="modal">
-			<div class="modal-content">
-				<span class="modal-close">&times;</span>
-				<h2>차량 신청입니다</h2>
-				<form id="vehicleForm" class="resource-form"
-					action="/submitVehicleForm" method="post">
-					<label for="empno">사원번호:</label> <input type="text" id="empno"
-						name="empno" value="${dto.getEmpno()}" required> <label
-						for="vstartdate">시작일:</label> <input type="date" id="vstartdate"
-						name="vstartdate" required> <label for="venddate">종료일:</label>
-					<input type="date" id="venddate" name="venddate" required>
-					<label for="vdescription">용도:</label>
-					<textarea id="vdescription" name="vdescription" rows="4" required></textarea>
-					<input type="submit" value="차량 신청하기">
-				</form>
-			</div>
-		</div>
-
-		<!-- Modal 3 - Expense -->
-		<div id="modal3" class="modal">
-			<div class="modal-content">
-				<span class="modal-close">&times;</span>
-				<h2>지출 비용 처리</h2>
-				<form id="expenseForm" class="resource-form"
-					action="/submitExpenseForm" method="post"
-					enctype="multipart/form-data">
-					<div id="fontSubject">
-						<label for="empno">사원번호:</label> <input type="text" id="empno"
-							name="empno" value="${dto.getEmpno()}" required> <label
-							for="usagePlace">사용처:</label> <input type="text" id="usagePlace"
-							name="usagePlace" required> <label for="attachment">첨부
-							이미지:</label> <input type="file" id="attachment" name="attachment">
-					</div>
-					<div id="fontpurpose">경비 청구</div>
-					<input type="submit" value="경비 청구하기">
-				</form>
-			</div>
-		</div>
-
-		<!-- Modal 4 - Reservation -->
-		<div id="modal4" class="modal">
-			<div class="modal-content">
-				<span class="modal-close">&times;</span>
-				<h2>숙소</h2>
-				<form id="reservationForm" class="resource-form"
-					action="/submitReservationForm" method="post">
-					<label for="empno">사원번호:</label> <input type="text" id="empno"
-						name="empno" value="${dto.getEmpno()}" required> <label
-						for="numOfPeople">숙박 인원:</label> <input type="text"
-						id="numOfPeople" name="numOfPeople" required> <label
-						for="checkInDate">숙박 시작일:</label> <input type="date"
-						id="checkInDate" name="checkInDate" required> <label
-						for="checkOutDate">숙박 종료일:</label> <input type="date"
-						id="checkOutDate" name="checkOutDate" required> <label
-						for="details">상세:</label> <input type="text" id="details"
-						name="details" required> <input type="submit" value="신청하기">
-				</form>
-			</div>
-		</div>
-
-	</main>
+ </main>
+ 
+ <jsp:include page="../footer.jsp"/>
+ 
 </body>
 </html>
 
@@ -619,6 +666,7 @@ $(document).ready(function () {
             success: function (response) {
             console.log("서버 응답:", response);
 
+                // 수정된 코드
                 if (response === "supply_write formData submitted successfully") {
                     $("#suppliesForm")[0].reset();
                     $("#modal1").css("display", "none");
@@ -626,21 +674,21 @@ $(document).ready(function () {
                     
                     alert("신청 되었습니다");
                 } else {
-                	console.error("서버 응답 오류:", response);
-                	
-                    alert("신청 중 오류가 발생했습니다. 다시 시도해 주세요.");
+                    console.error("서버 응답 오류:", response);
+                    // ...
                 }
             },
             error: function (xhr, status, error) {
                 console.error("AJAX 오류:", status, error);
-                
-                alert("서버와 통신 중 오류가 발생했습니다. 다시 시도해 주세요.");
             }
         });
     }
 });
  
 
+ 
+ 
+ 
  
 
     // Modal 2 - Vehicle
@@ -806,6 +854,10 @@ $(document).ready(function () {
                         "</tr>";                    
                     tableBody.append(row);
                 }
+                $(".supplylist").show(); // Show the supply list
+                $(".vehiclelist").hide(); // Hide the vehicle list
+                $(".expenselist").hide(); // Hide the vehicle list
+                $(".reservationlist").hide(); // Hide the vehicle list
             },
             error: function (xhr, status, error) {
                 console.error("AJAX 오류:", status, error);
@@ -862,6 +914,10 @@ $(document).ready(function () {
                         "</tr>";
                     tableBody.append(row);
                 }
+                $(".supplylist").hide();
+                $(".vehiclelist").show();
+                $(".expenselist").hide(); 
+                $(".reservationlist").hide(); 
             },
             error: function (xhr, status, error) {
                 console.error("AJAX 오류:", status, error);
@@ -912,6 +968,11 @@ $(document).ready(function () {
                         "</tr>";
                     tableBody.append(row);
                 }
+                $(".supplylist").hide();
+                $(".vehiclelist").hide(); 
+                $(".expenselist").show();
+                $(".reservationlist").hide();
+                
             },
             error: function (xhr, status, error) {
                 console.error("AJAX 오류:", status, error);
@@ -968,6 +1029,10 @@ $(document).ready(function () {
                         "</tr>";
                     tableBody.append(row);
                 }
+                $(".supplylist").hide();
+                $(".vehiclelist").hide();
+                $(".expenselist").hide(); 
+                $(".reservationlist").show(); 
             },
             error: function (xhr, status, error) {
                 console.error("AJAX 오류:", status, error);
@@ -1112,50 +1177,6 @@ function getStatusMessage(status) {
     }
 }
 
-// 예시: 비품 상태 표시
-// var supplyStatus = 0; // 예시로 0(처리 중)을 사용
-// var statusMessage = getStatusMessage(supplyStatus);
-
-
-
-// 삭제 기능 끝 
-
-    <!-- 리스트 불러오기 ajax 파트 끝 -->
- 
-//     원하는 리스트만 보이게 처리
-    $(".supply-list").click(function () {
-        $(".supplylist").show(); // Show the supply list
-        $(".vehiclelist").hide(); // Hide the vehicle list
-        $(".expenselist").hide(); // Hide the vehicle list
-        $(".reservationlist").hide(); // Hide the vehicle list
-    });
-
-    $(".vehicle-list").click(function () {
-        $(".supplylist").hide();
-        $(".vehiclelist").show();
-        $(".expenselist").hide(); 
-        $(".reservationlist").hide(); 
-    });
-    
-    $(".expense-list").click(function () {
-        $(".supplylist").hide();
-        $(".vehiclelist").hide(); 
-        $(".expenselist").show();
-        $(".reservationlist").hide();
-    });
-    
-    $(".reservation-list").click(function () {
-        $(".supplylist").hide();
-        $(".vehiclelist").hide();
-        $(".expenselist").hide(); 
-        $(".reservationlist").show(); 
-    });
-//  원하는 리스트만 보이게 처리
-
-
-
-
-
 });
 
 
@@ -1164,18 +1185,8 @@ function getStatusMessage(status) {
 
 
 <!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 <!-- Bootstrap JS (Popper.js and Bootstrap JS) -->
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

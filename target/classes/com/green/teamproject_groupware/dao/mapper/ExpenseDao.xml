@@ -10,11 +10,13 @@
              , usagePlace
              , edate
              , expense_status 
-              , modifydtm 
+             , modify_dtm as modifyDtm
           from expense_TABLE
          where 1=1
+         <if test='"N".equals(insaYn)'>
            and empno = #{empno}
-           and delYn = 'N'
+         </if>
+           and delYn = 'N'  
       order by expense_id desc
     </select>
    
@@ -31,9 +33,12 @@
     	update expense_TABLE set usagePlace=#{usagePlace} where expense_id=#{expense_id}
     </update>
     
+<!--     <delete id="expense_delete"> -->
+<!--     	delete from expense_TABLE where expense_id=#{expense_id} -->
+<!--     </delete> -->
     <update id="expense_delete">
-    	update from expense_TABLE
-    	set delYn='Y'
+    	update expense_TABLE 
+    	   set delYn='Y'
     	     , modify_dtm = sysdate
     	 where expense_id=#{expense_id}
     </update>
@@ -41,14 +46,12 @@
     <update id="expenseApprovalUpdate">
     	update expense_TABLE 
     	   set expense_status='1'
-    	    , modify_dtm = sysdate
     	 where expense_id=#{expense_id}
     </update>
     
     <update id="expenseRejectUpdate">
     	update expense_TABLE 
     	   set expense_status='2'
-    	    , modify_dtm = sysdate
     	 where expense_id=#{expense_id}
     </update>
 

@@ -252,7 +252,7 @@ cursor: pointer;
         </li>
         <li><a href="#"><i class="bi bi-boxes"></i> 자원요청</a>
             <ul>
-                <li><a href="resource">자원 신청</a></li>
+                <li><a href="resource_apply">자원 신청</a></li>
                 
             </ul>
         </li>

@@ -22,5 +22,6 @@ public class ReservationDto {
 	private int reservation_status;
 	private String delYn;
 	private Timestamp modifyDtm;
+	private String insaYn;
 }
 

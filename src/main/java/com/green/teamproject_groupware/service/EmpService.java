@@ -1,11 +1,7 @@
 package com.green.teamproject_groupware.service;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
-import java.util.List;
-
-import org.springframework.stereotype.Service;
 
 import com.green.teamproject_groupware.dto.EmpDto;
 
@@ -16,8 +12,9 @@ public interface EmpService {
 	public int changeProfile(HashMap<String, String> param);
 	public EmpDto getEmpByName(String name);
 	
-	
-	
-	
-//	public List<EmpDto> searchEmployees(String condition, String keyword); // 새로운 메소드 추가
+	 
+    // 새로운 메서드 추가: 직원 번호로 검색
+    ArrayList<EmpDto> searchEmpByEmpno(String empno);
+    
+    public ArrayList<EmpDto> getSearchEmp(String employeeSearch, String searchType);
 }

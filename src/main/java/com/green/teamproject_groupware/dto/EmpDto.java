@@ -27,4 +27,7 @@ private String dname;
 private String status;
 private Timestamp birthday;
 private String grade;
+
+private String searchType;
+private String employeeSearch;
 }
