@@ -14,7 +14,14 @@
         SELECT * FROM APPROVALTABLE WHERE EMPNO = #{empno}
         ORDER BY REQUESTDATE DESC
     </select>
+    
+    <select id="getVacationByID" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">
+        SELECT * FROM APPROVALTABLE WHERE EMPID = #{empid}
+        ORDER BY REQUESTDATE DESC
+    </select>
 
+	
+	
 <!-- 	<select id="getEventsForCalendar" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">    -->
 <select id="getVacationEvents" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">   
 <!--     SELECT vacationtype "title", startdate "start", enddate "end" FROM APPROVALTABLE WHERE empno = #{empno} AND status = '승인' -->
@@ -29,7 +36,7 @@
     </update>
     
 <!--     휴가 신청현황에 리스트 불러오는 SQL 쿼리 추가 -->
-    <select id="vacationApproval" resultType="com.green.teamproject_groupware.dto.VacationApprovalDto">
+    <select id="vacationApproval" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">
         SELECT * FROM APPROVALTABLE
         ORDER BY REQUESTDATE DESC
     </select>
@@ -50,6 +57,7 @@
     <update id="vacationApprovalUpdate">
         UPDATE APPROVALTABLE
         SET STATUS = '승인'
+        ,updatedate = sysdate
         WHERE EMPID = #{empid}
     </update>
     
@@ -59,4 +67,8 @@
         SET STATUS = '반려'
         WHERE EMPID = #{empid}
     </update>
+    <select id="getApproval_Vacation" resultType="com.green.teamproject_groupware.dto.VacationRequestDto">
+    	select * from approvaltable where empno=#{empno} and read = 0 and status = '승인'
+    </select>
+    
 </mapper>

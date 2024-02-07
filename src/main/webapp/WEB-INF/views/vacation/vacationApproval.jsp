@@ -289,7 +289,7 @@ cursor: pointer;
                             <td>${vacation.startdate}</td>
   			                <td>${vacation.enddate}</td>
 				            <td>${vacation.requestdate}</td>
-				            <td><fmt:formatDate value="${vacation.modifydate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+				            <td><fmt:formatDate value="${vacation.updatedate}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 		                    <td>
 			                    <c:choose>
 			                        <c:when test="${vacation.status == '신청'}">신청</c:when>

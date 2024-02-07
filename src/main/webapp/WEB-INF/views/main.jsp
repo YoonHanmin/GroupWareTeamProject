@@ -10,7 +10,7 @@
 <!-- FullCalendar 라이브러리 및 jQuery 추가 -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.css" />
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/fullcalendar@latest/main.min.js"></script>
@@ -72,8 +72,6 @@ border-bottom: 1px solid #eee;
 background-color : #363945;
 
 }
-
-
 
 
 .item a {
@@ -255,9 +253,20 @@ cursor: pointer;
 }
 
 
+.album{
+width: 600px;
+height:400px;
+border: 1px solid #eee;
+margin-left : 50px;
 }
-
-
+.album-container{
+border-bottom : 2px solid black;
+}
+.album-container span {
+display : inline;
+font-size : 28px;
+font-weight : bold;
+}
 
 </style>
  <script src="resources/js/jquery.js"></script>
@@ -269,51 +278,51 @@ cursor: pointer;
     <script>
   
 
-//     window.onload = function () {
+    window.onload = function () {
     	
-//     	const empno = $("input[name='empno']").val();
-//     	console.log(empno);
-//     const eventSource = new EventSource("/connect/"+empno)
     
-//     eventSource.addEventListener('NewMsg', function(e){
-//         console.log(e.data);
-//         const receivedConnectData = JSON.parse(e.data);
-//         console.log('connect event data:', receivedConnectData);
-//        if(receivedConnectData.msgDto!=null){
-//     	var notifyTime = receivedConnectData.time;
-//     	var currentTime = new Date().getTime();
-//     	var time = currentTime - notifyTime;
-//     	var minute_before = Math.floor(time/(1000*60));
-    
-//         var msgFromName = receivedConnectData.msgDto.from_name;
-//         console.log(msgFromName);
-//         var notify_num = ${notifyList.size()};
-//         notify_num = notify_num+1;
-//         console.log(notify_num);
-// //         var spanElement = $(' <span id=notify_num class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">')
-// //         .text(notify_num+1);
-
-//       $('#notify_num').text(notify_num);
-      
-//       var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
-//       .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
-//       "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
-
-//     $("#new_notify").after(newDiv);
-      
-      
-      
-//        }
-//     });
     
   
-//     };
+    };
     
     
     
     
     $(document).ready(function () {
         
+    	const empno = $("input[name='empno']").val();
+    	console.log(empno);
+    const eventSource = new EventSource("/connect/"+empno)
+    eventSource.addEventListener('NewMsg', function(e){
+        console.log(e.data);
+        const receivedConnectData = JSON.parse(e.data);
+        console.log('connect event data:', receivedConnectData);
+       if(receivedConnectData.msgDto!=null){
+    	var notifyTime = receivedConnectData.time;
+    	var currentTime = new Date().getTime();
+    	var time = currentTime - notifyTime;
+    	var minute_before = Math.floor(time/(1000*60));
+    
+        var msgFromName = receivedConnectData.msgDto.from_name;
+        console.log(msgFromName);
+        var notify_num = ${notifyList.size()};
+        notify_num = notify_num+1;
+        console.log(notify_num);
+//         var spanElement = $(' <span id=notify_num class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">')
+//         .text(notify_num+1);
+
+      $('#notify_num').text(notify_num);
+      
+      var newDiv = $('<div id="popup_notify" style="height:40px;width:300px; font-weight:bold;  font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">')
+      .append(" <div  style='margin-left:5px; margin-top:5px;'><img src='resources/images/msg.png' style='width:25px; height:25px;margin-right:5px;'></div><div style='margin-left:5px; margin-top:5px;'>"+msgFromName+
+      "님이 메시지를 보냈습니다.</div><p style='color:#9e9e9e;margin-left:5px; margin-top:5px;'>&nbsp;"+minute_before+"분전</p>");
+
+    $("#new_notify").after(newDiv);
+      
+      
+      
+       }
+    });
 
         // "서브메뉴1"을 클릭했을 때의 이벤트 리스너를 추가합니다
         $('li:contains("서브메뉴1")').click(function (event) {
@@ -484,7 +493,7 @@ cursor: pointer;
         
         <li><a href="#"><i class="bi bi-calendar-week"></i>  휴가관리</a>
             <ul>
-                <li><a href="vacationRequest">휴가 신청</a></li>
+                <li><a href="vacationRequest">휴가 신청하기</a></li>
                 <li><a href="myVacationRequests">휴가 신청내역</a></li>
             </ul>
         </li>
@@ -497,6 +506,7 @@ cursor: pointer;
         <li><a href="#"><i class="bi bi-file-earmark-check"></i>  자원요청</a> 
         <ul>
         	<li><a href="resource_apply"><i class="bi bi-boxes"></i> 신청하기</a>
+       	 	<li><a href="resource_approval"><i class="bi bi-boxes"></i> 자원요청 목록</a>
         </li>
         </ul>
         <li><a href="#"><i class="bi bi-people-fill"></i> 커뮤니티</a>
@@ -504,12 +514,6 @@ cursor: pointer;
                 <li><a href="notice_list">공지사항</a></li>
                 <li><a href="free_board_list">자유게시판</a></li>
                 <li><a href="picture_list">사진게시판</a></li>
-            </ul>
-        </li>
-        <li><a href="#"><i class="bi bi-people-fill"></i> 인사관리자</a>
-            <ul>
-                <li><a href="resource_approval">자원요청 현황</a></li>
-                <li><a href="vacationApproval">휴가승인 현황</a></li>
             </ul>
         </li>
       </ul>
@@ -520,9 +524,9 @@ cursor: pointer;
     <main>
   <div class="header">
 
- <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%;">
+ <nav id="main_nav" class="navbar navbar-expand-lg bg-dark border-bottom border-body" style="width:100%; height:70px;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#" style="color: white">메인</a>
+        <a class="navbar-brand" href="main" style="color: white;margin-left:50px;">메인</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -537,10 +541,10 @@ cursor: pointer;
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
            
-            <li class="nav-item">
-              <a class="nav-link" href="#" style="color: white">Link</a>
+            <li class="nav-item" style="margin-left:50px;">
+              <a class="nav-link" href="myinfo" style="color: white">마이페이지</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" style="margin-left:50px;">
               <a
                 class="nav-link dropdown-toggle"
                 style="color: white"
@@ -548,24 +552,25 @@ cursor: pointer;
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                font-size="1.25rem"
               >
-                Dropdown
+                내 업무
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" href="#" style="color: white"
-                    >Action</a
+                  <a class="dropdown-item" href="approval" style="color: black"
+                    >전자결재</a
                   >
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#" style="color: white"
-                    >Another action</a
+                  <a class="dropdown-item" href="receive" style="color: black"
+                    >메신저</a
                   >
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#" style="color: white"
-                    >Something else here</a
+                  <a class="dropdown-item" href="vacationRequest" style="color: black"
+                    >자원요청</a
                   >
                 </li>
               </ul>
@@ -576,7 +581,7 @@ cursor: pointer;
             <input
               class="form-control me-2"
               type="search"
-              placeholder="Search"
+              placeholder="사원명"
               aria-label="Search"
             />
             <button
@@ -706,6 +711,70 @@ cursor: pointer;
         
         </div>
         
+        <div class="album">
+        	<div class="album-container">
+       		<span>행사 앨범</span>
+        	</div>
+        	<div style=" margin-top:30px; margin-left:30px;">
+        	<div class="swiper-container" style="width:500px; overflow: hidden;">
+                    <div class="swiper-wrapper" style="width:200px; height:300px;">
+                        <div class="swiper-slide" style="width:200px; height:300px;">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album1.jpg" style="width:200px; height:200px;" alt="slide 1">
+                            </div>
+                    	<div style="text-align:center; margin-top:20px;"><b>행복한 직장만들기 강연 <br>2024-01-28 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album2.jpg" style="width:200px; height:200px;"alt="slide 2">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>A프로젝트 시연행사 <br>2024-01-25 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album3.jpg"style="width:200px; height:200px;" alt="slide 3">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>2024 1월 워크샵 행사 <br>2024-01-03 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album4.jpg"style="width:200px; height:200px;" alt="slide 4">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>2024 1월 워크샵 행사 <br>2024-01-03 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album5.jpg"style="width:200px; height:200px;" alt="slide 5">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>해외 프로젝트 연수 <br>2023-12-22 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album6.jpg" style="width:200px; height:200px;"alt="slide 6">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>사이언스데이 부스행사 <br>2023-12-15 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album7.png"style="width:200px; height:200px;" alt="slide 7">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>아이들과 함께하는 행사 <br>2023-12-10 </b></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slider-image">
+                                <img src="resources/images/album/album8.jpg"style="width:200px; height:200px;" alt="slide 8">
+                            </div>
+                            	<div style="text-align:center; margin-top:20px;"><b>2023 SW 박람회 참가 <br>2023-11-24 </b></div>
+                        </div>
+                        <!-- Add Pagination -->
+                    </div>
+                    <!--div class="swiper-pagination"></div-->
+                </div>
+
+        	
+        	</div>
+        </div>
+        
       </div>
       
       
@@ -715,7 +784,7 @@ cursor: pointer;
     <div class="popup">
  <i class="bi bi-x" id="messenger-out"></i>
 	<div style="height:40px; font-weight:bold; font-size:20px; background-color:white; ">
-	<span id="new_notify" style="padding : 5px; margin-bottom:10px;">새로온 소식</span>
+	<span id="new_notify" style="padding : 5px; margin-bottom:10px;"><img src='resources/images/bell2.jpg' style="width:25px; height:25px;margin-right:5px;">새로온 소식</span>
 	
 	<c:choose>
     <c:when test="${not empty notifyList }">
@@ -732,6 +801,13 @@ cursor: pointer;
                     <div id="popup_notify_msg" class="popup_notify" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
                         <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/msg.png' style="width:25px; height:25px;margin-right:5px;"></div>
                         <div style="margin-left:5px; margin-top:5px;">${notify.notify_sender}님이 메시지를 보냈습니다!</div>
+                        <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
+                    </div>
+                </c:when>
+                <c:when test="${notify.notify_type eq 'VACATION' }">
+                    <div id="popup_notify_msg" class="popup_notify" style="cursor:pointer;height:40px;width:300px; font-weight:bold; font-size:14px; text-align:center;border:1px solid #eee; background-color:white; display:flex; flex-direction: row;">
+                        <div  style="margin-left:5px; margin-top:5px;"><img src='resources/images/vacation.png' style="width:25px; height:25px;margin-right:5px;"></div>
+                        <div style="margin-left:5px; margin-top:5px;">휴가신청이 승인되었어요!</div>
                         <p style="color:#9e9e9e;margin-left:5px; margin-top:5px;">&nbsp;${notify.minute}</p>
                     </div>
                 </c:when>
@@ -806,6 +882,30 @@ z-index: 1;"></div>
       
     });
 
+    var swiper2 = new Swiper( '.swiper-container', {
+        //pagination: '.swiper-pagination',
+        //paginationClickable: true,
+        autoplay:3000,
+        speed : 1000,
+        effect: 'coverflow',
+        loop: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        coverflow: {
+            rotate: 0,
+            stretch: 100,
+            depth: 150,
+            modifier: 1.5,
+            slideShadows : true,
+
+        }
+    } );
+
+
+
+    
+    
+    
 </script>    
     
 </body>

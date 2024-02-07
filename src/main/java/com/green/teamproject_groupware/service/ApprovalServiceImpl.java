@@ -9,15 +9,25 @@ import org.springframework.stereotype.Service;
 
 import com.green.teamproject_groupware.dao.ApprovalDao;
 import com.green.teamproject_groupware.dto.ApprovalDto;
+import com.green.teamproject_groupware.dto.NotificationDto;
 
 @Service
 public class ApprovalServiceImpl implements ApprovalService {
 	@Autowired
 	private SqlSession sqlSession;
+	@Autowired
+	NotifyService notifyService;
 	
 	@Override
 public int docWrite(ApprovalDto dto) {
 	ApprovalDao dao = sqlSession.getMapper(ApprovalDao.class);
+	NotificationDto notify_dto = new NotificationDto();
+	notify_dto.setNotify_type("APPROVAL");
+	notify_dto.setNotify_receiver(""+dto.getFirst_empno());
+	notify_dto.setNotify_sender(dto.getDoc_name());
+	notify_dto.setNotify_time(dto.getDoc_date());
+	notify_dto.setEmpno(""+dto.getFirst_empno());
+	notifyService.addNotification(notify_dto);
 	
 	return dao.docWrite(dto);
 }
@@ -55,6 +65,9 @@ public int docWrite(ApprovalDto dto) {
 	@Override
 	public int doc_approval(HashMap<String, String> param) {
 		ApprovalDao dao = sqlSession.getMapper(ApprovalDao.class);
+		
+	
+		
 		return dao.doc_approval(param);
 		
 	}

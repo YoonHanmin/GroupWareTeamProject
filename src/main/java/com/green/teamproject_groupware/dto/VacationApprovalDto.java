@@ -25,4 +25,5 @@ public class VacationApprovalDto {
     private String status;
     private Timestamp requestdate;
     private Timestamp modifydate;
+    private boolean read;
 }

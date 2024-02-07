@@ -1,5 +1,6 @@
 package com.green.teamproject_groupware.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.green.teamproject_groupware.dao.MsgDao;
 import com.green.teamproject_groupware.dao.NotificationDao;
+import com.green.teamproject_groupware.dto.EmpDto;
 import com.green.teamproject_groupware.dto.MsgDto;
 import com.green.teamproject_groupware.dto.NotificationDto;
 
@@ -20,6 +22,10 @@ public class MsgServiceImpl implements MsgService {
 	
 	@Autowired
 	private NotificationService notificationService;
+	@Autowired
+	private NotifyService notifyService;
+	@Autowired
+	private EmpService empService;
 	
 	@Override
 	public ArrayList<MsgDto> getReceiveMsg(String empno) {
@@ -39,10 +45,19 @@ public class MsgServiceImpl implements MsgService {
 	@Override
 	public int sendMsg(MsgDto dto) {
 		MsgDao dao = sqlSession.getMapper(MsgDao.class);
-//		메세지 작성시 해당 메세지의 수신자에게 send 알림 전송
-		
+		int result = dao.sendMsg(dto);
+		String empno = ""+dto.getFrom_id();
+		EmpDto empdto = empService.getEmpByEmpno(empno);
+		NotificationDto notify_dto = new NotificationDto();
+		notify_dto.setNotify_type("MSG");
+		notify_dto.setNotify_receiver(""+dto.getTo_id());
+		notify_dto.setNotify_sender(empdto.getName());
+		notify_dto.setNotify_time(new Timestamp(System.currentTimeMillis()));
+		notify_dto.setEmpno(""+dto.getTo_id());
+		notifyService.addNotification(notify_dto);
+//		메세지 작성시 해당 메세지의 수신자에게 실시간 알림 전송
 		notificationService.sendEvent(String.valueOf(dto.getTo_id()), "NewMsg", dto);
-		return dao.sendMsg(dto);
+		return result;
 		
 	}
 	

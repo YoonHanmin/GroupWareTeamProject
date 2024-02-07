@@ -159,47 +159,7 @@ public class VacationController {
         }
     }
     
-//    @GetMapping("/vacationApproval")
-//	public String vacation_approval(HttpSession session,Model model) {
-//		String empno = (String) session.getAttribute("empno");
-//		EmpDto dto = empService.getEmpByEmpno(empno);
-//		
-//		String dname = dto.getDname();		
-//		String insaYn = "인사팀".equals(dname) ? "Y" : "N";
-//		
-//		if ("Y".equals(insaYn)) {
-//			ArrayList<VacationApprovalDto> vacationList = service.vacationApproval(empno);
-//	
-//			// todoCnt 확인할문서
-//			List<VacationApprovalDto> todoVacationList = vacationList.stream()
-//					.filter(t -> "처리중".equals(t.getStatus()))
-//				    .collect(Collectors.toList());
-//			
-//			// ingCnt 승인한문서
-//			List<VacationApprovalDto> ingVacationList = vacationList.stream()
-//					.filter(t -> "승인".equals(t.getStatus()))
-//				    .collect(Collectors.toList());
-//		
-//			// rejectCnt 반려한문서
-//			List<VacationApprovalDto> rejectVacationList = vacationList.stream()
-//					.filter(t -> "반려".equals(t.getStatus()))
-//				    .collect(Collectors.toList());
-//			
-//			int todoCnt = todoVacationList.size();
-//			int ingCnt = ingVacationList.size();
-//			int rejectCnt = rejectVacationList.size();
-//			
-//			model.addAttribute("vacationList", vacationList);
-//	        
-//			model.addAttribute("todoCnt", todoCnt);
-//	        model.addAttribute("ingCnt", ingCnt);
-//	        model.addAttribute("rejectCnt", rejectCnt);
-//		}
-//		
-//		model.addAttribute("insaYn", insaYn);		
-//        
-//		return "vacation/vacationAprroval";
-//	}  
+
 	
     @RequestMapping(value="/vacationApproval", method=RequestMethod.GET)
     public String vacationApproval(HttpSession session, Model model) {
@@ -212,7 +172,7 @@ public class VacationController {
 		
 		if ("Y".equals(insaYn)) {
         
-        List<VacationApprovalDto> vacationList = service.vacationApproval(empno);
+        List<VacationRequestDto> vacationList = service.vacationApproval(empno);
         model.addAttribute("vacationApproval", vacationList);
 
         // '신청', '승인', '반려' 상태에 따른 데이터 갯수 카운트
@@ -220,7 +180,7 @@ public class VacationController {
         int ingCnt = 0; // 승인 완료 휴가 카운트
         int rejectCnt = 0; // 휴가 반려 카운트
 
-        for (VacationApprovalDto vacation : vacationList) {
+        for (VacationRequestDto vacation : vacationList) {
             if ("신청".equals(vacation.getStatus())) {
                 tovacnt++;
             } else if ("승인".equals(vacation.getStatus())) {
@@ -247,6 +207,8 @@ public class VacationController {
         try {
             String empid = request.get("empid");
             service.vacationApprovalUpdate(Integer.parseInt(empid));
+            // 알림
+//            notificationService.sendEvent(String.valueOf(dto.getTo_id()), "NewMsg", dto);
             return "approvalUpdate 성공";
         } catch (Exception e) {
             e.printStackTrace();
