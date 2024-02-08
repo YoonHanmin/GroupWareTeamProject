@@ -49,12 +49,13 @@
 ## 🛠주요 기능🛠
 <br>
 - 이메일 인증을 통한 회원가입,로그인
-- 메신저 기능
-- 전자결재 기능
-- 휴가,출장등 일정관리
-- 각종 업무관련 자원요청 기능
-- 커뮤니티 공지사항,자유게시판,앨범게시판등
-- 실시간 알림기능 (메시지,전자결재,휴가신청 승인,댓글등 실시간 알림 전송)
+<br>
+- 메신저 기능<br>
+- 전자결재 기능<br>
+- 휴가,출장등 일정관리<br>
+- 각종 업무관련 자원요청 기능<br>
+- 커뮤니티 공지사항,자유게시판,앨범게시판등<br>
+- 실시간 알림기능 (메시지,전자결재,휴가신청 승인,댓글등 실시간 알림 전송)<br>
 
 ## 🗂사용 API & 라이브러리🗂
 <br>
@@ -67,12 +68,77 @@
 
 ## 💁‍♂️팀원 소개💁‍♂️
 
-🧑 윤한민(팀장) - 프론트엔드,로그인,메신저,전자결재,실시간 알림 기능
-🧑 오재석       - 회원가입,일정관리
-🧑 정병관       - 자유게시판,자원요청 기능
-🧑 조수영       - 공지사항,앨범
+🧑 윤한민(팀장) - 프론트엔드,로그인,메신저,전자결재,실시간 알림 기능<br>
+🧑 오재석       - 회원가입,일정관리<br>
+🧑 정병관       - 자유게시판,자원요청 기능<br>
+🧑 조수영       - 공지사항,앨범<br>
 
 
-## 주요기능 시연
+## 🖥전체 기능 시연 영상🖥
 <br>
 <img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/35e9c4cb-65aa-496c-97ac-f0b8f3dcf5c5"/>
+
+
+## ⭐기능 상세설명 ⭐
+
+
+<br>
+
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/71ab0e4f-4f25-4b78-b719-6fead96c9406"/>
+<br>
+
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/4af276f9-0e25-4627-a87b-f483a3a99a91"/>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/2bba0185-b899-4964-abeb-8c44442109bb"/>
+<br>
+<br>
+
+<h1>📆일정관리 시연📆</h1>
+<br>
+
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/2e5a333a-0471-4af6-a5f5-08d8e2e6d12a"/>
+<br>
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/b2671595-ebc8-445f-a527-9bb95afaf36f"/>
+<br>
+
+
+<h1>📮메신저 시연📮</h1>
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/63e71304-d106-4df9-ae09-77af48c03f21"/>
+<br>
+<br>
+
+
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/847bbbe6-ade9-4490-8b0c-8e25da659ba9"/>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/734210ab-3cf9-4494-8fc6-208d957eb694"/>
+<br>
+<h1>📜전자결재 시연📜</h1>
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/29cf6d31-74d4-46ae-833c-fe3f9827bf21"/>
+<br>
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/29eece26-ee89-43a6-af69-f6ebf45da8bd"/>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/eeaf3d49-b764-48b0-9b00-e7e354fef5d7"/>
+<br>
+<br>
+
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/30ce135d-bcd1-43b0-a887-593d657a50fa"/>
+<br>
+<h1>📜자원요청 시연📜</h1>
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/6db6c2ef-0c62-4f93-a615-d0283501dadc"/>
+<br><br>
+<br>
+<h1>🔔실시간 알람 기능🔔</h1>
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/bc832411-5db5-4262-907c-ed3b68cd15a7"/>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/9786520d-e473-4435-9e50-e795dd68fdcb"/>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/2a41d7e6-2d8e-44fc-9d5f-722596986c26"/>
+
+<br>
+<h1>🔔실시간 알람 기능 시연 영상🔔</h1>
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/5416fb04-8e8e-460b-889e-36c5319c785b"/>
+
+
