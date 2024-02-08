@@ -17,6 +17,11 @@
 ## 🧾기술 STACK 🧾
 <br><br>
 <img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/8a87ad7b-f4cd-479d-b5a6-8b0def722143" style="width:500px; height:300px;">
+- JDK 1.8
+- Spring Framework 5.0.7.RELEASE
+- STS 3.9.14
+- Oracle Database 11g Express Edition 
+
 <br><br>
 🖥️ <b>Front-End</b> <br><br>
 <img src="https://img.shields.io/badge/HTML5-00599C?style=flat&logo=HTML5&logoColor=white"/>
@@ -37,3 +42,37 @@
 <img src="https://img.shields.io/badge/Tomcat-F8DC75?style=flat&logo=apachetomcat&logoColor=black"/>
 <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/>
 <img src="https://img.shields.io/badge/Maven-C71A36?style=flat&logo=apachemaven&logoColor=white"/>
+
+
+<br>
+
+## 🛠주요 기능🛠
+<br>
+- 이메일 인증을 통한 회원가입,로그인
+- 메신저 기능
+- 전자결재 기능
+- 휴가,출장등 일정관리
+- 각종 업무관련 자원요청 기능
+- 커뮤니티 공지사항,자유게시판,앨범게시판등
+- 실시간 알림기능 (메시지,전자결재,휴가신청 승인,댓글등 실시간 알림 전송)
+
+## 🗂사용 API & 라이브러리🗂
+<br>
+- JavaMail API
+- Kakao 우편번호 API
+- thumbnailator(썸네일러)
+- Jackson
+- fullcalendar-5.6.0
+
+
+## 💁‍♂️팀원 소개💁‍♂️
+
+🧑 윤한민(팀장) - 프론트엔드,로그인,메신저,전자결재,실시간 알림 기능
+🧑 오재석       - 회원가입,일정관리
+🧑 정병관       - 자유게시판,자원요청 기능
+🧑 조수영       - 공지사항,앨범
+
+
+## 주요기능 시연
+
+
