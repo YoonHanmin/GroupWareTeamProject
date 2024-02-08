@@ -6,7 +6,7 @@
 
 ## 🖥전체 기능 시연 영상🖥
 <br>
-[![Video Label](http://img.youtube.com/vi/hg7kBf6XoJM/0.jpg](https://youtu.be/hg7kBf6XoJM)
+[![Video Label](http://img.youtube.com/vi/hg7kBf6XoJM/2.jpg)](https://youtu.be/hg7kBf6XoJM)
 
  ## 📢프로젝트 소개 📢
  
