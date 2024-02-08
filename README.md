@@ -74,5 +74,5 @@
 
 
 ## 주요기능 시연
-
-
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/35e9c4cb-65aa-496c-97ac-f0b8f3dcf5c5"/>
