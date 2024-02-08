@@ -6,7 +6,7 @@
 
 ## 🖥전체 기능 시연 영상🖥
 <br>
-<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/35e9c4cb-65aa-496c-97ac-f0b8f3dcf5c5"/>
+[![Video Label](http://img.youtube.com/vi/hg7kBf6XoJM/0.jpg](https://youtu.be/hg7kBf6XoJM)
 
  ## 📢프로젝트 소개 📢
  
