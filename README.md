@@ -1,7 +1,12 @@
 # 팀프로젝트 - 그룹웨어 시스템 AssemWork
+<br>
 231019_(디지털컨버전스 혼합)JAVA기반 웹& 데이터 융합 스프링,오라클 양성과정 23-6 
 2조 팀프로젝트 사내 그룹웨어 시스템
+<br><br><br>
+
+## 🖥전체 기능 시연 영상🖥
 <br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/35e9c4cb-65aa-496c-97ac-f0b8f3dcf5c5"/>
 
  ## 📢프로젝트 소개 📢
  
@@ -45,6 +50,12 @@
 
 
 <br>
+<br>
+
+## 프로젝트 일정🗓
+<br>
+<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/9db1a7f1-766c-4e04-a041-d958aaff3312"/>
+<br>
 
 ## 🛠주요 기능🛠
 <br>
@@ -74,9 +85,6 @@
 🧑 조수영       - 공지사항,앨범<br>
 
 
-## 🖥전체 기능 시연 영상🖥
-<br>
-<img src="https://github.com/YoonHanmin/GroupWareTeamProject/assets/145332449/35e9c4cb-65aa-496c-97ac-f0b8f3dcf5c5"/>
 
 
 ## ⭐기능 상세설명 ⭐
